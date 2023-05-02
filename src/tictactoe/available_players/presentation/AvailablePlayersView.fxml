@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="sendRequesBtn" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="525.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #46A3FF; -fx-font-size: 18; -fx-font-weight: bold; -fx-border-radius: 20; -fx-text-fill: #FFFFFF; -fx-padding: 10;" text="Send Request" textAlignment="CENTER" />
+      <ListView fx:id="playersListView" layoutX="192.0" layoutY="127.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="412.0" style="-fx-border-color: #FF827E; -fx-border-radius: 10;" />
+      <Label fx:id="availablePlayerTxt" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="251.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="294.0" style="-fx-font-size: 28; -fx-background-color: #FFFFFF; -fx-font-weight: bold; -fx-label-padding: 10;" text="Available Players" />
+      <ImageView fitHeight="104.0" fitWidth="118.0" layoutX="14.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../core/designsystem/resources/images/x.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="628.0" layoutY="346.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../core/designsystem/resources/images/o.png" />
+         </image>
+      </ImageView>
+      <RadioButton layoutX="250.0" layoutY="163.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-font-size: 26; -fx-alignment: center;" text="Player1" />
+      <RadioButton layoutX="250.0" layoutY="222.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-font-size: 26; -fx-alignment: center;" text="Player2" />
+      <RadioButton layoutX="251.0" layoutY="280.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-font-size: 26; -fx-alignment: center;" text="Player3" />
+      <RadioButton layoutX="251.0" layoutY="333.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-font-size: 26; -fx-alignment: center;" text="Player4" />
+      <RadioButton layoutX="251.0" layoutY="388.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-font-size: 26; -fx-alignment: center;" text="Player5" />
+   </children>
+</Pane>
