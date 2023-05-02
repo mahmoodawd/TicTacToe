@@ -1,7 +1,7 @@
 package tictactoe.main_menu.presentation;
 
 
-import tictacktoe_sigle_mode_presentation.SingleViewModel;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -168,7 +168,7 @@ public MainViewController(MainViewModel viewModel)  {
         imgeO0.setLayoutY(81.0);
         imgeO0.setPickOnBounds(true);
         imgeO0.setPreserveRatio(true);
- imgeO0.setImage(new Image(ImagesUri.oPNG)); 
+ imgeO0.setImage(new Image(ImagesUri.o)); 
  
         imgeX.setFitHeight(32.0);
         imgeX.setFitWidth(23.0);
@@ -176,7 +176,7 @@ public MainViewController(MainViewModel viewModel)  {
         imgeX.setLayoutY(15.0);
         imgeX.setPickOnBounds(true);
         imgeX.setPreserveRatio(true);
-         imgeX.setImage(new Image(ImagesUri.xPNG));
+         imgeX.setImage(new Image(ImagesUri.o));
         setTop(anchorePane);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
@@ -189,7 +189,7 @@ public MainViewController(MainViewModel viewModel)  {
         imgeX0.setLayoutY(70.0);
         imgeX0.setPickOnBounds(true);
         imgeX0.setPreserveRatio(true);
-        imgeX0.setImage(new Image(ImagesUri.xPNG));
+        imgeX0.setImage(new Image(ImagesUri.x));
         setLeft(anchorPane);
 
         BorderPane.setAlignment(anchorPane0, javafx.geometry.Pos.CENTER);
@@ -209,7 +209,7 @@ public MainViewController(MainViewModel viewModel)  {
         imgeO1.setLayoutY(58.0);
         imgeO1.setPickOnBounds(true);
         imgeO1.setPreserveRatio(true);
-         imgeO1.setImage(new Image(ImagesUri.oPNG));
+         imgeO1.setImage(new Image(ImagesUri.o));
         setRight(anchorPane0);
 
         vBox.getChildren().add(singleBtn);
@@ -229,9 +229,9 @@ public MainViewController(MainViewModel viewModel)  {
         
    
         singleBtn.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
-        multiBtn.setStyle("-fx-background-color: "+ColorPalette.darkBlue+"; -fx-background-radius: 30px;");
+        multiBtn.setStyle("-fx-background-color: "+ColorPalette.lightGreen+"; -fx-background-radius: 30px;");
         onlineBtn.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 30px;");
-        exitBtn.setStyle("-fx-background-color: "+ColorPalette.darkRed+"; -fx-background-radius: 30px;");
+        exitBtn.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
       
         
 
