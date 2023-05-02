@@ -7,10 +7,6 @@ package tictactoe.core;
 
 import javafx.beans.property.SimpleBooleanProperty;
 
-/**
- *
- * @author ASUS
- */
 public class PassData {
     
     private static PassData instance  = null;
