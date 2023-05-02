@@ -21,5 +21,5 @@ public class ImagesUri {
     public static final String back = baseUri + "back_button.png";
     public static final String loading = baseUri + "loading.gif";
     public static final String sad = baseUri + "sad.png";
-    public static final String background = baseUri + "background.png";
+    public static final String background = baseUri + "app_background.png";
 }

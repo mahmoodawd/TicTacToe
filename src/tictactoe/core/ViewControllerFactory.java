@@ -2,6 +2,12 @@
 package tictactoe.core;
 
 
+import tictactoe.authentication.login.presentation.LoginViewController;
+import tictactoe.authentication.login.presentation.LoginViewModel;
+import tictactoe.authentication.registration.RegistrationViewController;
+import tictactoe.authentication.registration.RegistrationViewModel;
+import tictactoe.available_players.presentation.AvailablePlayersViewController;
+import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
 import tictactoe.online_mode.presentation.OnlineViewController;

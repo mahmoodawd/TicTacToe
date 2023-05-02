@@ -1,5 +1,6 @@
 package tictactoe.authentication.registration;
 
+import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -15,9 +16,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import tictactoe.core.Navigation;
+import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.core.designsystem.resources.StylesUri;
 
 public class RegistrationViewController extends GridPane {
 
@@ -105,14 +109,11 @@ public class RegistrationViewController extends GridPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(600.0);
+        setPrefHeight(800.0);
         setPrefWidth(600.0);
-        setStyle("-fx-background-color: #FFFFFF;");
-        Image image = new Image(ImagesUri.retry);
-        BackgroundImage backgroundImage = new BackgroundImage(image,
-        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null,new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-        Background background = new Background(backgroundImage);
-        
+        getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
+        this.setId("pane");
+        setStyle("-fx-border-color: transparent; -fx-background-size: 600 800;");
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -348,6 +349,16 @@ public class RegistrationViewController extends GridPane {
         getChildren().add(gridPane);
         getChildren().add(confirmPasswordField);
         getChildren().add(passwordField);
+        
+        registerBtn.setOnAction((event) -> {
+
+        try {
+            Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+        } catch (IOException ex) {
+            
+        }
+         }); 
+        
 
     }
 }

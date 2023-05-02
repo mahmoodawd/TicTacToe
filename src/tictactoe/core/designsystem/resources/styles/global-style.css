@@ -17,10 +17,10 @@
     -fx-border-radius: 10px;
     -fx-border-color: -light-red;
     -fx-background-color: -white;
-    -fx-background-image: url(../images/background.png);
+    -fx-background-image: url(../images/app_background.png);
     -fx-background-repeat: stretch;
     -fx-background-radius: 10px;
-    -fx-background-size: 900 500;
+    -fx-background-size: 800 600;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }

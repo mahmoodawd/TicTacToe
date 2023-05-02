@@ -1,17 +1,23 @@
 package tictactoe.authentication.login.presentation;
 
+import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import tictactoe.core.Navigation;
+import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
+import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.core.designsystem.resources.StylesUri;
 
 public class LoginViewController extends GridPane {
 
@@ -85,9 +91,14 @@ public class LoginViewController extends GridPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(600.0);
+        setPrefHeight(800.0);
         setPrefWidth(600.0);
-        setStyle("-fx-background-color: #FFFFFF;");
+        getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
+        this.setId("pane");
+        setStyle("-fx-border-color: transparent; -fx-background-size: 600 800;");
+        columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        columnConstraints.setMinWidth(10.0);
+        columnConstraints.setPrefWidth(100.0);
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
@@ -167,10 +178,12 @@ public class LoginViewController extends GridPane {
 
         GridPane.setRowIndex(userNameField, 4);
         GridPane.setMargin(userNameField, new Insets(0.0, 200.0, 0.0, 200.0));
+        userNameField.setStyle("-fx-background-radius: 15px;");
 
         GridPane.setRowIndex(passwordField, 7);
         passwordField.setOpaqueInsets(new Insets(0.0));
         GridPane.setMargin(passwordField, new Insets(0.0, 200.0, 0.0, 200.0));
+        passwordField.setStyle("-fx-background-radius: 15px;");
 
         GridPane.setHalignment(loginBtn, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(loginBtn, 9);
@@ -181,8 +194,8 @@ public class LoginViewController extends GridPane {
         loginBtn.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 15px;");
         loginBtn.setPrefWidth(160);
 
-        backIcon.setFitHeight(44.0);
-        backIcon.setFitWidth(70.0);
+        backIcon.setFitHeight(70.0);
+        backIcon.setFitWidth(100.0);
         backIcon.setPickOnBounds(true);
         backIcon.setPreserveRatio(true);
         GridPane.setMargin(backIcon, new Insets(30.0, 0.0, 0.0, 50.0));
@@ -224,14 +237,9 @@ public class LoginViewController extends GridPane {
         rowConstraints11.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         GridPane.setColumnIndex(registerLink, 2);
-        registerLink.setAlignment(javafx.geometry.Pos.TOP_LEFT);
-        registerLink.setPrefHeight(19.0);
-        registerLink.setPrefWidth(206.0);
-        registerLink.setText("Register");
-        registerLink.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        registerLink.setTextFill(javafx.scene.paint.Color.valueOf("#0048ff"));
+        registerLink.setText("Login");
+        registerLink.setTextFill(javafx.scene.paint.Color.valueOf("#0c5eeb"));
         registerLink.setUnderline(true);
-        registerLink.setPadding(new Insets(0.0, 210.0, 0.0, 0.0));
 
         GridPane.setColumnIndex(notificationTxt, 1);
         GridPane.setHalignment(notificationTxt, javafx.geometry.HPos.RIGHT);
@@ -269,6 +277,20 @@ public class LoginViewController extends GridPane {
         gridPane.getChildren().add(registerLink);
         gridPane.getChildren().add(notificationTxt);
         getChildren().add(gridPane);
+        
+        GridPane.setMargin(backIcon, new Insets(0.0, 0, 20.0, 130));
+        backIcon.setImage(new Image(ImagesUri.back));
+        GridPane.setMargin(passwordTxt, new Insets(0.0, 115, 5, 0.0));
+        GridPane.setMargin(userNameTxt, new Insets(0.0, 115, 5, 0.0));
+        
+        loginBtn.setOnAction((event) -> {
+
+        try {
+            Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, loginBtn);
+        } catch (IOException ex) {
+            
+        }
+         }); 
 
     }
 }
