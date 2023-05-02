@@ -1,5 +1,8 @@
 package tictactoe.core;
 
+import tictactoe.authentication.login.presentation.LoginViewModel;
+import tictactoe.authentication.registration.RegistrationViewModel;
+import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.online_mode.presentation.OnlineViewController;
 import tictactoe.online_mode.presentation.OnlineViewModel;
@@ -39,7 +42,8 @@ public class ViewModelFactory {
             }
             
             case AVAILABLEPLAYERSVIEWCONTROLLER:{
-                return new AvailablePlayersViewModel();
+                    return new AvailablePlayersViewModel();
+                
             }
             
             
