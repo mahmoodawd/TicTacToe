@@ -8,6 +8,8 @@ import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
 
@@ -54,8 +56,8 @@ public class ViewModelFactory {
             }
             
             
-             case MULTIVIEWCONTROLLER:{
-                    return new MultiPlayerViewModel();
+             case MULTIMODEVIEWCONTROLLER:{
+                    return new MultiModeViewModel();
                 
             }
              
@@ -65,8 +67,11 @@ public class ViewModelFactory {
                 
             }
             
-            
-            //todo add your own controller name in enum class and add your case here
+              case SINGLEMODEVIEWCONTROLLER:{
+                    return new SingleModeViewModel();
+                
+            }
+            //todo add your own controller name in enum class and add your case here            //todo add your own controller name in enum class and add your case here
             
             
             default:{
