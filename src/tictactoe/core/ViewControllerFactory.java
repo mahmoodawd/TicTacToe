@@ -11,6 +11,8 @@ import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.multiplayer.presentation.MultiPlayerController;
 import tictactoe.online_mode.presentation.OnlineViewController;
 import tictactoe.online_mode.presentation.OnlineViewModel;
@@ -65,7 +67,9 @@ public class ViewControllerFactory {
                 return new MultiPlayerController((MultiPlayerViewModel)viewModel);
             }  
             
-           
+            case SINGLEVIEWCONTROLLER:{
+                return new SingleModeViewController((SingleModeViewModel)viewModel);
+            }  
             
             
             //todo add your own controller name in enum class and add your case here
