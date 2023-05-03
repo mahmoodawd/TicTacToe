@@ -1,19 +1,26 @@
 package tictactoe.core;
 
+import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewModel;
 import tictactoe.authentication.registration.RegistrationViewModel;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
-import tictactoe.online_mode.presentation.OnlineViewController;
-import tictactoe.online_mode.presentation.OnlineViewModel;
+import tictactoe.online_multi_player.presentation.OnlineViewController;
+import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.single_player.presentation.SinglePlayerViewModel;
+
 
 public class ViewModelFactory {
         
     
     public static Object getViewModel(ViewController viewController)
     {
+        
+        
+        
     
+        
         switch(viewController)
         {
         
@@ -42,7 +49,20 @@ public class ViewModelFactory {
             }
             
             case AVAILABLEPLAYERSVIEWCONTROLLER:{
-                return new AvailablePlayersViewModel();
+                    return new AvailablePlayersViewModel();
+                
+            }
+            
+            
+             case MULTIVIEWCONTROLLER:{
+                    return new MultiPlayerViewModel();
+                
+            }
+             
+             
+              case SINGLEVIEWCONTROLLER:{
+                    return new SinglePlayerViewModel();
+                
             }
             
             
