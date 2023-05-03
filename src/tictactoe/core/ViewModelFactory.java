@@ -8,6 +8,7 @@ import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.online_mode.presentation.OnlineViewController;
 import tictactoe.online_mode.presentation.OnlineViewModel;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 
 
@@ -50,12 +51,12 @@ public class ViewModelFactory {
             }
             
             
-             case MULTIVIEWCONTROLLER:{
-                    return new MultiPlayerViewModel();
+             case MULTIMODEVIEWCONTROLLER:{
+                    return new MultiModeViewModel();
                 
             }
             
-              case SINGLEVIEWCONTROLLER:{
+              case SINGLEMODEVIEWCONTROLLER:{
                     return new SingleModeViewModel();
                 
             }

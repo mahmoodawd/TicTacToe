@@ -11,6 +11,8 @@ import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewController;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.multiplayer.presentation.MultiPlayerController;
@@ -63,11 +65,11 @@ public class ViewControllerFactory {
             }   
          
          
-         case MULTIVIEWCONTROLLER:{
-                return new MultiPlayerController((MultiPlayerViewModel)viewModel);
+         case MULTIMODEVIEWCONTROLLER:{
+                return new MultiModeViewController((MultiModeViewModel)viewModel);
             }  
             
-            case SINGLEVIEWCONTROLLER:{
+            case SINGLEMODEVIEWCONTROLLER:{
                 return new SingleModeViewController((SingleModeViewModel)viewModel);
             }  
             
