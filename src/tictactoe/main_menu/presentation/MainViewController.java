@@ -77,8 +77,8 @@ public MainViewController(MainViewModel viewModel)  {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(395.0);
-        setPrefWidth(551.0);
+        setPrefHeight(600.0);
+        setPrefWidth(800.0);
 
         BorderPane.setAlignment(vBox, javafx.geometry.Pos.CENTER);
         vBox.setAlignment(javafx.geometry.Pos.CENTER);
@@ -87,13 +87,13 @@ public MainViewController(MainViewModel viewModel)  {
 
          singleButton.setMnemonicParsing(false);
          singleButton.setPrefHeight(25.0);
-         singleButton.setPrefWidth(129.0);
+         singleButton.setPrefWidth(130.0);
          singleButton.setText("Single");
         VBox.setMargin( singleButton, new Insets(8.0, 0.0, 0.0, 50.0));
 
         multiBtn.setMnemonicParsing(false);
         multiBtn.setPrefHeight(25.0);
-        multiBtn.setPrefWidth(132.0);
+        multiBtn.setPrefWidth(130.0);
         multiBtn.setText("Multi");
         VBox.setMargin(multiBtn, new Insets(8.0, 0.0, 0.0, 50.0));
 
@@ -117,9 +117,9 @@ public MainViewController(MainViewModel viewModel)  {
       
        
       
-        imageLogo3.setFitHeight(400);
-        imageLogo3.setFitWidth(500);
-        imageLogo3.setLayoutX(100.0);
+        imageLogo3.setFitHeight(150);
+        imageLogo3.setFitWidth(100);
+        imageLogo3.setLayoutX(300.0);
         imageLogo3.setLayoutY(31.0);
         imageLogo3.setPickOnBounds(true);
         imageLogo3.setPreserveRatio(true);
@@ -208,8 +208,7 @@ public MainViewController(MainViewModel viewModel)  {
  singleButton.setOnAction((event) -> {
 
         try { 
-            System.out.println("jjj");
-            Navigation.openPage(ViewController.MULTIMODEVIEWCONTROLLER,  singleButton);
+            Navigation.openPage(ViewController.SINGLEMODEVIEWCONTROLLER,  singleButton);
         } catch (IOException ex) {
            System.out.println(ex.getMessage());
         }
@@ -239,46 +238,13 @@ public MainViewController(MainViewModel viewModel)  {
              
              multiBtn.setOnAction((event) -> {
             try {
+                
                     Navigation.openPage(ViewController.MULTIMODEVIEWCONTROLLER, multiBtn);
             } catch (IOException ex) {
                 Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });   
 
-             
-           
-            
-
-        
-        /*
-         singleBtn.setOnAction((event) -> {
-            try {
-                    Navigation.openPage(ViewController.SINGLEVIEWCONTROLLER, singleBtn);
-            } catch (IOException ex) {
-                Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-         */
-         
-         /*
-             onlineBtn.setOnAction((event) -> {
-            try {
-                    Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, onlineBtn);
-            } catch (IOException ex) {
-                Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        */
-             /*
-             multiBtn.setOnAction((event) -> {
-            try {
-                    Navigation.openPage(ViewController.MULTIVIEWCONTROLLER, multiBtn);
-            } catch (IOException ex) {
-                Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });   
-*/
-            
              exitBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -22,7 +22,7 @@ import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 
-public  class MultiPlayerController extends BorderPane {
+public  class MultiPlayerViewController extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -90,7 +90,7 @@ public  class MultiPlayerController extends BorderPane {
     private ImageView imageViews[][] = new ImageView[3][3];
     MultiPlayerViewModel viewModel;
 
-    public MultiPlayerController(MultiPlayerViewModel viewModel) {
+    public MultiPlayerViewController(MultiPlayerViewModel viewModel) {
 
         this.viewModel = viewModel;
         

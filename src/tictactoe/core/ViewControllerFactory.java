@@ -15,12 +15,7 @@ import tictactoe.main_menu.presentation.multi_mode.MultiModeViewController;
 import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
-import tictactoe.multiplayer.presentation.MultiPlayerController;
-import tictactoe.online_mode.presentation.OnlineViewController;
-import tictactoe.online_mode.presentation.OnlineViewModel;
-import tictactoe.online_mode.presentation.menu_dialog.MenuDialogController;
-import tictactoe.online_mode.presentation.winner_dialog.WinnerDialogController;
-import tictactoe.multi_player.presentation.MultiPlayerController;
+import tictactoe.multi_player.presentation.MultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
@@ -75,16 +70,23 @@ public class ViewControllerFactory {
          
          case MULTIMODEVIEWCONTROLLER:{
                 return new MultiModeViewController((MultiModeViewModel)viewModel);
+            } 
+         
+         
+           case SINGLEMODEVIEWCONTROLLER:{
+                return new SingleModeViewController((SingleModeViewModel)viewModel);
             }  
          
          
          case SINGLEVIEWCONTROLLER:{
                 return new SinglePlayerController((SinglePlayerViewModel)viewModel);
             }  
-            
-            case SINGLEMODEVIEWCONTROLLER:{
-                return new SingleModeViewController((SingleModeViewModel)viewModel);
+         
+            case MULTIVIEWCONTROLLER:{
+                return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
             }  
+            
+          
             
             
             //todo add your own controller name in enum class and add your case here
