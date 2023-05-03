@@ -1,6 +1,7 @@
 package tictactoe.authentication.registration;
 
 import java.io.IOException;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -50,8 +51,8 @@ public class RegistrationViewController extends GridPane {
     protected final Button registerBtn;
     protected final TextField usernameField;
     protected final Text invalidUsernameTxt;
-    protected final Text invalidPasswordTxt;
-    protected final Text confirmationErrorTxt;
+    protected Text invalidPasswordTxt;
+    protected Text confirmationErrorTxt;
     protected final ImageView imageFrame;
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints0;
@@ -250,9 +251,9 @@ public class RegistrationViewController extends GridPane {
         invalidPasswordTxt.setFill(javafx.scene.paint.Color.RED);
         invalidPasswordTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         invalidPasswordTxt.setStrokeWidth(0.0);
-        invalidPasswordTxt.setText(viewModel.validatePassword());
         invalidPasswordTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         invalidPasswordTxt.setVisible(false);
+        invalidPasswordTxt.setFont(Typography.bodyTwoRegularFont);
 
         GridPane.setHalignment(confirmationErrorTxt, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(confirmationErrorTxt, 12);
@@ -349,16 +350,41 @@ public class RegistrationViewController extends GridPane {
         getChildren().add(gridPane);
         getChildren().add(confirmPasswordField);
         getChildren().add(passwordField);
-        
+        registerBtn.setDisable(true);
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setPassword(newValue);
+        });
+        confirmPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setConfirmPassword(newValue);
+        });
+        viewModel.getConfirmPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.isLengthEqual());
+        });
+        viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.isLengthEqual());
+        });
+        navigate();
+}
+    public void navigate(){
         registerBtn.setOnAction((event) -> {
 
         try {
-            Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+            viewModel.validatePasswordMsg.setLength(0);
+            if(viewModel.validatePassword())
+                if(viewModel.doesPasswordMatch()){
+                    Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+                }
+                else
+                    confirmationErrorTxt.setVisible(true);
+            else{
+                confirmationErrorTxt.setVisible(false);
+                invalidPasswordTxt.setText(viewModel.validatePasswordMsg.toString());
+                invalidPasswordTxt.setVisible(true);
+            }
         } catch (IOException ex) {
             
         }
          }); 
-        
-
     }
+    
 }

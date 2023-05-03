@@ -237,7 +237,7 @@ public class LoginViewController extends GridPane {
         rowConstraints11.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         GridPane.setColumnIndex(registerLink, 2);
-        registerLink.setText("Login");
+        registerLink.setText("Register");
         registerLink.setTextFill(javafx.scene.paint.Color.valueOf("#0c5eeb"));
         registerLink.setUnderline(true);
 
