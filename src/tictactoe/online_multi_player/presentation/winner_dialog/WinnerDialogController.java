@@ -358,13 +358,16 @@ public  class WinnerDialogController extends GridPane {
         getChildren().add(watchMovesButton);
         
         
-        
-        winnerNameTextView.setText(PassData.getInstance().winnerName.get());
+        String winnerName  = PassData.getInstance().winnerName.get();
+        winnerNameTextView.setText(winnerName);
         mainMenuButton.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 15px;");
          replayButton.setStyle("-fx-background-color: "+ColorPalette.lightRed+"; -fx-background-radius: 15px;");
          watchMovesButton.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 15px;");
-           iconLeftImageView.setImage(new Image(ImagesUri.trophy));
+         if(winnerName != "draw"){
+         iconLeftImageView.setImage(new Image(ImagesUri.trophy));
            iconrightImageView.setImage(new Image(ImagesUri.trophy));
+    }
+      
             homeImageView.setImage(new Image(ImagesUri.home));
             retryImageView.setImage(new Image(ImagesUri.retry));
             cameraImageView.setImage(new Image(ImagesUri.camera));
@@ -400,7 +403,7 @@ public  class WinnerDialogController extends GridPane {
     
     private void setReturnAndClose(String dialogReturn)
     {
-            PassData.getInstance().dialogReturn.set("");
+             PassData.getInstance().dialogReturn.set("");
             PassData.getInstance().dialogReturn.set(dialogReturn);
             Navigation.closePage(this);
     }

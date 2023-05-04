@@ -15,11 +15,15 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER);
+        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.MAINVIEWCONTROLLER);
+    
         Scene scene = new Scene(root);
         root.setStyle("-fx-background-color: White;"); 
      
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setMaxWidth(800);
+        stage.setMaxHeight(600);
         stage.show();
         
         
