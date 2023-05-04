@@ -1,6 +1,7 @@
 package tictactoe.available_players.presentation.dialogs;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -8,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
@@ -39,10 +43,19 @@ public class RequestDeniedDialogViewController extends DialogPane {
         dialog.getDialogPane().getButtonTypes().addAll(tryOntherBtn);
 
         DialogPane dialogPane = dialog.getDialogPane();
+        centerButtons(dialogPane);
         dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
         dialog.showAndWait();
 
     }
+    private void centerButtons(DialogPane dialogPane) {
+      Region spacer = new Region();
+      ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
+      HBox.setHgrow(spacer, Priority.ALWAYS);
+      dialogPane.applyCss();
+      HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
+      hboxDialogPane.getChildren().add(spacer);
+   }
 }
