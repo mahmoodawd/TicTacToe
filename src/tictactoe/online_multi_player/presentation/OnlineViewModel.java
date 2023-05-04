@@ -1,30 +1,49 @@
 package tictactoe.online_multi_player.presentation;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import tictactoe.core.designsystem.resources.ImagesUri;
 
 public class OnlineViewModel {
     
     private int  board [][] =  new int [3][3];
-    SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
+   private SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
    private SimpleStringProperty winnerName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneSymbol = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoSymbol = new SimpleIntegerProperty();
    private SimpleStringProperty playerOneName = new SimpleStringProperty();
    private SimpleStringProperty playerTwoName = new SimpleStringProperty();
-  private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
+   private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
-    Turn playerTurn = Turn.FIRSTPLAYER;
+   private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty();
+   
+   
+   //todo connect the server and everything will work perfectlly
     
     public OnlineViewModel()
     {
    
        boardNotifier.set(1);
        winnerName.set("");
+       turnNotifier.set(1);
  
   
+    }
+    
+    
+    public SimpleIntegerProperty getTurnNotifier()
+    {
+    
+        return turnNotifier;
+    
+    }
+    
+    
+    
+    
+    public SimpleIntegerProperty getBoardNotifier()
+    {
+    
+        return boardNotifier;
+    
     }
     
     
@@ -117,20 +136,17 @@ public class OnlineViewModel {
     public void setBoard(int row , int column)
     {
       
-        if(board[row][column]!= 0 || !winnerName.get().isEmpty()) return;
+        if(board[row][column]!= 0 || !winnerName.get().isEmpty() || turnNotifier.get() != 1) return;
         
         
-        if(playerTurn == Turn.FIRSTPLAYER)
+        if(turnNotifier.get() == 1)
         {
-                setXorO(row , column ,playerOneSymbol.get());
-                
-                playerTurn = Turn.SECONDPLAYER;
-        
+           setXorO(row , column ,playerOneSymbol.get());
+           turnNotifier.set(2);
         }else
         {
           setXorO(row, column,playerTwoSymbol.get());
-                playerTurn = Turn.FIRSTPLAYER;
-        
+          turnNotifier.set(1);
         }
          boardNotifier.set(boardNotifier.get()+1);
         checkWinner();
