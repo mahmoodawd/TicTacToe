@@ -286,7 +286,7 @@ public class LoginViewController extends GridPane {
         loginBtn.setOnAction((event) -> {
 
         try {
-            Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, loginBtn);
+            Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
         } catch (IOException ex) {
             
         }

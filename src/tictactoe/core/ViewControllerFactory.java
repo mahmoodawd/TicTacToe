@@ -39,7 +39,7 @@ public class ViewControllerFactory {
          
             }
             
-            case ONLINEVIEWCONTROLLER:{
+            case ONLINEMULTIPLAYERVIEWCONTROLLER:{
                 return new OnlineViewController((OnlineViewModel)viewModel);
             }
             
@@ -78,11 +78,11 @@ public class ViewControllerFactory {
             }  
          
          
-         case SINGLEVIEWCONTROLLER:{
+             case SINGLEPLAYERVIEWCONTROLLER:{
                 return new SinglePlayerController((SinglePlayerViewModel)viewModel);
             }  
          
-            case MULTIVIEWCONTROLLER:{
+            case MULTIPLAYERVIEWCONTROLLER:{
                 return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
             }  
             

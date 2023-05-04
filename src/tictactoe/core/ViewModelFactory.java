@@ -30,7 +30,7 @@ public class ViewModelFactory {
          
             }
             
-            case ONLINEVIEWCONTROLLER:{
+            case ONLINEMULTIPLAYERVIEWCONTROLLER:{
                 return new OnlineViewModel();
             }
             
@@ -67,13 +67,13 @@ public class ViewModelFactory {
                 
             }
               
-                 case SINGLEVIEWCONTROLLER:{
+                 case SINGLEPLAYERVIEWCONTROLLER:{
                     return new SinglePlayerViewModel();
                 
             }
                  
                  
-                    case MULTIVIEWCONTROLLER:{
+                    case MULTIPLAYERVIEWCONTROLLER:{
                     return new MultiPlayerViewModel();
                 
             }

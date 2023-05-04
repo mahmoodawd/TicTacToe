@@ -168,9 +168,9 @@ public class MultiPlayerViewModel {
     {
        // rows checker
        for (int row = 0; row < 3; row++) {
+           int willWin = 2 ;
     if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != 0 ) {
        setWinnerName(row, 0);
- 
     }
   }
         // columns checker

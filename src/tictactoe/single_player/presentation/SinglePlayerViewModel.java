@@ -22,6 +22,7 @@ public class SinglePlayerViewModel {
    private SimpleStringProperty playerTwoName = new SimpleStringProperty();
   private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
+   
     Turn playerTurn = Turn.FIRSTPLAYER;
     
     public SinglePlayerViewModel()

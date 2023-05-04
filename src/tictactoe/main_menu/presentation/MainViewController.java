@@ -230,7 +230,7 @@ public MainViewController(MainViewModel viewModel)  {
          
              onlineBtn.setOnAction((event) -> {
             try {
-                    Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, onlineBtn);
+                    Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, onlineBtn);
             } catch (IOException ex) {
                 Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
             }

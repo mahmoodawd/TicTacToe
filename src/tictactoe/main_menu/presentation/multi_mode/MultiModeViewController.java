@@ -338,7 +338,7 @@ this.viewModel=viewModel;
    
        
             try {
-                Navigation.openPage(ViewController.SINGLEVIEWCONTROLLER, this);
+                Navigation.openPage(ViewController.SINGLEPLAYERVIEWCONTROLLER, this);
             } catch (IOException ex) {
                 Logger.getLogger(MultiModeViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
