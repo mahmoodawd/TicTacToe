@@ -1,6 +1,7 @@
 package tictactoe.authentication.registration;
 
 import java.io.IOException;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -8,10 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -50,8 +47,8 @@ public class RegistrationViewController extends GridPane {
     protected final Button registerBtn;
     protected final TextField usernameField;
     protected final Text invalidUsernameTxt;
-    protected final Text invalidPasswordTxt;
-    protected final Text confirmationErrorTxt;
+    protected Text invalidPasswordTxt;
+    protected Text confirmationErrorTxt;
     protected final ImageView imageFrame;
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints0;
@@ -109,11 +106,11 @@ public class RegistrationViewController extends GridPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(800.0);
-        setPrefWidth(600.0);
+        setPrefHeight(600.0);
+        setPrefWidth(800.0);
+        setStyle("-fx-border-color: white; -fx-background-size: 600 800;");
         getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         this.setId("pane");
-        setStyle("-fx-border-color: transparent; -fx-background-size: 600 800;");
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -241,18 +238,18 @@ public class RegistrationViewController extends GridPane {
         invalidUsernameTxt.setFill(javafx.scene.paint.Color.RED);
         invalidUsernameTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         invalidUsernameTxt.setStrokeWidth(0.0);
-        invalidUsernameTxt.setText("Invalid username !");
+        invalidUsernameTxt.setText("This username already exists !");
         invalidUsernameTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        invalidUsernameTxt.setVisible(true);
+        invalidUsernameTxt.setVisible(false);
 
         GridPane.setHalignment(invalidPasswordTxt, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(invalidPasswordTxt, 9);
         invalidPasswordTxt.setFill(javafx.scene.paint.Color.RED);
         invalidPasswordTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         invalidPasswordTxt.setStrokeWidth(0.0);
-        invalidPasswordTxt.setText(viewModel.validatePassword());
         invalidPasswordTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         invalidPasswordTxt.setVisible(false);
+        invalidPasswordTxt.setFont(Typography.bodyTwoRegularFont);
 
         GridPane.setHalignment(confirmationErrorTxt, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(confirmationErrorTxt, 12);
@@ -349,16 +346,58 @@ public class RegistrationViewController extends GridPane {
         getChildren().add(gridPane);
         getChildren().add(confirmPasswordField);
         getChildren().add(passwordField);
-        
+        registerBtn.setDisable(true);
+        uiObservers();
+        viewModelObservers();
+        navigate();
+}
+    private void navigate(){
         registerBtn.setOnAction((event) -> {
 
         try {
-            Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+            invalidUsernameTxt.setVisible(false);
+            invalidPasswordTxt.setVisible(false);
+            confirmationErrorTxt.setVisible(false);
+            if(viewModel.validateUsername()){
+                if(viewModel.validatePassword())
+                    if(viewModel.doesPasswordMatch()){
+                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+                    }
+                    else
+                        confirmationErrorTxt.setVisible(true);
+                else{
+                invalidPasswordTxt.setVisible(true);
+            }
+            }
+            else{
+                invalidUsernameTxt.setVisible(true);
+            }
         } catch (IOException ex) {
             
         }
          }); 
-        
-
     }
+    private void uiObservers(){
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setUsername(newValue);
+        });
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setPassword(newValue);
+        });
+        confirmPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setConfirmPassword(newValue);
+        });
+    }
+    private void viewModelObservers(){
+        viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
+        });
+        viewModel.getConfirmPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
+        });
+        viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
+        });
+    }
+    
 }

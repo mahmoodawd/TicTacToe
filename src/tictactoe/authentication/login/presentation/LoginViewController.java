@@ -1,6 +1,7 @@
 package tictactoe.authentication.login.presentation;
 
 import java.io.IOException;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -37,7 +38,7 @@ public class LoginViewController extends GridPane {
     protected final Text passwordTxt;
     protected final Text loginTxt;
     protected final Text userNameTxt;
-    protected final TextField userNameField;
+    protected final TextField usernameField;
     protected final PasswordField passwordField;
     protected final Button loginBtn;
     protected final ImageView backIcon;
@@ -73,7 +74,7 @@ public class LoginViewController extends GridPane {
         passwordTxt = new Text();
         loginTxt = new Text();
         userNameTxt = new Text();
-        userNameField = new TextField();
+        usernameField = new TextField();
         passwordField = new PasswordField();
         loginBtn = new Button();
         backIcon = new ImageView();
@@ -176,9 +177,9 @@ public class LoginViewController extends GridPane {
         userNameTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         userNameTxt.setFont(Typography.subtitleOneRegularFont);
 
-        GridPane.setRowIndex(userNameField, 4);
-        GridPane.setMargin(userNameField, new Insets(0.0, 200.0, 0.0, 200.0));
-        userNameField.setStyle("-fx-background-radius: 15px;");
+        GridPane.setRowIndex(usernameField, 4);
+        GridPane.setMargin(usernameField, new Insets(0.0, 200.0, 0.0, 200.0));
+        usernameField.setStyle("-fx-background-radius: 15px;");
 
         GridPane.setRowIndex(passwordField, 7);
         passwordField.setOpaqueInsets(new Insets(0.0));
@@ -237,7 +238,7 @@ public class LoginViewController extends GridPane {
         rowConstraints11.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
         GridPane.setColumnIndex(registerLink, 2);
-        registerLink.setText("Login");
+        registerLink.setText("Register");
         registerLink.setTextFill(javafx.scene.paint.Color.valueOf("#0c5eeb"));
         registerLink.setUnderline(true);
 
@@ -264,7 +265,7 @@ public class LoginViewController extends GridPane {
         getChildren().add(passwordTxt);
         getChildren().add(loginTxt);
         getChildren().add(userNameTxt);
-        getChildren().add(userNameField);
+        getChildren().add(usernameField);
         getChildren().add(passwordField);
         getChildren().add(loginBtn);
         getChildren().add(backIcon);
@@ -283,14 +284,45 @@ public class LoginViewController extends GridPane {
         GridPane.setMargin(passwordTxt, new Insets(0.0, 115, 5, 0.0));
         GridPane.setMargin(userNameTxt, new Insets(0.0, 115, 5, 0.0));
         
-        loginBtn.setOnAction((event) -> {
+        
 
+    }
+    void navigate(){
+        loginBtn.setOnAction((event) -> {
+        invalidUsernameWarning.setVisible(false);
+        invalidPasswordWarning.setVisible(false);
         try {
+<<<<<<< HEAD
+            if(viewModel.validateUsername()){
+                if(viewModel.validatePassword())
+                Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, loginBtn);
+                else
+                    invalidPasswordWarning.setVisible(true);
+            }
+            else
+                invalidUsernameWarning.setVisible(true);
+=======
             Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
+>>>>>>> 066004ce4f991e49d4d00e85dbfdd2750133ca79
         } catch (IOException ex) {
             
         }
          }); 
-
+    }
+    private void uiObservers(){
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setUsername(newValue);
+        });
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setPassword(newValue);
+        });
+    }
+    private void viewModelObservers(){
+        viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            loginBtn.setDisable(!viewModel.enableLoginBtn());
+        });
+        viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            loginBtn.setDisable(!viewModel.enableLoginBtn());
+        });
     }
 }
