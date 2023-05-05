@@ -20,6 +20,9 @@ public class TicTacToe extends Application {
         root.setStyle("-fx-background-color: White;"); 
      
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setMaxWidth(800);
+        stage.setMaxHeight(600);
         stage.show();
         
         

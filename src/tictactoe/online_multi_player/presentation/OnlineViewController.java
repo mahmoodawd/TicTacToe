@@ -218,7 +218,7 @@ public  class OnlineViewController extends BorderPane {
         GridPane.setHalignment(titleTextView, javafx.geometry.HPos.CENTER);
         titleTextView.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         titleTextView.setStrokeWidth(0.0);
-        titleTextView.setText("Multi Player");
+        titleTextView.setText("Online Mode");
         titleTextView.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         titleTextView.setTextOrigin(javafx.geometry.VPos.CENTER);
         titleTextView.setFont(new Font(32.0));
@@ -645,13 +645,20 @@ public  class OnlineViewController extends BorderPane {
              
     }); 
     
-       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,0);
+       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
+           if(viewModel.getTurnNotifier().get() == 1)
+           {
+                 viewModel.setBoard(0,0);
+           }
+           
     }); 
     
     
-       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
+       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
+           if(viewModel.getTurnNotifier().get() == 1)
+           {
              viewModel.setBoard(0,1);
+           }
     }); 
        
           thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
@@ -692,7 +699,7 @@ public  class OnlineViewController extends BorderPane {
     {
     
     
-       viewModel.boardNotifier.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+       viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
            int [][] board = viewModel.getBoard();
            System.out.println(board[0][1]);
            for(int row = 0 ; row < 3 ; row++){
@@ -801,9 +808,32 @@ public  class OnlineViewController extends BorderPane {
        });
       
       
+             
       
       
-      
+        viewModel.getTurnNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+         int board [][] = viewModel.getBoard();
+              for(int row = 0 ; row < 3 ; row++){
+               for(int column = 0 ; column < 3 ; column++)
+               {
+                 if(board[row][column] == 0)
+                 {
+                 
+                      ImageView imageView = imageViews[row][column];
+                 
+           
+                    if(newValue.intValue() == 1)
+                   {
+                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
+                   }else{
+                    imageView.setImage(new Image(ImagesUri.emptyDisabled));
+                   }
+                 }       
+               }
+           }
+         
+            
+       });
     
     
     }

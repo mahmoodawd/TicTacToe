@@ -250,7 +250,7 @@ public MainViewController(MainViewModel viewModel)  {
             @Override
             public void handle(ActionEvent event) {
                 ExitDialogContoller dialog = new ExitDialogContoller();
-                Scene dialogScene = new Scene(dialog, 400, 200);
+                Scene dialogScene = new Scene(dialog, 600,400);
                 Stage dialogStage = new Stage();
                 dialogStage.initModality(Modality.APPLICATION_MODAL);
                 dialogStage.setScene(dialogScene);
