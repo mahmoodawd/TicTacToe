@@ -284,6 +284,9 @@ public class LoginViewController extends GridPane {
         GridPane.setMargin(passwordTxt, new Insets(0.0, 115, 5, 0.0));
         GridPane.setMargin(userNameTxt, new Insets(0.0, 115, 5, 0.0));
         
+        uiObservers();
+        viewModelObservers();
+        navigate();
         
 
     }

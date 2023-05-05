@@ -108,7 +108,6 @@ public class RegistrationViewController extends GridPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(600.0);
         setPrefWidth(800.0);
-        setStyle("-fx-border-color: white; -fx-background-size: 600 800;");
         getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         this.setId("pane");
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -375,7 +374,7 @@ public class RegistrationViewController extends GridPane {
         } catch (IOException ex) {
             
         }
-         }); 
+        }); 
     }
     private void uiObservers(){
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {

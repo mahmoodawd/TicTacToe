@@ -69,7 +69,7 @@ public class RegistrationViewModel {
     }
     boolean containsNumber(){
         boolean result = false;
-        if (password.get().matches(".*\\d+.*")){
+        if (password.get().matches("/\\d/")){
             containsNumberMsg ="";
             result = true;
         }
