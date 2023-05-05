@@ -27,7 +27,7 @@ import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
-import tictactoe.online_multi_player.presentation.winner_dialog.WinnerDialogController;
+import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 
 public  class MultiPlayerViewController extends BorderPane {
 
@@ -699,8 +699,7 @@ public  class MultiPlayerViewController extends BorderPane {
                if(!newValue.isEmpty()){
                  
                    PassData.getInstance().winnerName.set(newValue);
-                   WinnerDialogController dialog = new WinnerDialogController();
-                   Navigation.openDialog(dialog);
+                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
                    
                }}
        });
@@ -852,8 +851,8 @@ public  class MultiPlayerViewController extends BorderPane {
                           
                       }
                        Platform.runLater(() -> {
-                            WinnerDialogController dialog = new WinnerDialogController();
-                   Navigation.openDialog(dialog);
+                           
+                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
                        });
                    }).start();
     

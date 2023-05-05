@@ -19,7 +19,7 @@ import tictactoe.multi_player.presentation.MultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
-import tictactoe.online_multi_player.presentation.winner_dialog.WinnerDialogController;
+import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
@@ -50,7 +50,7 @@ public class ViewControllerFactory {
              
              
               case WINNERDIALOGCNTROLLER:{
-                return new WinnerDialogController();
+                return new MultiPlayerWinnerDialogController();
             }
               
               
@@ -84,6 +84,11 @@ public class ViewControllerFactory {
          
             case MULTIPLAYERVIEWCONTROLLER:{
                 return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
+            }  
+            
+            
+             case MULTIPLAYERWINNERDIALOG:{
+                return new MultiPlayerWinnerDialogController();
             }  
             
           

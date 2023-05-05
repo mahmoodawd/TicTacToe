@@ -17,7 +17,7 @@ import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
 
-public  class WinnerDialogController extends GridPane {
+public  class MultiPlayerWinnerDialogController extends GridPane {
 
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;
@@ -59,7 +59,7 @@ public  class WinnerDialogController extends GridPane {
     protected final ImageView cameraImageView;
     protected final Text text1;
 
-    public WinnerDialogController() {
+    public MultiPlayerWinnerDialogController() {
 
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();

@@ -718,11 +718,7 @@ public  class SinglePlayerController extends BorderPane {
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                System.out.println(newValue);
                if(!newValue.isEmpty())PassData.getInstance().winnerName.set(newValue);
-               try {
-                   if(!newValue.isEmpty()) Navigation.openPage(ViewController.SINGLEWINNERDIALOGCONTROLLER, null);
-               } catch (IOException ex) {
-                   
-               }
+           //    if(!newValue.isEmpty()) Navigation.openPage(ViewController.SINGLEWINNERDIALOGCONTROLLER, null);
            }
        });
       
