@@ -8,6 +8,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import tictactoe.core.designsystem.ColorPalette;
 
 public class ExitDialogContoller extends BorderPane {
 
@@ -79,9 +80,10 @@ public class ExitDialogContoller extends BorderPane {
         gridPane.getRowConstraints().add(rowConstraints);
         gridPane.getChildren().add(YesBtn);
         gridPane.getChildren().add(NoBtn);
-
-        
-      ////  DialogExitecontoller dialog = new DialogExitecontoller() ;
+        YesBtn.setStyle("-fx-background-color: "+ColorPalette.lightRed+"; -fx-background-radius: 30px;");
+        NoBtn.setStyle("-fx-background-color: "+ColorPalette.lightRed+"; -fx-background-radius: 30px;");
+        //YesBtn.setTextFill(ColorPalette.white);
+       // DialogExitecontoller dialog = new DialogExitecontoller() ;
 //dialog.setStyle("-fx-background-color: red;");
 
       

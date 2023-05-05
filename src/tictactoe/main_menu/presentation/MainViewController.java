@@ -2,6 +2,7 @@ package tictactoe.main_menu.presentation;
 
 
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -203,7 +204,7 @@ public MainViewController(MainViewModel viewModel)  {
         multiBtn.setStyle("-fx-background-color: "+ColorPalette.lightGreen+"; -fx-background-radius: 30px;");
         onlineBtn.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 30px;");
         exitBtn.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
-      
+     
         
  singleButton.setOnAction((event) -> {
 
