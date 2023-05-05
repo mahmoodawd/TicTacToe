@@ -839,7 +839,7 @@ public  class MultiPlayerViewController extends BorderPane {
                                   
                                   Platform.runLater(() -> {
                                       setImage(view,symbol , ImagesUri.xWithBackground,ImagesUri.oWithBackground);
-                                  ;
+                                  });
                                   
                                   try {
                                       Thread.sleep(1000);
