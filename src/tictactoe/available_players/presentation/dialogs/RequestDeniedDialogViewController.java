@@ -47,7 +47,7 @@ public class RequestDeniedDialogViewController extends DialogPane {
         dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
-        dialog.showAndWait();
+        
 
     }
     private void centerButtons(DialogPane dialogPane) {
@@ -58,4 +58,7 @@ public class RequestDeniedDialogViewController extends DialogPane {
       HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
       hboxDialogPane.getChildren().add(spacer);
    }
+    public void show(){
+        dialog.showAndWait();
+    }
 }

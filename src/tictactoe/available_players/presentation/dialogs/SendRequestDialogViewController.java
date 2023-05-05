@@ -29,7 +29,7 @@ public class SendRequestDialogViewController extends DialogPane {
     protected final GridPane gridPane;
     protected final Label label;
     protected final String title;
-    protected final ButtonType okBtn;
+    protected final ButtonType cancelBtn;
     private Node owner;
     protected final Image loadingGif = new Image(getClass().getResourceAsStream(ImagesUri.loading));
 
@@ -42,50 +42,45 @@ public class SendRequestDialogViewController extends DialogPane {
         gridPane = new GridPane();
         label = new Label();
         title = "Sending";
-        okBtn = new ButtonType("OK");
-        
-        
+        cancelBtn = new ButtonType("Cancel");
+
         dialog.setDialogPane(this);
         dialog.initOwner(owner.getScene().getWindow());
 
         dialog.setTitle(title);
         dialog.initStyle(StageStyle.UNIFIED);
-        
+
         label.setText("Sending Request to " + player + "\nPlease Wait....");
-        
+
         gridPane.setAlignment(Pos.CENTER);
         gridPane.add(label, 0, 0);
         gridPane.add(imageView, 1, 0);
-        
+
         getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
-        getButtonTypes().addAll(okBtn);
+        getButtonTypes().addAll(cancelBtn);
         centerButtons(this);
         setContent(gridPane);
 
-        try {
-            requestAccepted();
-        } catch (IOException ex) {
-            Logger.getLogger(SendRequestDialogViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    }
 
-    }
     private void centerButtons(DialogPane dialogPane) {
-      Region spacer = new Region();
-      ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
-      HBox.setHgrow(spacer, Priority.ALWAYS);
-      dialogPane.applyCss();
-      HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
-      hboxDialogPane.getChildren().add(spacer);
-   }
-    private void requestAccepted() throws IOException{
-        Optional<String> result;
-        result = dialog.showAndWait();
-            if (result.isPresent() ) {
-                System.out.println(owner);
-                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, owner );
-            }
-            
+        Region spacer = new Region();
+        ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        dialogPane.applyCss();
+        HBox hboxDialogPane = (HBox) dialogPane.lookup(".container");
+        hboxDialogPane.getChildren().add(spacer);
     }
-    
+
+    public void show() throws IOException {
+        Optional<String> result;
+        dialog.showAndWait();
+//        if (result.isPresent()) {
+//            dialog.close();
+//    }
+}
+
+public void close() {
+        dialog.close();
+    }
 }
