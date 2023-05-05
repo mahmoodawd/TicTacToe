@@ -1,4 +1,4 @@
-package winnerDialog;
+package tictactoe.single_player.presentation.winnerDialog;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
