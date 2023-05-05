@@ -218,7 +218,7 @@ public  class OnlineViewController extends BorderPane {
         GridPane.setHalignment(titleTextView, javafx.geometry.HPos.CENTER);
         titleTextView.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         titleTextView.setStrokeWidth(0.0);
-        titleTextView.setText("Multi Player");
+        titleTextView.setText("Online Mode");
         titleTextView.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         titleTextView.setTextOrigin(javafx.geometry.VPos.CENTER);
         titleTextView.setFont(new Font(32.0));
