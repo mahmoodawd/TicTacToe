@@ -1,11 +1,17 @@
 package tictactoe.available_players.presentation.dialogs;
 
+import java.io.IOException;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.StageStyle;
+import tictactoe.core.Navigation;
+import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.StylesUri;
 
 public class ReceivedRequestDialogViewController extends DialogPane {
@@ -34,7 +40,20 @@ public class ReceivedRequestDialogViewController extends DialogPane {
         dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
-        dialog.showAndWait();
+        try {
+            accept();
+        } catch (IOException ex) {
+            Logger.getLogger(SendRequestDialogViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void accept() throws IOException {
+        Optional<String> result;
+        result = dialog.showAndWait();
+        if (result.isPresent()) { //TODO make accept performed on pressing the accept button only
+            Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, null);
+        }
 
     }
 }
