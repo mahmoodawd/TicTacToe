@@ -9,10 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -110,11 +106,11 @@ public class RegistrationViewController extends GridPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(800.0);
-        setPrefWidth(600.0);
+        setPrefHeight(600.0);
+        setPrefWidth(800.0);
+        setStyle("-fx-border-color: white; -fx-background-size: 600 800;");
         getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         this.setId("pane");
-        setStyle("-fx-border-color: transparent; -fx-background-size: 600 800;");
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -242,9 +238,9 @@ public class RegistrationViewController extends GridPane {
         invalidUsernameTxt.setFill(javafx.scene.paint.Color.RED);
         invalidUsernameTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         invalidUsernameTxt.setStrokeWidth(0.0);
-        invalidUsernameTxt.setText("Invalid username !");
+        invalidUsernameTxt.setText("This username already exists !");
         invalidUsernameTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        invalidUsernameTxt.setVisible(true);
+        invalidUsernameTxt.setVisible(false);
 
         GridPane.setHalignment(invalidPasswordTxt, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(invalidPasswordTxt, 9);
@@ -351,40 +347,57 @@ public class RegistrationViewController extends GridPane {
         getChildren().add(confirmPasswordField);
         getChildren().add(passwordField);
         registerBtn.setDisable(true);
+        uiObservers();
+        viewModelObservers();
+        navigate();
+}
+    private void navigate(){
+        registerBtn.setOnAction((event) -> {
+
+        try {
+            invalidUsernameTxt.setVisible(false);
+            invalidPasswordTxt.setVisible(false);
+            confirmationErrorTxt.setVisible(false);
+            if(viewModel.validateUsername()){
+                if(viewModel.validatePassword())
+                    if(viewModel.doesPasswordMatch()){
+                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+                    }
+                    else
+                        confirmationErrorTxt.setVisible(true);
+                else{
+                invalidPasswordTxt.setVisible(true);
+            }
+            }
+            else{
+                invalidUsernameTxt.setVisible(true);
+            }
+        } catch (IOException ex) {
+            
+        }
+         }); 
+    }
+    private void uiObservers(){
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setUsername(newValue);
+        });
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.setPassword(newValue);
         });
         confirmPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.setConfirmPassword(newValue);
         });
+    }
+    private void viewModelObservers(){
+        viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
+        });
         viewModel.getConfirmPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            registerBtn.setDisable(!viewModel.isLengthEqual());
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
         });
         viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            registerBtn.setDisable(!viewModel.isLengthEqual());
+            registerBtn.setDisable(!viewModel.enableRegisterBtn());
         });
-        navigate();
-}
-    public void navigate(){
-        registerBtn.setOnAction((event) -> {
-
-        try {
-            viewModel.validatePasswordMsg.setLength(0);
-            if(viewModel.validatePassword())
-                if(viewModel.doesPasswordMatch()){
-                    Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
-                }
-                else
-                    confirmationErrorTxt.setVisible(true);
-            else{
-                confirmationErrorTxt.setVisible(false);
-                invalidPasswordTxt.setText(viewModel.validatePasswordMsg.toString());
-                invalidPasswordTxt.setVisible(true);
-            }
-        } catch (IOException ex) {
-            
-        }
-         }); 
     }
     
 }

@@ -12,14 +12,30 @@ import javafx.beans.property.SimpleStringProperty;
  * @author omar_
  */
 public class RegistrationViewModel {
-     String sufficientLengthMsg="";
      String contatinsUpperCaseMsg="";
      String contatinsLowerCaseMsg="";
      String containsSpecialCharacterMsg="";
      String passwordMatchesMsg="";
+     String containsNumberMsg="";
      StringBuilder validatePasswordMsg=new StringBuilder();
      SimpleStringProperty password = new SimpleStringProperty();
-     SimpleStringProperty confirmPassword = new SimpleStringProperty("");
+     SimpleStringProperty confirmPassword = new SimpleStringProperty();
+     SimpleStringProperty username = new SimpleStringProperty();
+     
+    public RegistrationViewModel(){
+        password.set("");
+        confirmPassword.set("");
+        username.set("");
+        
+    }
+
+    public SimpleStringProperty getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username.set(username);
+    }
 
     public String getValidatePasswordMsg() {
         return validatePasswordMsg.toString();
@@ -44,61 +60,69 @@ public class RegistrationViewModel {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword.set(confirmPassword);
     }
-    public boolean isLengthEqual(){
+    boolean isLengthEqual(){
         return confirmPassword.get().length() == password.get().length();
     }
-     
-    protected  boolean sufficientLength(){
-        if (password.get().length()>5){
-            sufficientLengthMsg="";
-            return true;
+      
+    boolean isPasswordLengthSufficient(){
+        return(password.get().length()>5);
+    }
+    boolean containsNumber(){
+        boolean result = false;
+        if (password.get().matches(".*\\d+.*")){
+            containsNumberMsg ="";
+            result = true;
         }
         else
-            sufficientLengthMsg = "Password must be at least 6 characters";
-        return false;
+            containsNumberMsg = "Password must contain at least 1 number !";
+        return result;
     }
-    protected  boolean contatinsUpperCase(){
+    boolean contatinsUpperCase(){
+        boolean result = false;
         for(int i=0; i<password.get().length(); i++){
           if(Character.isUpperCase(password.get().charAt(i))){
             contatinsUpperCaseMsg="";
-            return true;
+            result = true;
+            break;
           }
+          else
+            contatinsUpperCaseMsg = "Password must contain at least 1 Upper Case letter";
         }
-        contatinsUpperCaseMsg = "Password must contain at least 1 Upper Case letter";
-        return false;
+        return result;
     }
-    protected  boolean contatinsLowerCase(){
+    boolean contatinsLowerCase(){
+        boolean result = false;
         for(int i=0; i<password.get().length(); i++){
-            if(Character.isUpperCase(password.get().charAt(i))){
+            if(Character.isLowerCase(password.get().charAt(i))){
                 contatinsLowerCaseMsg="";
-                return true;
+                result = true;
+                break;
             }
+            else
+                contatinsLowerCaseMsg = "Password must contain at least 1 lower case letter";
         }
-        contatinsLowerCaseMsg = "Password must contatin at least 1 lower case letter";
-        return false;
+        return result;
     }
-    public  boolean containsSpecialCharacter() {
+    boolean containsSpecialCharacter() {
+        boolean result = false;
         String pattern = "[!@#$%^&*()_+=\\[\\]{};':\"\\\\|,.<>\\/?]";
         for (int i = 0; i < password.get().length(); i++) {
             if (String.valueOf(password.get().charAt(i)).matches(pattern)){
                 containsSpecialCharacterMsg="";
-                return true;
+                result = true;
+                break;
             }
+            else
+                containsSpecialCharacterMsg = "Password must contain at least 1 special character";
         }
-        containsSpecialCharacterMsg = "Password must contain at least 1 special character";
-        return false;
+        return result;
     }
-    public boolean doesPasswordMatch(){
-        return(confirmPassword.equals(password));
+    protected boolean doesPasswordMatch(){
+        return(confirmPassword.get().equals(password.get()));
     }
-    public boolean validatePassword(){
-        sufficientLength();
-        contatinsUpperCase();
-        contatinsLowerCase();
-        containsSpecialCharacter();
-        doesPasswordMatch();
-        if(!sufficientLengthMsg.isEmpty()){
-            validatePasswordMsg.append(sufficientLengthMsg);
+    void concatinateValidatePasswordMsg(){
+        if(!containsNumberMsg.isEmpty()){
+            validatePasswordMsg.append(containsNumberMsg);
             validatePasswordMsg.append(System.lineSeparator());
         }
         if(!contatinsUpperCaseMsg.isEmpty()){
@@ -112,9 +136,28 @@ public class RegistrationViewModel {
         if(!containsSpecialCharacterMsg.isEmpty()){
             validatePasswordMsg.append(containsSpecialCharacterMsg);
         }
-        if(sufficientLength() && contatinsUpperCase() && contatinsLowerCase() && containsSpecialCharacter())
-            return true;
-        return false;
     }
-    
+    protected boolean validatePassword(){
+        validatePasswordMsg.setLength(0);
+        containsNumber();
+        contatinsUpperCase();
+        contatinsLowerCase();
+        containsSpecialCharacter();
+        doesPasswordMatch();
+        concatinateValidatePasswordMsg();
+        return isPasswordLengthSufficient()&& contatinsUpperCase() && contatinsLowerCase() && containsSpecialCharacter();
+    }
+    protected boolean enableRegisterBtn(){
+        return isLengthEqual()&&!username.get().isEmpty()&&!password.get().isEmpty()&&!confirmPassword.get().isEmpty()&&isUsernameLengthSufficient()
+            &&isPasswordLengthSufficient();
+    }
+    boolean isUsernameLengthSufficient(){   
+        return (username.get().length()>5);
+    }
+    protected boolean validateUsername(){
+        boolean result = false;
+        if(result==false)
+            result=true;
+        return result;
+    }
 }
