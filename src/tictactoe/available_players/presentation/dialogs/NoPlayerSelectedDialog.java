@@ -16,7 +16,7 @@ import javafx.stage.StageStyle;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
 
-public class RequestDeniedDialogViewController extends DialogPane {
+public class NoPlayerSelectedDialog extends DialogPane {
 
     protected final Dialog<String> dialog;
     protected final GridPane gridPane;
@@ -25,7 +25,7 @@ public class RequestDeniedDialogViewController extends DialogPane {
     protected final ButtonType tryOntherBtn;
     protected final Image sadIcon = new Image(getClass().getResourceAsStream(ImagesUri.sad));
 
-    public RequestDeniedDialogViewController() {
+    public NoPlayerSelectedDialog() {
         ImageView imageView = new ImageView(sadIcon);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
@@ -33,10 +33,10 @@ public class RequestDeniedDialogViewController extends DialogPane {
         dialog = new Dialog<>();
         gridPane = new GridPane();
         label = new Label();
-        title = "Request";
-        tryOntherBtn = new ButtonType("Try Another player");
+        title = "Error";
+        tryOntherBtn = new ButtonType("OK");
         dialog.setTitle(title);
-        label.setText("Request Denied .......");
+        label.setText("No Players Selected");
         gridPane.setAlignment(Pos.CENTER);
         gridPane.add(label, 0, 0);
         gridPane.add(imageView, 1, 0);
@@ -47,7 +47,6 @@ public class RequestDeniedDialogViewController extends DialogPane {
         dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
-        
 
     }
     private void centerButtons(DialogPane dialogPane) {
@@ -60,5 +59,6 @@ public class RequestDeniedDialogViewController extends DialogPane {
    }
     public void show(){
         dialog.showAndWait();
+        
     }
 }
