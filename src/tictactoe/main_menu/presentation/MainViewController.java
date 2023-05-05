@@ -3,40 +3,26 @@ package tictactoe.main_menu.presentation;
 
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import static javafx.scene.layout.Region.USE_PREF_SIZE;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tictactoe.core.Navigation;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.ColorPalette;
-import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
 
 
 
@@ -49,7 +35,7 @@ private MainViewModel viewModel= null;
 
  
   protected final VBox vBox;
-    protected final Button singleBtn;
+    protected final Button singleButton;
     protected final Button multiBtn;
     protected final Button onlineBtn;
     protected final Button exitBtn;
@@ -70,7 +56,7 @@ private MainViewModel viewModel= null;
 public MainViewController(MainViewModel viewModel)  { 
   
        vBox = new VBox();
-        singleBtn = new Button();
+        singleButton = new Button();
         multiBtn = new Button();
         onlineBtn = new Button();
         exitBtn = new Button();
@@ -91,23 +77,23 @@ public MainViewController(MainViewModel viewModel)  {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(395.0);
-        setPrefWidth(551.0);
+        setPrefHeight(600.0);
+        setPrefWidth(800.0);
 
         BorderPane.setAlignment(vBox, javafx.geometry.Pos.CENTER);
         vBox.setAlignment(javafx.geometry.Pos.CENTER);
         vBox.setPrefHeight(130.0);
         vBox.setPrefWidth(600.0);
 
-        singleBtn.setMnemonicParsing(false);
-        singleBtn.setPrefHeight(25.0);
-        singleBtn.setPrefWidth(129.0);
-        singleBtn.setText("Single");
-        VBox.setMargin(singleBtn, new Insets(8.0, 0.0, 0.0, 50.0));
+         singleButton.setMnemonicParsing(false);
+         singleButton.setPrefHeight(25.0);
+         singleButton.setPrefWidth(130.0);
+         singleButton.setText("Single");
+        VBox.setMargin( singleButton, new Insets(8.0, 0.0, 0.0, 50.0));
 
         multiBtn.setMnemonicParsing(false);
         multiBtn.setPrefHeight(25.0);
-        multiBtn.setPrefWidth(132.0);
+        multiBtn.setPrefWidth(130.0);
         multiBtn.setText("Multi");
         VBox.setMargin(multiBtn, new Insets(8.0, 0.0, 0.0, 50.0));
 
@@ -120,7 +106,7 @@ public MainViewController(MainViewModel viewModel)  {
         exitBtn.setMnemonicParsing(false);
         exitBtn.setPrefHeight(25.0);
         exitBtn.setPrefWidth(135.0);
-        exitBtn.setText("Exite");
+        exitBtn.setText("Exit");
         VBox.setMargin(exitBtn, new Insets(8.0, 0.0, 0.0, 50.0));
         setBottom(vBox);
 
@@ -128,27 +114,12 @@ public MainViewController(MainViewModel viewModel)  {
         anchorePane.setPrefHeight(136.0);
         anchorePane.setPrefWidth(512.0);
 
-        imgeLogo1.setFitHeight(61.0);
-        imgeLogo1.setFitWidth(69.0);
-        imgeLogo1.setLayoutX(328.0);
-        imgeLogo1.setLayoutY(55.0);
-        imgeLogo1.setPickOnBounds(true);
-        imgeLogo1.setPreserveRatio(true);
       
        
-      imgeLogo1.setImage(new Image(ImagesUri.logo));
-        imageLogo2.setFitHeight(62.0);
-        imageLogo2.setFitWidth(70.0);
-        imageLogo2.setLayoutX(276.0);
-        imageLogo2.setLayoutY(44.0);
-        imageLogo2.setPickOnBounds(true);
-        imageLogo2.setPreserveRatio(true);
-     
       
-  imageLogo2.setImage(new Image(ImagesUri.logo));
-        imageLogo3.setFitHeight(66.0);
-        imageLogo3.setFitWidth(71.0);
-        imageLogo3.setLayoutX(224.0);
+        imageLogo3.setFitHeight(150);
+        imageLogo3.setFitWidth(100);
+        imageLogo3.setLayoutX(300.0);
         imageLogo3.setLayoutY(31.0);
         imageLogo3.setPickOnBounds(true);
         imageLogo3.setPreserveRatio(true);
@@ -212,7 +183,7 @@ public MainViewController(MainViewModel viewModel)  {
          imgeO1.setImage(new Image(ImagesUri.o));
         setRight(anchorPane0);
 
-        vBox.getChildren().add(singleBtn);
+        vBox.getChildren().add( singleButton);
         vBox.getChildren().add(multiBtn);
         vBox.getChildren().add(onlineBtn);
         vBox.getChildren().add(exitBtn);
@@ -228,11 +199,20 @@ public MainViewController(MainViewModel viewModel)  {
 
         
    
-        singleBtn.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
+         singleButton.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
         multiBtn.setStyle("-fx-background-color: "+ColorPalette.lightGreen+"; -fx-background-radius: 30px;");
         onlineBtn.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 30px;");
         exitBtn.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 30px;");
       
+        
+ singleButton.setOnAction((event) -> {
+
+        try { 
+            Navigation.openPage(ViewController.SINGLEMODEVIEWCONTROLLER,  singleButton);
+        } catch (IOException ex) {
+           System.out.println(ex.getMessage());
+        }
+         });
         
 
 
@@ -250,25 +230,34 @@ public MainViewController(MainViewModel viewModel)  {
          
              onlineBtn.setOnAction((event) -> {
             try {
-                    Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, onlineBtn);
+                    Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, onlineBtn);
             } catch (IOException ex) {
                 Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-             /*
+             
              multiBtn.setOnAction((event) -> {
             try {
-                    Navigation.openPage(ViewController.MULTIVIEWCONTROLLER, multiBtn);
+                
+                    Navigation.openPage(ViewController.MULTIMODEVIEWCONTROLLER, multiBtn);
             } catch (IOException ex) {
                 Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });   
-*/
-             
-             exitBtn.setOnAction((event) -> {
-                 Navigation.closePage(exitBtn);
+
+             exitBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ExitDialogContoller dialog = new ExitDialogContoller();
+                Scene dialogScene = new Scene(dialog, 600,400);
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                dialogStage.setScene(dialogScene);
+                dialogStage.show(); 
+                
+            }
         });
-             
+         
             
 
          

@@ -11,13 +11,18 @@ import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
-import tictactoe.multi_player.presentation.MultiPlayerController;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewController;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
+import tictactoe.multi_player.presentation.MultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
 import tictactoe.online_multi_player.presentation.winner_dialog.WinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
+
 
 public class ViewControllerFactory {
 
@@ -34,7 +39,7 @@ public class ViewControllerFactory {
          
             }
             
-            case ONLINEVIEWCONTROLLER:{
+            case ONLINEMULTIPLAYERVIEWCONTROLLER:{
                 return new OnlineViewController((OnlineViewModel)viewModel);
             }
             
@@ -63,16 +68,25 @@ public class ViewControllerFactory {
             }   
          
          
-         case MULTIVIEWCONTROLLER:{
-                return new MultiPlayerController((MultiPlayerViewModel)viewModel);
+         case MULTIMODEVIEWCONTROLLER:{
+                return new MultiModeViewController((MultiModeViewModel)viewModel);
+            } 
+         
+         
+           case SINGLEMODEVIEWCONTROLLER:{
+                return new SingleModeViewController((SingleModeViewModel)viewModel);
             }  
          
          
-         case SINGLEVIEWCONTROLLER:{
+             case SINGLEPLAYERVIEWCONTROLLER:{
                 return new SinglePlayerController((SinglePlayerViewModel)viewModel);
             }  
+         
+            case MULTIPLAYERVIEWCONTROLLER:{
+                return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
+            }  
             
-           
+          
             
             
             //todo add your own controller name in enum class and add your case here

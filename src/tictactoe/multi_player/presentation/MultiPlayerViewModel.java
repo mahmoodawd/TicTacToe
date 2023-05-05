@@ -26,8 +26,9 @@ public class MultiPlayerViewModel {
    private SimpleIntegerProperty playerTwoSymbol = new SimpleIntegerProperty();
    private SimpleStringProperty playerOneName = new SimpleStringProperty();
    private SimpleStringProperty playerTwoName = new SimpleStringProperty();
-  private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
+   private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
+   private SimpleIntegerProperty numberOfPlayedMoves = new SimpleIntegerProperty();
     Turn playerTurn = Turn.FIRSTPLAYER;
     
     public MultiPlayerViewModel()
@@ -41,9 +42,19 @@ public class MultiPlayerViewModel {
     
     
      
+    public void setPlayerOneScore(int score)
+    {
     
+       playerOneScore.set(score);
+    }
    
+       public void setPlayerTwoScore(int score)
+    {
     
+       playerTwoScore.set(score);
+    }
+       
+       
     public void setPlayerOneName(String name)
     {
     
@@ -131,6 +142,9 @@ public class MultiPlayerViewModel {
       
         if(board[row][column]!= 0 || !winnerName.get().isEmpty()) return;
         
+        numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1);
+      
+        
         
         if(playerTurn == Turn.FIRSTPLAYER)
         {
@@ -166,11 +180,14 @@ public class MultiPlayerViewModel {
     
     private void checkWinner()
     {
+        
+        
+        
        // rows checker
        for (int row = 0; row < 3; row++) {
+           int willWin = 2 ;
     if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != 0 ) {
        setWinnerName(row, 0);
- 
     }
   }
         // columns checker
@@ -189,6 +206,10 @@ public class MultiPlayerViewModel {
      if (board[0][2] == board[1][1] && board[1][1] == board[2][0]&& board[0][2] != 0) {
          setWinnerName(0, 2);
     }
+     
+     if(numberOfPlayedMoves.get() == 9 && winnerName.get().isEmpty()){
+     winnerName.set("draw");
+     }
         }
     
     private void setWinnerName(int row , int column)
@@ -197,7 +218,7 @@ public class MultiPlayerViewModel {
      {
       winnerName.set(playerOneName.get());
       playerOneScore.set(playerOneScore.get()+1);
-     }else
+     }else 
      {
         winnerName.set(playerTwoName.get());
         playerTwoScore.set(playerTwoScore.get()+1);
@@ -222,9 +243,11 @@ public class MultiPlayerViewModel {
                for(int column = 0 ; column < 3 ; column++)
                {
                  board[row][column] = 0;
+                    
                }
            }
           winnerName.setValue("");
+          numberOfPlayedMoves.set(0);
          
     }
     

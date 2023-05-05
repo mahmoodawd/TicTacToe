@@ -4,10 +4,10 @@ import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewModel;
 import tictactoe.authentication.registration.RegistrationViewModel;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
-import tictactoe.main_menu.presentation.MainViewController;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
+import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
 
@@ -30,7 +30,7 @@ public class ViewModelFactory {
          
             }
             
-            case ONLINEVIEWCONTROLLER:{
+            case ONLINEMULTIPLAYERVIEWCONTROLLER:{
                 return new OnlineViewModel();
             }
             
@@ -54,19 +54,30 @@ public class ViewModelFactory {
             }
             
             
-             case MULTIVIEWCONTROLLER:{
-                    return new MultiPlayerViewModel();
+             case MULTIMODEVIEWCONTROLLER:{
+                    return new MultiModeViewModel();
                 
             }
              
              
-              case SINGLEVIEWCONTROLLER:{
+           
+            
+              case SINGLEMODEVIEWCONTROLLER:{
+                    return new SingleModeViewModel();
+                
+            }
+              
+                 case SINGLEPLAYERVIEWCONTROLLER:{
                     return new SinglePlayerViewModel();
                 
             }
-            
-            
-            //todo add your own controller name in enum class and add your case here
+                 
+                 
+                    case MULTIPLAYERVIEWCONTROLLER:{
+                    return new MultiPlayerViewModel();
+                
+            }
+            //todo add your own controller name in enum class and add your case here            //todo add your own controller name in enum class and add your case here
             
             
             default:{
