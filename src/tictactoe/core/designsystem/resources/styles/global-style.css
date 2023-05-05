@@ -15,7 +15,6 @@
 #pane{
     -fx-border-width: 5px;
     -fx-border-radius: 10px;
-    -fx-border-color: -light-red;
     -fx-background-color: -white;
     -fx-background-image: url(../images/app_background.png);
     -fx-background-repeat: stretch;
