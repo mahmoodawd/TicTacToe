@@ -22,6 +22,7 @@ import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogControll
 import tictactoe.online_multi_player.presentation.winner_dialog.WinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
+import winnerDialog.SingleWinnerDialogController;
 
 
 public class ViewControllerFactory {
@@ -86,7 +87,9 @@ public class ViewControllerFactory {
                 return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
             }  
             
-          
+          case  SINGLEWINNERDIALOGCONTROLLER:{
+                return new SingleWinnerDialogController();
+            }  
             
             
             //todo add your own controller name in enum class and add your case here
