@@ -11,5 +11,6 @@ package tictactoe.online_multi_player.presentation;
  */
 public enum Turn {
     FIRSTPLAYER,
-    SECONDPLAYER
+    SECONDPLAYER,
+     COMPUTERPLAYER
 }

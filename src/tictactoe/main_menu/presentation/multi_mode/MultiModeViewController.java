@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -281,7 +283,7 @@ this.viewModel=viewModel;
         multiImage.setFitWidth(84.0);
         multiImage.setPickOnBounds(true);
         multiImage.setPreserveRatio(true);
-          imageFrame.setImage(new Image(ImagesUri.retry));
+          imageFrame.setImage(new Image(ImagesUri.back));
          multiImage.setImage(new Image(ImagesUri.retry));
        // multiImage.setImage(new Image(getClass().getResource("../../../../Multi_player.jpg").toExternalForm()));
         GridPane.setMargin(multiImage, new Insets(0.0));
@@ -325,7 +327,53 @@ this.viewModel=viewModel;
         
         
         
-        
+  
+
+
+// Set up the submit button action
+startBtn.setOnAction(event -> {
+    String name = usernameField.getText();
+    if (name.isEmpty()) {
+        // If the name field is empty, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Please enter your name.");
+        alert.showAndWait();
+    } else if (name.length() < 5) {
+        // If the name is less than 5 characters long, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Name must be at least 5 characters long.");
+        alert.showAndWait();
+    } else {
+        // If the name is valid, do something with it
+        System.out.println("Hello, " + name + "!");
+    }
+}); 
+
+startBtn.setOnAction(event -> {
+    String name = textField2.getText();
+    if (name.isEmpty()) {
+        // If the name field is empty, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Please enter your name.");
+        alert.showAndWait();
+    } else if (name.length() < 5) {
+        // If the name is less than 5 characters long, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Name must be at least 5 characters long.");
+        alert.showAndWait();
+    } else {
+        // If the name is valid, do something with it
+        System.out.println("Hello, " + name + "!");
+    }
+}); 
+
+
+
+
+
+// Add the name field and submit button to your UI layout
+// ...
+
         
         
         

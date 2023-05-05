@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -371,7 +373,24 @@ SingleModeViewModel viewModel= null;
 //parentContainer.getChildren().add(backButton);
 
         
-        
+        startBtn.setOnAction(event -> {
+    String name = usernameField.getText();
+    if (name.isEmpty()) {
+        // If the name field is empty, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Please enter your name.");
+        alert.showAndWait();
+    } else if (name.length() < 5) {
+        // If the name is less than 5 characters long, show an error message
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Name must be at least 5 characters long.");
+        alert.showAndWait();
+    } else {
+        // If the name is valid, do something with it
+        System.out.println("Hello, " + name + "!");
+    }
+}); 
+
         
 
     }
