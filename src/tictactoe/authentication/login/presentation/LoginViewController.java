@@ -300,7 +300,6 @@ public class LoginViewController extends GridPane {
             }
             else
                 invalidUsernameWarning.setVisible(true);
-            Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
         } catch (IOException ex) {
             
         }
