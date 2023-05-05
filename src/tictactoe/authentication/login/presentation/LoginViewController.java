@@ -292,18 +292,15 @@ public class LoginViewController extends GridPane {
         invalidUsernameWarning.setVisible(false);
         invalidPasswordWarning.setVisible(false);
         try {
-<<<<<<< HEAD
             if(viewModel.validateUsername()){
                 if(viewModel.validatePassword())
-                Navigation.openPage(ViewController.ONLINEVIEWCONTROLLER, loginBtn);
+                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
                 else
                     invalidPasswordWarning.setVisible(true);
             }
             else
                 invalidUsernameWarning.setVisible(true);
-=======
             Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
->>>>>>> 066004ce4f991e49d4d00e85dbfdd2750133ca79
         } catch (IOException ex) {
             
         }
