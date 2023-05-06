@@ -2,7 +2,7 @@ package tictactoe.core;
 
 import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewModel;
-import tictactoe.authentication.registration.RegistrationViewModel;
+import tictactoe.authentication.registration.presentation.RegistrationViewModel;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.online_multi_player.presentation.OnlineViewModel;
 import tictactoe.main_menu.presentation.MainViewModel;

@@ -5,8 +5,8 @@ package tictactoe.core;
 import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewController;
 import tictactoe.authentication.login.presentation.LoginViewModel;
-import tictactoe.authentication.registration.RegistrationViewController;
-import tictactoe.authentication.registration.RegistrationViewModel;
+import tictactoe.authentication.registration.presentation.RegistrationViewController;
+import tictactoe.authentication.registration.presentation.RegistrationViewModel;
 import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
@@ -22,7 +22,8 @@ import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogControll
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
-import winnerDialog.SingleWinnerDialogController;
+import tictactoe.single_player.presentation.winnerDialog.SingleWinnerDialogController;
+
 
 
 public class ViewControllerFactory {
