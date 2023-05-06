@@ -22,7 +22,7 @@ import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 
 public class LoginViewController extends GridPane {
 
@@ -347,7 +347,7 @@ public class LoginViewController extends GridPane {
               try {
                   Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
               } catch (IOException ex) {
-                  Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
               }
         });
     }
