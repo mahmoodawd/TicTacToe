@@ -1,8 +1,6 @@
 package tictactoe.online_multi_player.presentation.winner_dialog;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -358,12 +356,17 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         getChildren().add(watchMovesButton);
         
         
-        String winnerName  = PassData.getInstance().winnerName.get();
+        String winnerName  = PassData.winnerName.get();
         winnerNameTextView.setText(winnerName);
         mainMenuButton.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 15px;");
          replayButton.setStyle("-fx-background-color: "+ColorPalette.lightRed+"; -fx-background-radius: 15px;");
          watchMovesButton.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 15px;");
-         if(winnerName != "draw"){
+         if(!PassData.showWatchMoves.get())
+         {
+         
+          watchMovesButton.setVisible(false);
+         }
+         if(!"draw".equals(winnerName)){
          iconLeftImageView.setImage(new Image(ImagesUri.trophy));
            iconrightImageView.setImage(new Image(ImagesUri.trophy));
     }

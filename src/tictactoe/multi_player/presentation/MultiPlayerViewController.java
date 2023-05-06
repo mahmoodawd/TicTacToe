@@ -26,7 +26,7 @@ import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 
 public  class MultiPlayerViewController extends BorderPane {
@@ -623,7 +623,7 @@ public  class MultiPlayerViewController extends BorderPane {
               try {
                   Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
               } catch (IOException ex) {
-                  Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
               }
              
     }); 
@@ -692,16 +692,13 @@ public  class MultiPlayerViewController extends BorderPane {
        });
        
        
-      viewModel.getWinnerName().addListener(new ChangeListener<String>() {
-           @Override
-           public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-             
-               if(!newValue.isEmpty()){
-                 
-                   PassData.getInstance().winnerName.set(newValue);
-                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-                   
-               }}
+      viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+          if(!newValue.isEmpty()){
+              
+              PassData.getInstance().winnerName.set(newValue);
+              Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
+              
+          }
        });
       
       
@@ -733,7 +730,7 @@ public  class MultiPlayerViewController extends BorderPane {
            
            } 
                } catch (IOException ex) {
-                   Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                   Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
                }
           
        });
