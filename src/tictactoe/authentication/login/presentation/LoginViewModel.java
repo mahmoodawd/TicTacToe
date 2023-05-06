@@ -11,6 +11,10 @@ public class LoginViewModel {
     SimpleStringProperty username = new SimpleStringProperty();
     SimpleStringProperty password = new SimpleStringProperty();
     
+    public LoginViewModel(){
+        username.set("");
+        password.set("");
+    }
     public SimpleStringProperty getUsername() {
         return username;
     }

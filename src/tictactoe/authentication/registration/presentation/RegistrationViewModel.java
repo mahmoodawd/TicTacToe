@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.authentication.registration;
+package tictactoe.authentication.registration.presentation;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -67,16 +69,32 @@ public class RegistrationViewModel {
     boolean isPasswordLengthSufficient(){
         return(password.get().length()>5);
     }
-    boolean containsNumber(){
+    protected boolean containsNumber(){
         boolean result = false;
-        if (password.get().matches("/\\d/")){
-            containsNumberMsg ="";
+        Pattern pattern = Pattern.compile(".*\\d.*");
+        Matcher matcher = pattern.matcher(password.get());
+        if(matcher.find()){
+            containsNumberMsg = "";
             result = true;
         }
         else
             containsNumberMsg = "Password must contain at least 1 number !";
         return result;
     }
+    /*boolean containsNumber(){
+        boolean result = false;
+        char[] chars = password.get().toCharArray();
+        for(char c: chars){
+            if(Character.isDigit(c)){
+                containsNumberMsg = "";
+                result = true;
+                break;
+            }
+            else
+                containsNumberMsg = "Password must contain at least 1 number !";
+        }
+        return result;
+    }*/
     boolean contatinsUpperCase(){
         boolean result = false;
         for(int i=0; i<password.get().length(); i++){
@@ -145,7 +163,7 @@ public class RegistrationViewModel {
         containsSpecialCharacter();
         doesPasswordMatch();
         concatinateValidatePasswordMsg();
-        return isPasswordLengthSufficient()&& contatinsUpperCase() && contatinsLowerCase() && containsSpecialCharacter();
+        return isPasswordLengthSufficient()&& contatinsUpperCase() && contatinsLowerCase() && containsSpecialCharacter() && containsNumber();
     }
     protected boolean enableRegisterBtn(){
         return isLengthEqual()&&!username.get().isEmpty()&&!password.get().isEmpty()&&!confirmPassword.get().isEmpty()&&isUsernameLengthSufficient()
