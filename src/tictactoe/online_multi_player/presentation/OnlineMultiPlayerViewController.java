@@ -1,22 +1,10 @@
 package tictactoe.online_multi_player.presentation;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ArrayChangeListener;
-import javafx.collections.ObservableIntegerArray;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Separator;
 import javafx.scene.effect.Blend;
 import javafx.scene.image.Image;
@@ -25,20 +13,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
-import tictactoe.online_multi_player.presentation.menu_dialog.DialogBox;
-import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
 
-public  class OnlineViewController extends BorderPane {
+public  class OnlineMultiPlayerViewController extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -104,8 +88,8 @@ public  class OnlineViewController extends BorderPane {
     protected final Text playerTwoScoreTextView;
     private ImageView imageViews[][] = new ImageView[3][3];
 
-      OnlineViewModel viewModel ;
-    public OnlineViewController(OnlineViewModel viewModel) {
+      OnlineMultiPlayerViewModel viewModel ;
+    public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
         this.viewModel = viewModel;
       
         gridPane = new GridPane();
@@ -640,7 +624,7 @@ public  class OnlineViewController extends BorderPane {
               try {
                   Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
               } catch (IOException ex) {
-                  Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
               }
              
     }); 
@@ -723,7 +707,7 @@ public  class OnlineViewController extends BorderPane {
            try {
                if(!newValue.isEmpty()) Navigation.openPage(ViewController.WINNERDIALOGCNTROLLER, null);
            } catch (IOException ex) {
-               Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
            }
        });
       
@@ -742,7 +726,7 @@ public  class OnlineViewController extends BorderPane {
                case "replay":{
                  
                    resetBoard();
-                   viewModel.swapNames();
+                   viewModel.swapSymbols();
                      break;
                }
                
@@ -755,7 +739,7 @@ public  class OnlineViewController extends BorderPane {
            
            } 
                } catch (IOException ex) {
-                   Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                   Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
                }
           
        });

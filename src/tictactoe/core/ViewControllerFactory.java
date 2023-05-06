@@ -16,13 +16,13 @@ import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.multi_player.presentation.MultiPlayerViewController;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
-import tictactoe.online_multi_player.presentation.OnlineViewModel;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewModel;
 import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
-import winnerDialog.SingleWinnerDialogController;
+import tictactoe.single_player.presentation.winnerDialog.SingleWinnerDialogController;
 
 
 public class ViewControllerFactory {
@@ -41,7 +41,7 @@ public class ViewControllerFactory {
             }
             
             case ONLINEMULTIPLAYERVIEWCONTROLLER:{
-                return new OnlineViewController((OnlineViewModel)viewModel);
+                return new OnlineMultiPlayerViewController((OnlineMultiPlayerViewModel)viewModel);
             }
             
             

@@ -1,10 +1,12 @@
 package tictactoe.online_multi_player.presentation;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import tictactoe.core.Remote;
 
-public class OnlineViewModel {
-    
-    private int  board [][] =  new int [3][3];
+public class OnlineMultiPlayerViewModel {
+    private Remote remote ;
+   private int  board [][] =  new int [3][3];
    private SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
    private SimpleStringProperty winnerName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneSymbol = new SimpleIntegerProperty();
@@ -14,19 +16,26 @@ public class OnlineViewModel {
    private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty();
-   
+   private SimpleIntegerProperty numberOfPlayedMoves = new SimpleIntegerProperty();
    
    //todo connect the server and everything will work perfectlly
     
-    public OnlineViewModel()
+    public OnlineMultiPlayerViewModel(Remote remote)
     {
-   
+       this.remote = remote;
        boardNotifier.set(1);
        winnerName.set("");
        turnNotifier.set(1);
  
+       
+       
+       //listeners to the remote class
+       listenToMoveResponse();
+       listenToGameResult();
   
     }
+
+    
     
     
     public SimpleIntegerProperty getTurnNotifier()
@@ -142,6 +151,7 @@ public class OnlineViewModel {
         if(turnNotifier.get() == 1)
         {
            setXorO(row , column ,playerOneSymbol.get());
+           sendMoveRequest(row, column);
            turnNotifier.set(2);
         }else
         {
@@ -166,6 +176,7 @@ public class OnlineViewModel {
     private void setXorO(int row, int column, int playerSymbol)
     {
               board[row][column]= playerSymbol;
+                numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1);
     }
     
     private void checkWinner()
@@ -193,6 +204,13 @@ public class OnlineViewModel {
      if (board[0][2] == board[1][1] && board[1][1] == board[2][0]&& board[0][2] != 0) {
          setWinnerName(0, 2);
     }
+     
+     
+     
+     if(numberOfPlayedMoves.get() == 9 && winnerName.get().isEmpty()){
+     winnerName.set("draw");
+     sendWinnerRequest();
+     }
         }
     
     private void setWinnerName(int row , int column)
@@ -206,13 +224,15 @@ public class OnlineViewModel {
         winnerName.set(playerTwoName.get());
         playerTwoScore.set(playerTwoScore.get()+1);
      }
+      sendWinnerRequest();
+    
     }
     
 
     
     
     
-    public void swapNames()
+    public void swapSymbols()
     {
         int temp = playerOneSymbol.get();
         playerOneSymbol.set(playerTwoSymbol.get());
@@ -231,6 +251,61 @@ public class OnlineViewModel {
           winnerName.setValue("");
          
     }
+    
+    
+    
+    private void sendMoveRequest(int row , int column)
+    {
+        remote.sendGameMoveRequest(playerTwoName.get(), row, column);
+
     }
+    
+    
+    private void sendWinnerRequest()
+    {
+    
+          if(winnerName.get().equals(playerOneName.get()) 
+              || ("draw".equals(winnerName.get())))
+      {
+         
+          remote.sendGameResultRequest(playerOneName.get()
+                  , playerTwoName.get(), winnerName.get());
+      }
+    
+    
+    }
+    
+    
+    private void listenToMoveResponse()
+    {
+        remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            
+            String []splitedResponse = newValue.split(" ");
+            setBoard(Integer.valueOf(splitedResponse[1]), Integer.valueOf(splitedResponse[2]));
+            
+       });
+    
+    }
+    
+    
+    
+    private void listenToGameResult()
+    {
+    
+     remote.getGameResultResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            
+              winnerName.set(newValue);
+            
+       });
+    
+    }
+    
+    
+    
+    
+ }
+
+
+
    
 

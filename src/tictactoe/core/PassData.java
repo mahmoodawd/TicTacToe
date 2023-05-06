@@ -11,7 +11,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class PassData {
     
     private static PassData instance  = null;
-     public static SimpleStringProperty winnerName = new SimpleStringProperty();
+    public static SimpleStringProperty winnerName = new SimpleStringProperty();
+    public static SimpleBooleanProperty showWatchMoves = new SimpleBooleanProperty();
     public static SimpleStringProperty dialogReturn = new SimpleStringProperty();
     private PassData()
     {
