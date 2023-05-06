@@ -1,6 +1,8 @@
-package tictactoe.authentication.registration;
+package tictactoe.authentication.registration.presentation;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -19,6 +22,7 @@ import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
+import tictactoe.online_multi_player.presentation.OnlineViewController;
 
 public class RegistrationViewController extends GridPane {
 
@@ -190,32 +194,32 @@ public class RegistrationViewController extends GridPane {
         registrationTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         registrationTxt.setFont(Typography.headerBoldFont);
 
-        GridPane.setHalignment(usernameTxt, javafx.geometry.HPos.CENTER);
+        GridPane.setHalignment(usernameTxt, javafx.geometry.HPos.LEFT);
         GridPane.setRowIndex(usernameTxt, 4);
         usernameTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         usernameTxt.setStrokeWidth(0.0);
         usernameTxt.setText("username");
         usernameTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         usernameTxt.setFont(Typography.subtitleOneRegularFont);
-        GridPane.setMargin(usernameTxt, new Insets(0.0, 125, 5, 0.0));
+        GridPane.setMargin(usernameTxt, new Insets(0.0, 0.0, 5, 195.0));
 
-        GridPane.setHalignment(passwordTxt, javafx.geometry.HPos.CENTER);
+        GridPane.setHalignment(passwordTxt, javafx.geometry.HPos.LEFT);
         GridPane.setRowIndex(passwordTxt, 7);
         passwordTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         passwordTxt.setStrokeWidth(0.0);
         passwordTxt.setText("password");
         passwordTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         passwordTxt.setFont(Typography.subtitleOneRegularFont);
-        GridPane.setMargin(passwordTxt, new Insets(0.0, 125, 5, 0.0));
+        GridPane.setMargin(passwordTxt, new Insets(0.0, 0.0, 5, 195.0));
 
-        GridPane.setHalignment(confirmPasswordTxt, javafx.geometry.HPos.CENTER);
+        GridPane.setHalignment(confirmPasswordTxt, javafx.geometry.HPos.LEFT);
         GridPane.setRowIndex(confirmPasswordTxt, 10);
         confirmPasswordTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         confirmPasswordTxt.setStrokeWidth(0.0);
         confirmPasswordTxt.setText("confirm password");
         confirmPasswordTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         confirmPasswordTxt.setFont(Typography.subtitleOneRegularFont);
-        GridPane.setMargin(confirmPasswordTxt, new Insets(0.0, 65, 5, 0.0));
+        GridPane.setMargin(confirmPasswordTxt, new Insets(0.0, 0.0, 5, 195.0));
 
         GridPane.setHalignment(registerBtn, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(registerBtn, 13);
@@ -294,10 +298,12 @@ public class RegistrationViewController extends GridPane {
         text.setStrokeWidth(0.0);
         text.setText("Already have an account ?");
         text.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
+        GridPane.setMargin(text, new Insets(20.0, 85.0, 0.0, 0.0));
 
-        GridPane.setColumnIndex(hyperlink, 2);
+        GridPane.setColumnIndex(hyperlink, 1);
         hyperlink.setText("Login");
         hyperlink.setTextFill(javafx.scene.paint.Color.valueOf("#0c5eeb"));
+        GridPane.setMargin(hyperlink, new Insets(20.0, 0.0, 0.0, 110.0));
 
         GridPane.setRowIndex(confirmPasswordField, 11);
         GridPane.setMargin(confirmPasswordField, new Insets(0.0, 190.0, 0.0, 190.0));
@@ -307,6 +313,7 @@ public class RegistrationViewController extends GridPane {
         passwordField.setPromptText("e.g. Sample_Sample947");
         GridPane.setMargin(passwordField, new Insets(0.0, 190.0, 0.0, 190.0));
         passwordField.setStyle("-fx-background-radius: 15px;");
+        
 
         getColumnConstraints().add(columnConstraints);
         getRowConstraints().add(rowConstraints);
@@ -348,31 +355,35 @@ public class RegistrationViewController extends GridPane {
         registerBtn.setDisable(true);
         uiObservers();
         viewModelObservers();
+        navigateBackIcon();
+        navigateHyperLink();
         navigate();
-}
+    }
+    
+    
     private void navigate(){
         registerBtn.setOnAction((event) -> {
-
         try {
+            invalidPasswordTxt.setText(viewModel.getValidatePasswordMsg().toString());
             invalidUsernameTxt.setVisible(false);
             invalidPasswordTxt.setVisible(false);
             confirmationErrorTxt.setVisible(false);
             if(viewModel.validateUsername()){
                 if(viewModel.validatePassword())
-                    if(viewModel.doesPasswordMatch()){
+                    if(viewModel.doesPasswordMatch())
                         Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
-                    }
-                    else
+                    else{
                         confirmationErrorTxt.setVisible(true);
-                else{
-                invalidPasswordTxt.setVisible(true);
-            }
+                    }
+                else{    
+                    invalidPasswordTxt.setVisible(true);
+                }
             }
             else{
                 invalidUsernameTxt.setVisible(true);
             }
-        } catch (IOException ex) {
-            
+        }catch (IOException e) {
+            e.printStackTrace();
         }
         }); 
     }
@@ -387,6 +398,7 @@ public class RegistrationViewController extends GridPane {
             viewModel.setConfirmPassword(newValue);
         });
     }
+    
     private void viewModelObservers(){
         viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             registerBtn.setDisable(!viewModel.enableRegisterBtn());
@@ -399,4 +411,23 @@ public class RegistrationViewController extends GridPane {
         });
     }
     
+    private void navigateHyperLink(){
+        hyperlink.setOnAction(event -> {
+            try {
+                Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    
+    private void navigateBackIcon(){
+        imageFrame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
+              try {
+                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+              } catch (IOException ex) {
+                  Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+              }
+        });
+    }
 }
