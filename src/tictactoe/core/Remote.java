@@ -35,6 +35,7 @@ public class Remote extends Thread{
             
              while(true)
              {
+                 
                String input = listener.readLine();
                switch(input.split(" ")[0])
                {
