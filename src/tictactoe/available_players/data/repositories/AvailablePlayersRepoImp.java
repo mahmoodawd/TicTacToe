@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.available_players.data;
+package tictactoe.available_players.data.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,25 +25,30 @@ public class AvailablePlayersRepoImp implements AvailablePlayersRepoInterface {
     }
 
     @Override
-    public ObservableList<Player> getAvailablePlayers() {
-        fetchPlayersList();
-        ObservableList<Player> players = FXCollections.observableArrayList();
-        players.setAll(availablePlayers);
+    public List<Player> getAvailablePlayers() {        
+        fetchPlayersListFromServer();
+        List<Player> players = new ArrayList();
+        players.addAll(availablePlayers);
         return players;
     }
 
-    public void fetchPlayersList() {
+    private void fetchPlayersListFromServer() {
         //pretend to get players list from server
 
         for (int i = 0; i < 100; i++) {
             availablePlayers.add(new Player("Player " + i));
         }
     }
-    
+    @Override
     public boolean sendRequest(Player requester, Player receiver){
         //Send playing request to the receiver
         System.out.println(receiver.getName());
         return false ;
+    }
+    @Override
+    public boolean listenForRequest(){
+        boolean result = true; //should be retrieved from the server
+        return result;
     }
     }
 
