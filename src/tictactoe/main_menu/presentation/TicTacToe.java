@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoe.core.ViewController;
 import tictactoe.core.ViewControllerFactory;
+import tictactoe.core.ViewModelFactory;
 
 public class TicTacToe extends Application {
     
@@ -15,7 +16,7 @@ public class TicTacToe extends Application {
         
               new Thread(() -> {
                   
-                       new Remote();
+                    ViewModelFactory.remote=   new Remote();
                   
                }).start();
     

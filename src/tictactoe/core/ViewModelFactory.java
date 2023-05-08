@@ -13,7 +13,7 @@ import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
 public class ViewModelFactory {
         
-   // private static Remote remote  = new Remote();
+  public static Remote remote;
     public static Object getViewModel(ViewController viewController)
     {
         
