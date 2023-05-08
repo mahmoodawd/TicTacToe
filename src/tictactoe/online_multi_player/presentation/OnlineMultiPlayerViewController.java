@@ -3,6 +3,7 @@ package tictactoe.online_multi_player.presentation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Separator;
@@ -21,6 +22,7 @@ import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.multi_player.presentation.MultiPlayerViewController;
 
 public  class OnlineMultiPlayerViewController extends BorderPane {
 
@@ -597,8 +599,8 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
             imageViews[2][1] = eightPlaceImageView;
             imageViews[2][2] = ninethPlaceImageView;
      
-        
-        boardSetters();
+      resetBoard(true);
+      boardSetters();
       properitiesObservers();
       init();
 
@@ -607,8 +609,6 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     
     private void init()
     {
-    
-     
         viewModel.setPlayerOneSymbol(1);
           viewModel.setPlayerTwoSymbol(2);
            viewModel.setPlayerOneName("ahmed");
@@ -725,7 +725,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
                
                case "replay":{
                  
-                   resetBoard();
+                   resetBoard(true);
                    viewModel.swapSymbols();
                      break;
                }
@@ -733,7 +733,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
                
                case "watch moves":
                {
-                  
+                  animateMoves();
                  break;
                }
            
@@ -823,17 +823,64 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     }
     
     
-    private void resetBoard()
+     private void animateMoves()
     {
+      int [][] board = viewModel.getBoard();
+                      resetBoard(false);
+      new Thread(() -> {
+          viewModel.getWatchMovesQueue().forEach((pair) -> {
+                final ImageView view = imageViews[pair.getKey()][pair.getValue()];
+                              final int symbol =  board[pair.getKey()][pair.getValue()];
+                        
+                              if(symbol != 0){
+                                  
+                                  Platform.runLater(() -> {
+                                      setImage(view,symbol , ImagesUri.xWithBackground,ImagesUri.oWithBackground);
+                                  });
+                                  
+                                  try {
+                                      Thread.sleep(1000);
+                                  } catch (InterruptedException ex) {
+                                      Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                  }
+                              }
+          });
+         
+                       Platform.runLater(() -> {
+                           
+                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
+                       });
+                   }).start();
+    
+    }
+     
+     
+     
+      private void setImage(ImageView imageView, int symbol,String imageUriOne,String imageUriTwo)
+    {
+    
+     if(symbol == 1)
+             {
+                 imageView.setImage(new Image(imageUriOne));
+             }else{
+                imageView.setImage(new Image(imageUriTwo));
+             }
+    
+    }
+     
+     
+     
+         private void resetBoard(boolean reset)
+    {
+          if(reset)viewModel.resetBorad();
                for(int row = 0 ; row < 3 ; row++){
                for(int column = 0 ; column < 3 ; column++)
                {
+             
                    ImageView imageView = imageViews[row][column];
                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
                }
            }
-               
-               viewModel.resetBorad();
-    
     }
+   
 }

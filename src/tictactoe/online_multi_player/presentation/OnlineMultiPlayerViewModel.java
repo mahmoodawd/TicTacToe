@@ -1,7 +1,10 @@
 package tictactoe.online_multi_player.presentation;
+import java.util.LinkedList;
+import java.util.Queue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.util.Pair;
 import tictactoe.core.Remote;
 
 public class OnlineMultiPlayerViewModel {
@@ -17,12 +20,20 @@ public class OnlineMultiPlayerViewModel {
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty();
    private SimpleIntegerProperty numberOfPlayedMoves = new SimpleIntegerProperty();
+   private Queue<Pair<Integer,Integer>> watchMovesQueue = new LinkedList();
+
+    public Queue<Pair<Integer, Integer>> getWatchMovesQueue() {
+        return watchMovesQueue;
+    }
+
    
    //todo connect the server and everything will work perfectlly
     
     public OnlineMultiPlayerViewModel(Remote remote)
     {
-       this.remote = remote;
+        
+        
+     this.remote = remote;
        boardNotifier.set(1);
        winnerName.set("");
        turnNotifier.set(1);
@@ -278,12 +289,15 @@ public class OnlineMultiPlayerViewModel {
     
     private void listenToMoveResponse()
     {
-        remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+       
+         remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             
             String []splitedResponse = newValue.split(" ");
             setBoard(Integer.valueOf(splitedResponse[1]), Integer.valueOf(splitedResponse[2]));
             
        });
+        
+       
     
     }
     

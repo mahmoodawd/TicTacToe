@@ -12,15 +12,15 @@ import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
 
 public class ViewModelFactory {
-        
+
+  
+    
+    
+    
  
     public static Object getViewModel(ViewController viewController)
     {
-        
-        
-        
-    
-        
+     
         switch(viewController)
         {
         
@@ -31,12 +31,14 @@ public class ViewModelFactory {
             }
             
             case ONLINEMULTIPLAYERVIEWCONTROLLER:{
-                return new OnlineMultiPlayerViewModel(Remote.getInstance());
+                
+                return new OnlineMultiPlayerViewModel(Remote.getIntance());
             }
             
             
              case MENUDIALOGCONTROLLER:{
-                return new OnlineMultiPlayerViewModel(Remote.getInstance());
+                
+                return new OnlineMultiPlayerViewModel(Remote.getIntance());
             }
              
              

@@ -12,23 +12,17 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
+import static tictactoe.core.LocalAccessLayer.instance;
 
 public class Remote extends Thread{
 
-  private static Remote instance  ;
-  private Socket server;
-  private DataInputStream listener; 
-  private PrintStream sender ;
-  private SimpleStringProperty gameMoveResponse = new SimpleStringProperty();
-  private SimpleStringProperty gameResultResponse = new SimpleStringProperty();
-
-   
-  
     
-    private Remote()
-    {
-    
-        try {
+    private static Remote instance;
+    @Override
+    public void run() {
+        super.run();
+        
+           try {
             server = new Socket("192.168.1.21",4004);
             listener = new DataInputStream(server.getInputStream());
             sender = new PrintStream(server.getOutputStream());
@@ -75,6 +69,17 @@ public class Remote extends Thread{
         }
         
     }
+
+  private Socket server;
+  private DataInputStream listener; 
+  private PrintStream sender ;
+  private SimpleStringProperty gameMoveResponse = new SimpleStringProperty();
+  private SimpleStringProperty gameResultResponse = new SimpleStringProperty();
+
+   
+  
+    
+    
     
      public SimpleStringProperty getGameResultResponse() {
         return gameResultResponse;
@@ -88,18 +93,7 @@ public class Remote extends Thread{
     }
     
     
-    
-     public static synchronized Remote getInstance()
-    {
-  
-     if(instance == null){
-        instance = new Remote();
-        }
-     
-    
-    
-    return instance;
-    }
+
 
    
     
@@ -131,6 +125,22 @@ public class Remote extends Thread{
     {
        gameResultResponse.set(" ");
        gameResultResponse.set(response);
+    }
+    
+    
+    public static synchronized Remote getIntance()
+    {
+    
+        if(instance == null)
+        {
+        
+        
+            instance = new Remote();
+        
+        
+        }
+    
+    return instance;
     }
     
     

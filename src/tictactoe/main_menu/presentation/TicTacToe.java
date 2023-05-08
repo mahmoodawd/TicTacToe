@@ -14,13 +14,11 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-              new Thread(() -> {
+           
                   
-                   Remote.getInstance();
-                  
-               }).start();
-    
-        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.MULTIPLAYERVIEWCONTROLLER);
+               
+
+        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER);
         Scene scene = new Scene(root);
         root.setStyle("-fx-background-color: White;"); 
      

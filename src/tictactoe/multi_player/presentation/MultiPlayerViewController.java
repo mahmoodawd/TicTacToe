@@ -715,7 +715,9 @@ public  class MultiPlayerViewController extends BorderPane {
                
                case "replay":{
                    resetBoard(true);
-                   viewModel.swapNames();
+                   
+                   viewModel.swapSymbols();
+                   
                      break;
                }
                
@@ -803,9 +805,6 @@ public  class MultiPlayerViewController extends BorderPane {
                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
                }
            }
-               
-             
-    
     }
     
     private void setImage(ImageView imageView, int symbol,String imageUriOne,String imageUriTwo)
@@ -825,11 +824,9 @@ public  class MultiPlayerViewController extends BorderPane {
       int [][] board = viewModel.getBoard();
                       resetBoard(false);
       new Thread(() -> {
-                      for(int row = 0 ; row < 3 ;row++)
-                      {
-                          for(int column = 0 ; column < 3 ;column++){
-                              final ImageView view = imageViews[row][column];
-                              final int symbol =  board[row][column];
+          viewModel.getWatchMovesQueue().forEach((pair) -> {
+                final ImageView view = imageViews[pair.getKey()][pair.getValue()];
+                              final int symbol =  board[pair.getKey()][pair.getValue()];
                         
                               if(symbol != 0){
                                   
@@ -843,10 +840,8 @@ public  class MultiPlayerViewController extends BorderPane {
                                       Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
                                   }
                               }
-                              
-                          }
-                          
-                      }
+          });
+         
                        Platform.runLater(() -> {
                            
                    Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
