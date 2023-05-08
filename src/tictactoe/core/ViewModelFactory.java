@@ -13,7 +13,7 @@ import tictactoe.single_player.presentation.SinglePlayerViewModel;
 
 public class ViewModelFactory {
         
-    private static Remote remote  = new Remote();
+   // private static Remote remote  = new Remote();
     public static Object getViewModel(ViewController viewController)
     {
         
@@ -31,12 +31,12 @@ public class ViewModelFactory {
             }
             
             case ONLINEMULTIPLAYERVIEWCONTROLLER:{
-                return new OnlineMultiPlayerViewModel(remote);
+                return new OnlineMultiPlayerViewModel();
             }
             
             
              case MENUDIALOGCONTROLLER:{
-                return new OnlineMultiPlayerViewModel(remote);
+                return new OnlineMultiPlayerViewModel();
             }
              
              

@@ -45,6 +45,11 @@ public class AvailablePlayersRepoImp implements AvailablePlayersRepoInterface {
         System.out.println(receiver.getName());
         return false ;
     }
+
+    @Override
+    public boolean listenForRequest() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     }
 
 
