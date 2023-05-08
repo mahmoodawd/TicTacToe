@@ -20,9 +20,9 @@ public class OnlineMultiPlayerViewModel {
    
    //todo connect the server and everything will work perfectlly
     
-    public OnlineMultiPlayerViewModel()
+    public OnlineMultiPlayerViewModel(Remote remote)
     {
-       //this.remote = remote;
+       this.remote = remote;
        boardNotifier.set(1);
        winnerName.set("");
        turnNotifier.set(1);

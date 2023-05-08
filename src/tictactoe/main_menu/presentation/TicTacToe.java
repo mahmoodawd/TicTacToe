@@ -16,7 +16,7 @@ public class TicTacToe extends Application {
         
               new Thread(() -> {
                   
-                    ViewModelFactory.remote=   new Remote();
+                   Remote.getInstance();
                   
                }).start();
     

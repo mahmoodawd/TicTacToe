@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Remote extends Thread{
 
+  private static Remote instance  ;
   private Socket server;
   private DataInputStream listener; 
   private PrintStream sender ;
@@ -24,7 +25,7 @@ public class Remote extends Thread{
    
   
     
-    public Remote()
+    private Remote()
     {
     
         try {
@@ -84,6 +85,20 @@ public class Remote extends Thread{
     
     public SimpleStringProperty getGameMoveResponse() {
         return gameMoveResponse;
+    }
+    
+    
+    
+     public static synchronized Remote getInstance()
+    {
+  
+     if(instance == null){
+        instance = new Remote();
+        }
+     
+    
+    
+    return instance;
     }
 
    
