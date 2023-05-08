@@ -1,26 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tictactoe.multi_player.presentation;
-
+package tictactoe.online_multi_player.presentation;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import tictactoe.online_multi_player.presentation.Turn;
+import javafx.beans.value.ObservableValue;
+import tictactoe.core.Remote;
 
-/**
- *
- * @author ASUS
- */
-public class MultiPlayerViewModel {
-
-  
-    
-    
-    
-    private int  board [][] =  new int [3][3];
-    SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
+public class OnlineMultiPlayerViewModel {
+    private Remote remote ;
+   private int  board [][] =  new int [3][3];
+   private SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
    private SimpleStringProperty winnerName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneSymbol = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoSymbol = new SimpleIntegerProperty();
@@ -28,33 +15,51 @@ public class MultiPlayerViewModel {
    private SimpleStringProperty playerTwoName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
+   private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty();
    private SimpleIntegerProperty numberOfPlayedMoves = new SimpleIntegerProperty();
-    Turn playerTurn = Turn.FIRSTPLAYER;
-    
-    public MultiPlayerViewModel()
-    {
    
+   //todo connect the server and everything will work perfectlly
+    
+    public OnlineMultiPlayerViewModel(Remote remote)
+    {
+       this.remote = remote;
        boardNotifier.set(1);
        winnerName.set("");
+       turnNotifier.set(1);
  
+       
+       
+       //listeners to the remote class
+       listenToMoveResponse();
+       listenToGameResult();
   
+    }
+
+    
+    
+    
+    public SimpleIntegerProperty getTurnNotifier()
+    {
+    
+        return turnNotifier;
+    
+    }
+    
+    
+    
+    
+    public SimpleIntegerProperty getBoardNotifier()
+    {
+    
+        return boardNotifier;
+    
     }
     
     
      
-    public void setPlayerOneScore(int score)
-    {
     
-       playerOneScore.set(score);
-    }
    
-       public void setPlayerTwoScore(int score)
-    {
     
-       playerTwoScore.set(score);
-    }
-       
-       
     public void setPlayerOneName(String name)
     {
     
@@ -140,23 +145,18 @@ public class MultiPlayerViewModel {
     public void setBoard(int row , int column)
     {
       
-        if(board[row][column]!= 0 || !winnerName.get().isEmpty()) return;
-        
-        numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1);
-      
+        if(board[row][column]!= 0 || !winnerName.get().isEmpty() || turnNotifier.get() != 1) return;
         
         
-        if(playerTurn == Turn.FIRSTPLAYER)
+        if(turnNotifier.get() == 1)
         {
-                setXorO(row , column ,playerOneSymbol.get());
-                
-                playerTurn = Turn.SECONDPLAYER;
-        
+           setXorO(row , column ,playerOneSymbol.get());
+           sendMoveRequest(row, column);
+           turnNotifier.set(2);
         }else
         {
           setXorO(row, column,playerTwoSymbol.get());
-                playerTurn = Turn.FIRSTPLAYER;
-        
+          turnNotifier.set(1);
         }
          boardNotifier.set(boardNotifier.get()+1);
         checkWinner();
@@ -176,18 +176,16 @@ public class MultiPlayerViewModel {
     private void setXorO(int row, int column, int playerSymbol)
     {
               board[row][column]= playerSymbol;
+                numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1);
     }
     
     private void checkWinner()
     {
-        
-        
-        
        // rows checker
        for (int row = 0; row < 3; row++) {
-        
     if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != 0 ) {
        setWinnerName(row, 0);
+ 
     }
   }
         // columns checker
@@ -207,8 +205,11 @@ public class MultiPlayerViewModel {
          setWinnerName(0, 2);
     }
      
+     
+     
      if(numberOfPlayedMoves.get() == 9 && winnerName.get().isEmpty()){
      winnerName.set("draw");
+     sendWinnerRequest();
      }
         }
     
@@ -218,18 +219,20 @@ public class MultiPlayerViewModel {
      {
       winnerName.set(playerOneName.get());
       playerOneScore.set(playerOneScore.get()+1);
-     }else 
+     }else
      {
         winnerName.set(playerTwoName.get());
         playerTwoScore.set(playerTwoScore.get()+1);
      }
+      sendWinnerRequest();
+    
     }
     
 
     
     
     
-    public void swapNames()
+    public void swapSymbols()
     {
         int temp = playerOneSymbol.get();
         playerOneSymbol.set(playerTwoSymbol.get());
@@ -243,12 +246,66 @@ public class MultiPlayerViewModel {
                for(int column = 0 ; column < 3 ; column++)
                {
                  board[row][column] = 0;
-                    
                }
            }
           winnerName.setValue("");
-          numberOfPlayedMoves.set(0);
          
     }
     
-}
+    
+    
+    private void sendMoveRequest(int row , int column)
+    {
+        remote.sendGameMoveRequest(playerTwoName.get(), row, column);
+
+    }
+    
+    
+    private void sendWinnerRequest()
+    {
+    
+          if(winnerName.get().equals(playerOneName.get()) 
+              || ("draw".equals(winnerName.get())))
+      {
+         
+          remote.sendGameResultRequest(playerOneName.get()
+                  , playerTwoName.get(), winnerName.get());
+      }
+    
+    
+    }
+    
+    
+    private void listenToMoveResponse()
+    {
+        remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            
+            String []splitedResponse = newValue.split(" ");
+            setBoard(Integer.valueOf(splitedResponse[1]), Integer.valueOf(splitedResponse[2]));
+            
+       });
+    
+    }
+    
+    
+    
+    private void listenToGameResult()
+    {
+    
+     remote.getGameResultResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            
+              winnerName.set(newValue);
+            
+       });
+    
+    }
+    
+    
+    
+    
+ }
+
+
+
+   
+

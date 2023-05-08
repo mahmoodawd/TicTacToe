@@ -5,8 +5,8 @@ package tictactoe.core;
 import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewController;
 import tictactoe.authentication.login.presentation.LoginViewModel;
-import tictactoe.authentication.registration.RegistrationViewController;
-import tictactoe.authentication.registration.RegistrationViewModel;
+import tictactoe.authentication.registration.presentation.RegistrationViewController;
+import tictactoe.authentication.registration.presentation.RegistrationViewModel;
 import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
@@ -16,12 +16,14 @@ import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewModel;
 import tictactoe.multi_player.presentation.MultiPlayerViewController;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
-import tictactoe.online_multi_player.presentation.OnlineViewModel;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewModel;
 import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogController;
-import tictactoe.online_multi_player.presentation.winner_dialog.WinnerDialogController;
+import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
+import tictactoe.single_player.presentation.winnerDialog.SingleWinnerDialogController;
+
 
 
 public class ViewControllerFactory {
@@ -40,7 +42,7 @@ public class ViewControllerFactory {
             }
             
             case ONLINEMULTIPLAYERVIEWCONTROLLER:{
-                return new OnlineViewController((OnlineViewModel)viewModel);
+                return new OnlineMultiPlayerViewController((OnlineMultiPlayerViewModel)viewModel);
             }
             
             
@@ -50,7 +52,7 @@ public class ViewControllerFactory {
              
              
               case WINNERDIALOGCNTROLLER:{
-                return new WinnerDialogController();
+                return new MultiPlayerWinnerDialogController();
             }
               
               
@@ -84,6 +86,14 @@ public class ViewControllerFactory {
          
             case MULTIPLAYERVIEWCONTROLLER:{
                 return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
+            }  
+            
+          case  SINGLEWINNERDIALOGCONTROLLER:{
+                return new SingleWinnerDialogController();
+            }  
+            
+             case MULTIPLAYERWINNERDIALOG:{
+                return new MultiPlayerWinnerDialogController();
             }  
             
           

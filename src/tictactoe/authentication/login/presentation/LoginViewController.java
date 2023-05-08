@@ -1,6 +1,9 @@
 package tictactoe.authentication.login.presentation;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -8,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -18,6 +22,7 @@ import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 
 public class LoginViewController extends GridPane {
 
@@ -37,7 +42,7 @@ public class LoginViewController extends GridPane {
     protected final Text passwordTxt;
     protected final Text loginTxt;
     protected final Text userNameTxt;
-    protected final TextField userNameField;
+    protected final TextField usernameField;
     protected final PasswordField passwordField;
     protected final Button loginBtn;
     protected final ImageView backIcon;
@@ -73,7 +78,7 @@ public class LoginViewController extends GridPane {
         passwordTxt = new Text();
         loginTxt = new Text();
         userNameTxt = new Text();
-        userNameField = new TextField();
+        usernameField = new TextField();
         passwordField = new PasswordField();
         loginBtn = new Button();
         backIcon = new ImageView();
@@ -91,11 +96,10 @@ public class LoginViewController extends GridPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(800.0);
-        setPrefWidth(600.0);
+        setPrefHeight(600.0);
+        setPrefWidth(800.0);
         getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         this.setId("pane");
-        setStyle("-fx-border-color: transparent; -fx-background-size: 600 800;");
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
         columnConstraints.setPrefWidth(100.0);
@@ -176,9 +180,9 @@ public class LoginViewController extends GridPane {
         userNameTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         userNameTxt.setFont(Typography.subtitleOneRegularFont);
 
-        GridPane.setRowIndex(userNameField, 4);
-        GridPane.setMargin(userNameField, new Insets(0.0, 200.0, 0.0, 200.0));
-        userNameField.setStyle("-fx-background-radius: 15px;");
+        GridPane.setRowIndex(usernameField, 4);
+        GridPane.setMargin(usernameField, new Insets(0.0, 200.0, 0.0, 200.0));
+        usernameField.setStyle("-fx-background-radius: 15px;");
 
         GridPane.setRowIndex(passwordField, 7);
         passwordField.setOpaqueInsets(new Insets(0.0));
@@ -236,16 +240,18 @@ public class LoginViewController extends GridPane {
         rowConstraints11.setPrefHeight(30.0);
         rowConstraints11.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        GridPane.setColumnIndex(registerLink, 2);
-        registerLink.setText("Login");
+        GridPane.setColumnIndex(registerLink, 1);
+        registerLink.setText("Register");
         registerLink.setTextFill(javafx.scene.paint.Color.valueOf("#0c5eeb"));
         registerLink.setUnderline(true);
+        GridPane.setMargin(registerLink, new Insets(0.0, 0.0, 0.0, 230.0));
 
         GridPane.setColumnIndex(notificationTxt, 1);
         GridPane.setHalignment(notificationTxt, javafx.geometry.HPos.RIGHT);
         notificationTxt.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         notificationTxt.setStrokeWidth(0.0);
         notificationTxt.setText("Don't hava an account?");
+        GridPane.setMargin(notificationTxt, new Insets(0.0, 65.0, 0.0, 0.0));
         setOpaqueInsets(new Insets(0.0));
 
         getColumnConstraints().add(columnConstraints);
@@ -264,7 +270,7 @@ public class LoginViewController extends GridPane {
         getChildren().add(passwordTxt);
         getChildren().add(loginTxt);
         getChildren().add(userNameTxt);
-        getChildren().add(userNameField);
+        getChildren().add(usernameField);
         getChildren().add(passwordField);
         getChildren().add(loginBtn);
         getChildren().add(backIcon);
@@ -278,19 +284,71 @@ public class LoginViewController extends GridPane {
         gridPane.getChildren().add(notificationTxt);
         getChildren().add(gridPane);
         
-        GridPane.setMargin(backIcon, new Insets(0.0, 0, 20.0, 130));
+        GridPane.setMargin(backIcon, new Insets(0.0, 0, 0.0, 80));
         backIcon.setImage(new Image(ImagesUri.back));
-        GridPane.setMargin(passwordTxt, new Insets(0.0, 115, 5, 0.0));
-        GridPane.setMargin(userNameTxt, new Insets(0.0, 115, 5, 0.0));
+        GridPane.setMargin(passwordTxt, new Insets(0.0, 275, 0, 0.0));
+        GridPane.setMargin(userNameTxt, new Insets(0.0, 275, 0, 0.0));
         
+        navigateBackIcon();
+        navigateHyperLink();
+        uiObservers();
+        viewModelObservers();
+        navigate();
+    }    
+    
+    
+    void navigate(){
         loginBtn.setOnAction((event) -> {
-
         try {
-            Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
-        } catch (IOException ex) {
-            
+            invalidUsernameWarning.setVisible(false);
+            invalidPasswordWarning.setVisible(false);
+            if(viewModel.validateUsername()){
+                if(viewModel.validatePassword())
+                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
+                else
+                    invalidPasswordWarning.setVisible(true);
+            }
+            else
+                invalidUsernameWarning.setVisible(true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
          }); 
-
+    }
+    private void uiObservers(){
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setUsername(newValue);
+        });
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            viewModel.setPassword(newValue);
+        });
+    }
+    private void viewModelObservers(){
+        viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            loginBtn.setDisable(!viewModel.enableLoginBtn());
+        });
+        viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            loginBtn.setDisable(!viewModel.enableLoginBtn());
+        });
+    }
+    
+    private void navigateHyperLink(){
+        registerLink.setOnAction(event -> {
+            try {
+                Navigation.openPage(ViewController.REGISTRATIONVIEWCONTROLLER, this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    
+    private void navigateBackIcon(){
+        backIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
+              try {
+                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+              } catch (IOException ex) {
+                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+              }
+        });
     }
 }

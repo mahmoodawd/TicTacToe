@@ -7,8 +7,9 @@ package tictactoe.available_players.presentation;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import tictactoe.available_players.data.AvailablePlayersRepoImp;
+import tictactoe.available_players.data.repositories.AvailablePlayersRepoImp;
 import tictactoe.available_players.domain.model.Player;
 
 /**
@@ -19,15 +20,15 @@ public class AvailablePlayersViewModel {
 
     AvailablePlayersRepoImp availablePlayersRepo;
     ObservableList<Player> availablePlayers;
-    private SimpleBooleanProperty accepted;
-    private SimpleObjectProperty<RequestStatus> requestStatus = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<RequestStatus> requestStatus = new SimpleObjectProperty<>();
     private Player requester;
+    private final SimpleBooleanProperty haveRequest;
 
     public AvailablePlayersViewModel() {
         availablePlayersRepo = new AvailablePlayersRepoImp();
-
-//        requestStatus.set(RequestStatus.SENDING);
-        availablePlayers = availablePlayersRepo.getAvailablePlayers();
+        haveRequest = new SimpleBooleanProperty(false);
+        availablePlayers = FXCollections.observableArrayList();
+        availablePlayers.addAll(availablePlayersRepo.getAvailablePlayers());
     }
 
     public ObservableList<Player> getAvailablePlayers() {
@@ -37,11 +38,25 @@ public class AvailablePlayersViewModel {
     public SimpleObjectProperty<RequestStatus> getRequestStatus() {
         return requestStatus;
     }
+    public SimpleBooleanProperty isHaveRequest() {
+        return haveRequest;
+    }
 
     public void sendRequest(Player receiver) {
-
         requestStatus.set(availablePlayersRepo.sendRequest(requester, receiver)
                 ? RequestStatus.ACCEPTED : RequestStatus.REJECTED);
+    }
+
+
+    private void listenForRequest() {
+        haveRequest.set(availablePlayersRepo.listenForRequest());
+
+    }
+
+    public void addNewPlayer(Player player) {
+        ObservableList<Player> updatedPlayersList = availablePlayers;
+        updatedPlayersList.add(player);
+        availablePlayers.setAll(updatedPlayersList);
     }
 
 }

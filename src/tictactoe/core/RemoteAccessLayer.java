@@ -5,9 +5,16 @@
  */
 package tictactoe.core;
 
-import tictactoe.online_multi_player.domain.usecases.UpdatePlayerOverallScoreUseCase;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
 public class RemoteAccessLayer {
     static RemoteAccessLayer instance ; 
+    private static  Socket server;
+    
+    
     private RemoteAccessLayer()
     {
     
@@ -23,9 +30,14 @@ public class RemoteAccessLayer {
             instance = new RemoteAccessLayer();
         }
         return instance;
-        
-      
     } 
+    
+    
+    public void initConnection() throws IOException
+    {
+         server = new Socket();
+       server.connect(new InetSocketAddress("192.168.1.1", 8000));
+    }
     
     
     //todo implement your server functions

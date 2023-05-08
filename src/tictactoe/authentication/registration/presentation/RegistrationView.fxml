@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Text fx:id="registrationTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Text fx:id="usernameTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="username" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Text fx:id="passwordTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+      <Text fx:id="confirmPasswordTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="confirm password" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+      <Button fx:id="registerBtn" mnemonicParsing="false" text="Register" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
+      <TextField fx:id="usernameField" prefHeight="26.0" prefWidth="438.0" GridPane.rowIndex="5">
+         <GridPane.margin>
+            <Insets left="190.0" right="190.0" />
+         </GridPane.margin>
+      </TextField>
+      <Text fx:id="invalidUsernameTxt" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid username !" textAlignment="CENTER" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+      <Text fx:id="invalidPasswordTxt" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must be at least 6 characters and contain upper &amp; lower case letters, special characters and numbers !" textAlignment="CENTER" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+      <Text fx:id="confirmationErrorTxt" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Password doesn't match !" textAlignment="CENTER" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+      <ImageView fx:id="imageFrame" fitHeight="46.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="120.0" />
+         </GridPane.margin>
+      </ImageView>
+      <GridPane GridPane.rowIndex="14">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.5999755859375" minWidth="10.0" prefWidth="184.00002441406252" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.79997558593743" minWidth="10.0" prefWidth="240.79997558593743" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account ?" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+            <Hyperlink text="Login" textFill="#0c5eeb" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+      <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="11">
+         <GridPane.margin>
+            <Insets left="190.0" right="190.0" />
+         </GridPane.margin>
+      </PasswordField>
+      <PasswordField fx:id="passwordField" promptText="e.g. Sample_Sample947" GridPane.rowIndex="8">
+         <GridPane.margin>
+            <Insets left="190.0" right="190.0" />
+         </GridPane.margin>
+      </PasswordField>
+   </children>
+</GridPane>

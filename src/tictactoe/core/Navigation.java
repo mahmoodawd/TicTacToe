@@ -9,14 +9,14 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
+import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 
 
 public class Navigation {
     
-    public static void openDialog(Object dialog)
+    public static void openDialog(ViewController viewController)
     {
-    
+     Object dialog =  ViewControllerFactory.getViewController(viewController);
     
        Scene dialogScene = new Scene((Parent)dialog, 400, 300);
               Stage dialogStage = new Stage();

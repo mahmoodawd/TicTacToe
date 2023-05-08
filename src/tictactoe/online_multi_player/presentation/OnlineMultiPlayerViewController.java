@@ -1,13 +1,10 @@
-package tictactoe.multi_player.presentation;
+package tictactoe.online_multi_player.presentation;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.effect.Blend;
 import javafx.scene.image.Image;
@@ -19,17 +16,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
+import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
-import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
-import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
-import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 
-public  class MultiPlayerViewController extends BorderPane {
+public  class OnlineMultiPlayerViewController extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -52,14 +45,14 @@ public  class MultiPlayerViewController extends BorderPane {
     protected final RowConstraints rowConstraints3;
     protected final RowConstraints rowConstraints4;
     protected final RowConstraints rowConstraints5;
-    protected final Text playerOneName;
+    protected final Text firstPlayerName1;
     protected final ImageView firstPlayerSymbolImageView1;
     protected final GridPane gridPane3;
     protected final ColumnConstraints columnConstraints6;
     protected final RowConstraints rowConstraints6;
     protected final RowConstraints rowConstraints7;
     protected final RowConstraints rowConstraints8;
-    protected final Text playerTwoName;
+    protected final Text firstPlayerName;
     protected final ImageView secondPlayerSymbolImageView;
     protected final GridPane gridPane4;
     protected final ColumnConstraints columnConstraints7;
@@ -93,14 +86,12 @@ public  class MultiPlayerViewController extends BorderPane {
     protected final Separator separator;
     protected final Text playerTwoNameScoreTextView;
     protected final Text playerTwoScoreTextView;
-    
     private ImageView imageViews[][] = new ImageView[3][3];
-    MultiPlayerViewModel viewModel;
 
-    public MultiPlayerViewController(MultiPlayerViewModel viewModel) {
-
+      OnlineMultiPlayerViewModel viewModel ;
+    public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
         this.viewModel = viewModel;
-        
+      
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         rowConstraints = new RowConstraints();
@@ -122,14 +113,14 @@ public  class MultiPlayerViewController extends BorderPane {
         rowConstraints3 = new RowConstraints();
         rowConstraints4 = new RowConstraints();
         rowConstraints5 = new RowConstraints();
-        playerOneName = new Text();
+        firstPlayerName1 = new Text();
         firstPlayerSymbolImageView1 = new ImageView();
         gridPane3 = new GridPane();
         columnConstraints6 = new ColumnConstraints();
         rowConstraints6 = new RowConstraints();
         rowConstraints7 = new RowConstraints();
         rowConstraints8 = new RowConstraints();
-        playerTwoName = new Text();
+        firstPlayerName = new Text();
         secondPlayerSymbolImageView = new ImageView();
         gridPane4 = new GridPane();
         columnConstraints7 = new ColumnConstraints();
@@ -164,15 +155,15 @@ public  class MultiPlayerViewController extends BorderPane {
         playerTwoNameScoreTextView = new Text();
         playerTwoScoreTextView = new Text();
 
-        setMaxHeight(200);
-        setMaxWidth(800);
-        setMinHeight(600);
-        setMinWidth(800);
+        setMaxHeight(USE_PREF_SIZE);
+        setMaxWidth(USE_PREF_SIZE);
+        setMinHeight(USE_PREF_SIZE);
+        setMinWidth(USE_PREF_SIZE);
         setStyle("-fx-background-color: #FFB048;");
 
         BorderPane.setAlignment(gridPane, javafx.geometry.Pos.CENTER);
-        gridPane.setPrefHeight(150.0);
-        gridPane.setPrefWidth(600.0);
+        gridPane.setPrefHeight(190.0);
+        gridPane.setPrefWidth(599.0);
         gridPane.setStyle("-fx-background-color: #ffffff;");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -211,7 +202,7 @@ public  class MultiPlayerViewController extends BorderPane {
         GridPane.setHalignment(titleTextView, javafx.geometry.HPos.CENTER);
         titleTextView.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         titleTextView.setStrokeWidth(0.0);
-        titleTextView.setText("Multi Player");
+        titleTextView.setText("Online Mode");
         titleTextView.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         titleTextView.setTextOrigin(javafx.geometry.VPos.CENTER);
         titleTextView.setFont(new Font(32.0));
@@ -264,11 +255,11 @@ public  class MultiPlayerViewController extends BorderPane {
         rowConstraints5.setPrefHeight(65.6);
         rowConstraints5.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        GridPane.setHalignment(playerOneName, javafx.geometry.HPos.CENTER);
-        playerOneName.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        playerOneName.setStrokeWidth(0.0);
-        playerOneName.setText("player 1");
-        playerOneName.setFont(new Font(18.0));
+        GridPane.setHalignment(firstPlayerName1, javafx.geometry.HPos.CENTER);
+        firstPlayerName1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        firstPlayerName1.setStrokeWidth(0.0);
+        firstPlayerName1.setText("player 1");
+      
 
         GridPane.setHalignment(firstPlayerSymbolImageView1, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(firstPlayerSymbolImageView1, 2);
@@ -277,7 +268,7 @@ public  class MultiPlayerViewController extends BorderPane {
         firstPlayerSymbolImageView1.setFitWidth(30.0);
         firstPlayerSymbolImageView1.setPickOnBounds(true);
         firstPlayerSymbolImageView1.setPreserveRatio(true);
-        
+        firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(gridPane3, 1);
         gridPane3.setStyle("-fx-background-color: #ffffff;");
@@ -300,11 +291,11 @@ public  class MultiPlayerViewController extends BorderPane {
         rowConstraints8.setPrefHeight(64.79999999999998);
         rowConstraints8.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        GridPane.setHalignment(playerTwoName, javafx.geometry.HPos.CENTER);
-        playerTwoName.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        playerTwoName.setStrokeWidth(0.0);
-        playerTwoName.setText("player 2");
-        playerTwoName.setFont(new Font(18.0));
+        GridPane.setHalignment(firstPlayerName, javafx.geometry.HPos.CENTER);
+        firstPlayerName.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        firstPlayerName.setStrokeWidth(0.0);
+        firstPlayerName.setText("player 2");
+        firstPlayerName.setFont(new Font(18.0));
 
         GridPane.setHalignment(secondPlayerSymbolImageView, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(secondPlayerSymbolImageView, 2);
@@ -312,7 +303,7 @@ public  class MultiPlayerViewController extends BorderPane {
         secondPlayerSymbolImageView.setFitWidth(30.0);
         secondPlayerSymbolImageView.setPickOnBounds(true);
         secondPlayerSymbolImageView.setPreserveRatio(true);
-     
+        secondPlayerSymbolImageView.setImage(new Image(ImagesUri.emptyEnabled));
         setTop(gridPane);
 
         BorderPane.setAlignment(gridPane4, javafx.geometry.Pos.CENTER);
@@ -366,7 +357,7 @@ public  class MultiPlayerViewController extends BorderPane {
         secondPlaceImageView.setFitWidth(100.0);
         secondPlaceImageView.setPickOnBounds(true);
         secondPlaceImageView.setPreserveRatio(true);
-
+        secondPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(firstPlaceImageView, 1);
         GridPane.setHalignment(firstPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -375,7 +366,7 @@ public  class MultiPlayerViewController extends BorderPane {
         firstPlaceImageView.setFitWidth(100.0);
         firstPlaceImageView.setPickOnBounds(true);
         firstPlaceImageView.setPreserveRatio(true);
-      
+        firstPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(fourthPlaceImageView, 1);
         GridPane.setHalignment(fourthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -385,7 +376,7 @@ public  class MultiPlayerViewController extends BorderPane {
         fourthPlaceImageView.setFitWidth(100.0);
         fourthPlaceImageView.setPickOnBounds(true);
         fourthPlaceImageView.setPreserveRatio(true);
-      
+        fourthPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(fifthPlaceImageView, 2);
         GridPane.setHalignment(fifthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -395,7 +386,7 @@ public  class MultiPlayerViewController extends BorderPane {
         fifthPlaceImageView.setFitWidth(100.0);
         fifthPlaceImageView.setPickOnBounds(true);
         fifthPlaceImageView.setPreserveRatio(true);
-     
+        fifthPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(sevenPlaceImageView, 1);
         GridPane.setHalignment(sevenPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -405,7 +396,7 @@ public  class MultiPlayerViewController extends BorderPane {
         sevenPlaceImageView.setFitWidth(100.0);
         sevenPlaceImageView.setPickOnBounds(true);
         sevenPlaceImageView.setPreserveRatio(true);
-      
+        sevenPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(eightPlaceImageView, 2);
         GridPane.setHalignment(eightPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -415,7 +406,7 @@ public  class MultiPlayerViewController extends BorderPane {
         eightPlaceImageView.setFitWidth(100.0);
         eightPlaceImageView.setPickOnBounds(true);
         eightPlaceImageView.setPreserveRatio(true);
-        
+        eightPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(thirdPlaceImageView, 3);
         GridPane.setHalignment(thirdPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -424,7 +415,7 @@ public  class MultiPlayerViewController extends BorderPane {
         thirdPlaceImageView.setFitWidth(100.0);
         thirdPlaceImageView.setPickOnBounds(true);
         thirdPlaceImageView.setPreserveRatio(true);
-       
+        thirdPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(sixthPlaceImageView, 3);
         GridPane.setHalignment(sixthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -434,7 +425,7 @@ public  class MultiPlayerViewController extends BorderPane {
         sixthPlaceImageView.setFitWidth(100.0);
         sixthPlaceImageView.setPickOnBounds(true);
         sixthPlaceImageView.setPreserveRatio(true);
-    
+        sixthPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(ninethPlaceImageView, 3);
         GridPane.setHalignment(ninethPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -444,7 +435,7 @@ public  class MultiPlayerViewController extends BorderPane {
         ninethPlaceImageView.setFitWidth(100.0);
         ninethPlaceImageView.setPickOnBounds(true);
         ninethPlaceImageView.setPreserveRatio(true);
- 
+        ninethPlaceImageView.setImage(new Image(ImagesUri.emptyEnabled));
 
         GridPane.setColumnIndex(text, 4);
         GridPane.setHalignment(text, javafx.geometry.HPos.CENTER);
@@ -542,14 +533,14 @@ public  class MultiPlayerViewController extends BorderPane {
         gridPane2.getRowConstraints().add(rowConstraints3);
         gridPane2.getRowConstraints().add(rowConstraints4);
         gridPane2.getRowConstraints().add(rowConstraints5);
-        gridPane2.getChildren().add(playerOneName);
+        gridPane2.getChildren().add(firstPlayerName1);
         gridPane2.getChildren().add(firstPlayerSymbolImageView1);
         gridPane1.getChildren().add(gridPane2);
         gridPane3.getColumnConstraints().add(columnConstraints6);
         gridPane3.getRowConstraints().add(rowConstraints6);
         gridPane3.getRowConstraints().add(rowConstraints7);
         gridPane3.getRowConstraints().add(rowConstraints8);
-        gridPane3.getChildren().add(playerTwoName);
+        gridPane3.getChildren().add(firstPlayerName);
         gridPane3.getChildren().add(secondPlayerSymbolImageView);
         gridPane1.getChildren().add(gridPane3);
         gridPane.getChildren().add(gridPane1);
@@ -585,7 +576,18 @@ public  class MultiPlayerViewController extends BorderPane {
         gridPane5.getChildren().add(playerTwoScoreTextView);
         gridPane4.getChildren().add(gridPane5);
         
-             imageViews[0][0] = firstPlaceImageView;
+        titleTextView.setFont(Typography.headerBoldFont);
+        playerOneNameScoreTextView.setFont(Typography.subtitleTwoRegularFont);
+          firstPlayerName1.setFont(Typography.subtitleOneRegularFont);
+          firstPlayerName.setFont(Typography.subtitleOneRegularFont);
+          playerOneNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
+          playerTwoNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
+          
+          playerOneScoreTextView.setFont(Typography.BodyOneRegularFont);
+          playerTwoScoreTextView.setFont(Typography.BodyOneRegularFont);
+        
+          
+            imageViews[0][0] = firstPlaceImageView;
             imageViews[0][1] = secondPlaceImageView;
             imageViews[0][2] = thirdPlaceImageView;
             imageViews[1][0] = fourthPlaceImageView;
@@ -594,24 +596,23 @@ public  class MultiPlayerViewController extends BorderPane {
             imageViews[2][0]= sevenPlaceImageView;
             imageViews[2][1] = eightPlaceImageView;
             imageViews[2][2] = ninethPlaceImageView;
-             
-             resetBoard(true);
-             boardSetters();
-             properitiesObservers();
-             init();
-            
+     
+        
+        boardSetters();
+      properitiesObservers();
+      init();
 
     }
     
     
-     private void init()
+    private void init()
     {
     
      
         viewModel.setPlayerOneSymbol(1);
-        viewModel.setPlayerTwoSymbol(2);
-        viewModel.setPlayerOneName("ahmed");
-        viewModel.setPlayerTwoName("ali");
+          viewModel.setPlayerTwoSymbol(2);
+           viewModel.setPlayerOneName("ahmed");
+          viewModel.setPlayerTwoName("ali");
     
     }
     
@@ -628,13 +629,20 @@ public  class MultiPlayerViewController extends BorderPane {
              
     }); 
     
-       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,0);
+       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
+           if(viewModel.getTurnNotifier().get() == 1)
+           {
+                 viewModel.setBoard(0,0);
+           }
+           
     }); 
     
     
-       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
+       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
+           if(viewModel.getTurnNotifier().get() == 1)
+           {
              viewModel.setBoard(0,1);
+           }
     }); 
        
           thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
@@ -675,30 +683,32 @@ public  class MultiPlayerViewController extends BorderPane {
     {
     
     
-       viewModel.boardNotifier.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+       viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
            int [][] board = viewModel.getBoard();
-        
+           System.out.println(board[0][1]);
            for(int row = 0 ; row < 3 ; row++){
                for(int column = 0 ; column < 3 ; column++)
                {
-                   if(board[row][column] != 0)
-                   {
-                     ImageView imageView = imageViews[row][column];
-                   setImage(imageView, board[row][column], ImagesUri.xWithBackground, ImagesUri.oWithBackground);
+                   ImageView imageView = imageViews[row][column];
+                   if(board[row][column] == 1){
+                       imageView.setImage(new Image(ImagesUri.xWithBackground));
+                   }else if (board[row][column] == 2){
+                       imageView.setImage(new Image(ImagesUri.oWithBackground));
                    }
-                 
                }
            }
        });
        
        
       viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-          if(!newValue.isEmpty()){
-              
-              PassData.getInstance().winnerName.set(newValue);
-              Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-              
-          }
+    
+          System.out.println(newValue);
+          if(!newValue.isEmpty())PassData.getInstance().winnerName.set(newValue);
+           try {
+               if(!newValue.isEmpty()) Navigation.openPage(ViewController.WINNERDIALOGCNTROLLER, null);
+           } catch (IOException ex) {
+               Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+           }
        });
       
       
@@ -714,17 +724,16 @@ public  class MultiPlayerViewController extends BorderPane {
                }
                
                case "replay":{
-                   resetBoard(true);
-                   viewModel.swapNames();
+                 
+                   resetBoard();
+                   viewModel.swapSymbols();
                      break;
                }
                
                
                case "watch moves":
                {
-                   //viewModel.resetWinnerName();
-                   animateMoves();     
-              
+                  
                  break;
                }
            
@@ -736,13 +745,13 @@ public  class MultiPlayerViewController extends BorderPane {
        });
        
      viewModel.getPlayerOneName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-         playerOneName.setText(newValue);
+         firstPlayerName1.setText(newValue);
          playerOneNameScoreTextView.setText(newValue);
        });
      
       viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
          
-         playerTwoName.setText(newValue);
+         firstPlayerName.setText(newValue);
          playerTwoNameScoreTextView.setText(newValue);
        });
       
@@ -765,7 +774,6 @@ public  class MultiPlayerViewController extends BorderPane {
              }else{
                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.o));
              }
-             
             
        });
          
@@ -784,74 +792,48 @@ public  class MultiPlayerViewController extends BorderPane {
        });
       
       
+             
       
       
-      
+        viewModel.getTurnNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+         int board [][] = viewModel.getBoard();
+              for(int row = 0 ; row < 3 ; row++){
+               for(int column = 0 ; column < 3 ; column++)
+               {
+                 if(board[row][column] == 0)
+                 {
+                 
+                      ImageView imageView = imageViews[row][column];
+                 
+           
+                    if(newValue.intValue() == 1)
+                   {
+                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
+                   }else{
+                    imageView.setImage(new Image(ImagesUri.emptyDisabled));
+                   }
+                 }       
+               }
+           }
+         
+            
+       });
     
     
     }
     
     
-    private void resetBoard(boolean reset)
+    private void resetBoard()
     {
-          if(reset)viewModel.resetBorad();
                for(int row = 0 ; row < 3 ; row++){
                for(int column = 0 ; column < 3 ; column++)
                {
-             
                    ImageView imageView = imageViews[row][column];
                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
                }
            }
                
-             
-    
-    }
-    
-    private void setImage(ImageView imageView, int symbol,String imageUriOne,String imageUriTwo)
-    {
-    
-     if(symbol == 1)
-             {
-                 imageView.setImage(new Image(imageUriOne));
-             }else{
-                imageView.setImage(new Image(imageUriTwo));
-             }
-    
-    }
-    
-    private void animateMoves()
-    {
-      int [][] board = viewModel.getBoard();
-                      resetBoard(false);
-      new Thread(() -> {
-                      for(int row = 0 ; row < 3 ;row++)
-                      {
-                          for(int column = 0 ; column < 3 ;column++){
-                              final ImageView view = imageViews[row][column];
-                              final int symbol =  board[row][column];
-                        
-                              if(symbol != 0){
-                                  
-                                  Platform.runLater(() -> {
-                                      setImage(view,symbol , ImagesUri.xWithBackground,ImagesUri.oWithBackground);
-                                  });
-                                  
-                                  try {
-                                      Thread.sleep(1000);
-                                  } catch (InterruptedException ex) {
-                                      Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                                  }
-                              }
-                              
-                          }
-                          
-                      }
-                       Platform.runLater(() -> {
-                           
-                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-                       });
-                   }).start();
+               viewModel.resetBorad();
     
     }
 }

@@ -21,7 +21,6 @@ import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
-import tictactoe.online_multi_player.presentation.OnlineViewController;
 
 public  class SinglePlayerController extends BorderPane {
 
@@ -591,28 +590,28 @@ public  class SinglePlayerController extends BorderPane {
             imageViews[2][2] = ninethPlaceImageView;
             
             
-             resetBoard();
+             resetBoard(false);
              boardSetters();
              properitiesObservers();
              init();
 
     }
     
-    
+     
     
     
         private void init()
     {
     
      
-          viewModel.setPlayerOneSymbol(1);
+         System.out.println("init");
           viewModel.setPlayerTwoSymbol(2);
           playerOneScoreTextView.setText("0");
           playerTwoScoreTextView.setText("0");
           viewModel.setPlayerOneSymbol(1);
            viewModel.setPlayerOneName("ahmed");
           viewModel.setPlayerTwoName("Computer");
-    
+        viewModel. boardNotifier.set(0);
     }
     
     
@@ -623,7 +622,7 @@ public  class SinglePlayerController extends BorderPane {
               try {
                   Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
               } catch (IOException ex) {
-                  Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                 
               }
              
     }); 
@@ -673,9 +672,10 @@ public  class SinglePlayerController extends BorderPane {
     
     private void properitiesObservers()
     {
+    //imageViews[row][column]
     
-    
-       viewModel.boardNotifier.addListener(new ChangeListener<Number>() {
+       viewModel.boardNotifier.addListener(new ChangeListener<Number>() { 
+          
            @Override
            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                int [][] board = viewModel.getBoard();
@@ -692,6 +692,24 @@ public  class SinglePlayerController extends BorderPane {
                    }
                }
            }
+       }); 
+       
+       
+       viewModel.getPlayerTurn().addListener(new ChangeListener<Number>(){
+           @Override
+         
+          public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) { 
+             
+                if(newValue.intValue() == viewModel.getComputerSymbol().get()){ 
+                    viewModel.computerPlay();
+                  // animateMoves();
+                   
+                } 
+           }
+        
+           
+        
+        
        });
        
        
@@ -700,11 +718,7 @@ public  class SinglePlayerController extends BorderPane {
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                System.out.println(newValue);
                if(!newValue.isEmpty())PassData.getInstance().winnerName.set(newValue);
-               try {
-                   if(!newValue.isEmpty()) Navigation.openPage(ViewController.WINNERDIALOGCNTROLLER, null);
-               } catch (IOException ex) {
-                   Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
-               }
+           //    if(!newValue.isEmpty()) Navigation.openPage(ViewController.SINGLEWINNERDIALOGCONTROLLER, null);
            }
        });
       
@@ -720,9 +734,18 @@ public  class SinglePlayerController extends BorderPane {
                                break;
                            }
                        case "replay":{
+                          
+                           resetBoard(true); 
+                            
+                          viewModel.swapNames();
+                         // viewModel.computerPlay();
+                          viewModel.setPlayerTurn(0); 
+                          viewModel.setPlayerTurn(1); 
+                            viewModel. boardNotifier.set(0);
+                            
                            
-                           resetBoard();
-                           viewModel.swapNames();
+                           
+                           
                            break;
                        }   case "watch moves":
                        {
@@ -730,7 +753,7 @@ public  class SinglePlayerController extends BorderPane {
                            break;
                        }   }
                }catch (IOException ex) {
-                   Logger.getLogger(OnlineViewController.class.getName()).log(Level.SEVERE, null, ex);
+                  
                }
            }          
        });
@@ -777,7 +800,9 @@ public  class SinglePlayerController extends BorderPane {
            }
        });
          
-         
+        
+          
+          
            viewModel.getPlayerOneScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
         
             playerOneScoreTextView.setText(newValue.toString());
@@ -798,11 +823,37 @@ public  class SinglePlayerController extends BorderPane {
       
     
     
+    } 
+    
+    
+    private void animateMoves()
+    { 
+        
+     
+      new Thread(() -> { 
+                      
+
+                                    try { 
+                                        
+                                      Thread.sleep(1000);
+                                       viewModel.computerPlay();
+                                  } catch (InterruptedException ex) {
+                                     
+                                  }
+                                   
+                           
+                      
+                   }).start();
+
     }
+
     
     
-    private void resetBoard()
-    {
+    
+    
+    private void resetBoard(boolean reset)
+    { 
+        if(reset)viewModel.resetBorad();
                for(int row = 0 ; row < 3 ; row++){
                for(int column = 0 ; column < 3 ; column++)
                {
@@ -811,7 +862,12 @@ public  class SinglePlayerController extends BorderPane {
                }
            }
                
-               viewModel.resetBorad();
+               
     
     }
 }
+//
+
+
+
+//
