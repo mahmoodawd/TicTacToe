@@ -20,6 +20,24 @@ public class Remote extends Thread{
   private PrintStream sender ;
   private SimpleStringProperty gameMoveResponse = new SimpleStringProperty();
   private SimpleStringProperty gameResultResponse = new SimpleStringProperty();
+  private SimpleStringProperty loginResponse = new SimpleStringProperty();
+  private SimpleStringProperty registrationResponse = new SimpleStringProperty();
+
+    public SimpleStringProperty getLoginResponse() {
+        return loginResponse;
+    }
+
+    public void setLoginResponse(SimpleStringProperty loginResponse) {
+        this.loginResponse = loginResponse;
+    }
+
+    public SimpleStringProperty getRegistrationResponse() {
+        return registrationResponse;
+    }
+
+    public void setRegistrationResponse(SimpleStringProperty registrationResponse) {
+        this.registrationResponse = registrationResponse;
+    }
 
    
   
@@ -28,7 +46,7 @@ public class Remote extends Thread{
     {
     
         try {
-            server = new Socket("192.168.1.21",4004);
+            server = new Socket("localhost",4004);
             listener = new DataInputStream(server.getInputStream());
             sender = new PrintStream(server.getOutputStream());
             
@@ -52,6 +70,14 @@ public class Remote extends Thread{
                    {
                    
                        recieveGameResultResponse(input);
+                       break;
+                   }
+                   case "Login":{
+                       recieveLoginResponse(input);
+                       break;
+                   }
+                   case "Register":{
+                       recieveRegistrationResponse(input);
                        break;
                    }
                    
@@ -117,6 +143,22 @@ public class Remote extends Thread{
        gameResultResponse.set(" ");
        gameResultResponse.set(response);
     }
+    
+    public void sendRegistrationCridentials(String ... validate){
+        sender.println("Register "+validate[0]+" "+validate[1]);
+    }
+    public void sendLoginCridentials(String ... check ){
+        sender.println("Login "+check[0]+" "+check[1]);
+    }
+    
+    private void recieveLoginResponse(String response){
+      loginResponse.set(response);
+    }
+    private void recieveRegistrationResponse(String response){
+      registrationResponse.set(response);
+    }
+    
+    
     
     
    

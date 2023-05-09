@@ -365,24 +365,20 @@ public class RegistrationViewController extends GridPane {
         registerBtn.setOnAction((event) -> {
         try {
             invalidPasswordTxt.setText(viewModel.getValidatePasswordMsg().toString());
-            invalidUsernameTxt.setVisible(false);
             invalidPasswordTxt.setVisible(false);
             confirmationErrorTxt.setVisible(false);
-            if(viewModel.validateUsername()){
+           
                 if(viewModel.validatePassword())
                     if(viewModel.doesPasswordMatch())
-                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
+                        viewModel.sendRegisterCredentials();
                     else{
                         confirmationErrorTxt.setVisible(true);
                     }
                 else{    
                     invalidPasswordTxt.setVisible(true);
                 }
-            }
-            else{
-                invalidUsernameTxt.setVisible(true);
-            }
-        }catch (IOException e) {
+           
+        }catch (Exception e) {
             e.printStackTrace();
         }
         }); 
@@ -408,6 +404,18 @@ public class RegistrationViewController extends GridPane {
         });
         viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             registerBtn.setDisable(!viewModel.enableRegisterBtn());
+        });
+        viewModel.getValidation().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(newValue){
+                    try {
+                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, this);
+                } catch (IOException ex) {
+                    Logger.getLogger(RegistrationViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                invalidUsernameTxt.setVisible(true);
+            }
         });
     }
     

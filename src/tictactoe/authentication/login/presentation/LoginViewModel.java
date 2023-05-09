@@ -1,20 +1,35 @@
 
 package tictactoe.authentication.login.presentation;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import tictactoe.core.Navigation;
+import tictactoe.core.Remote;
 
 
 public class LoginViewModel {
 
     SimpleStringProperty username = new SimpleStringProperty();
     SimpleStringProperty password = new SimpleStringProperty();
-    
-    public LoginViewModel(){
+    SimpleStringProperty validation = new SimpleStringProperty();
+
+    Remote remote;
+
+    public LoginViewModel(Remote remote){
         username.set("");
         password.set("");
+        this.remote = remote;
     }
+
+    public SimpleStringProperty getValidation() {
+        return validation;
+    }
+
+    public void setValidation(SimpleStringProperty validation) {
+        this.validation = validation;
+    }
+    
     public SimpleStringProperty getUsername() {
         return username;
     }
@@ -39,10 +54,22 @@ public class LoginViewModel {
     protected boolean enableLoginBtn(){
         return isPasswordLengthSufficient()&&isUsernameLengthSufficient();
     }
-    protected boolean validateUsername(){
-        return true;
+    protected void sendLoginCredentials(){
+        remote.sendLoginCridentials(username.get(), password.get());
     }
-    protected boolean validatePassword(){
-        return true;
+    protected void validation(){
+        remote.getLoginResponse().addListener((observable, oldValue, newValue) -> {
+            validation.set(newValue);
+        });
     }
+    /*protected void validatePassword(){
+        remote.getLoginResponse().addListener((observable, oldValue, newValue) -> {
+            
+            if("Successful".equals(newValue))
+                passwordValidation.set(true);
+            else
+                passwordValidation.set(false);
+            
+        });
+    }*/
 }

@@ -299,12 +299,16 @@ public class LoginViewController extends GridPane {
     
     void navigate(){
         loginBtn.setOnAction((event) -> {
-        try {
-            invalidUsernameWarning.setVisible(false);
-            invalidPasswordWarning.setVisible(false);
+        invalidUsernameWarning.setVisible(false);
+        invalidPasswordWarning.setVisible(false);
+            viewModel.sendLoginCredentials();   
+        });
+    }
+       /* try {
+            
             if(viewModel.validateUsername()){
                 if(viewModel.validatePassword())
-                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, loginBtn);
+                
                 else
                     invalidPasswordWarning.setVisible(true);
             }
@@ -314,7 +318,7 @@ public class LoginViewController extends GridPane {
             e.printStackTrace();
         }
          }); 
-    }
+    }*/
     private void uiObservers(){
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.setUsername(newValue);
@@ -330,6 +334,25 @@ public class LoginViewController extends GridPane {
         viewModel.getPassword().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             loginBtn.setDisable(!viewModel.enableLoginBtn());
         });
+        viewModel.getValidation().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    try {             
+                        switch (newValue){
+                            case "Login Successful" :
+                                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, this);
+                                break;
+                            case "Login Failed Username" :
+                                invalidUsernameWarning.setVisible(true);
+                                break;
+                            case "Login Failed Password" :
+                                invalidPasswordWarning.setVisible(true);
+                                break;
+                        }
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+            });
     }
     
     private void navigateHyperLink(){
