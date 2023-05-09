@@ -250,6 +250,10 @@ public class OnlineMultiPlayerViewModel {
         playerTwoSymbol.set(temp);
     }
     
+    
+    
+    
+    
   
 
     void resetBorad() {
@@ -268,7 +272,6 @@ public class OnlineMultiPlayerViewModel {
     private void sendMoveRequest(int row , int column)
     {
         remote.sendGameMoveRequest(playerTwoName.get(), row, column);
-
     }
     
     
@@ -289,7 +292,8 @@ public class OnlineMultiPlayerViewModel {
     
     private void listenToMoveResponse()
     {
-       
+     
+        
          remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             
             String []splitedResponse = newValue.split(" ");

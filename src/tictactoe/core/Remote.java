@@ -135,7 +135,12 @@ public class Remote extends Thread{
     public void sendGameMoveRequest(String playerTwoName,int row , int column)
     {
     
-        sender.println("acceptMoveRequest"+" "+playerTwoName +" "+String.valueOf(row)+" "+String.valueOf(column));
+        try{
+           sender.println("acceptMoveRequest"+" "+playerTwoName +" "+String.valueOf(row)+" "+String.valueOf(column));
+        }catch(Exception e)
+        {
+        
+        }
     
     }
     
@@ -149,8 +154,12 @@ public class Remote extends Thread{
     
     public void sendGameResultRequest(String playerOneName,String playerTwoName, String gameResult)
     {
-    
-     sender.println("acceptGameResult"+" "+playerOneName +" "+playerTwoName+" "+gameResult);
+        try{
+                 sender.println("acceptGameResult"+" "+playerOneName +" "+playerTwoName+" "+gameResult);
+        }catch(Exception e)
+        {
+
+        }
     
     }
     
