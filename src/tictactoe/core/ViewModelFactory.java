@@ -43,11 +43,11 @@ public class ViewModelFactory {
              
              
              case REGISTRATIONVIEWCONTROLLER:{
-                return new RegistrationViewModel();
+                return new RegistrationViewModel(Remote.getIntance());
             }
 
             case LOGINVIEWCONTROLLER:{
-                return new LoginViewModel();
+                return new LoginViewModel(Remote.getIntance());
             }
             
             case AVAILABLEPLAYERSVIEWCONTROLLER:{

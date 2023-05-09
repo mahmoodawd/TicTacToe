@@ -7,7 +7,9 @@ package tictactoe.authentication.registration.presentation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import tictactoe.core.Remote;
 
 /**
  *
@@ -23,12 +25,24 @@ public class RegistrationViewModel {
      SimpleStringProperty password = new SimpleStringProperty();
      SimpleStringProperty confirmPassword = new SimpleStringProperty();
      SimpleStringProperty username = new SimpleStringProperty();
+
+     SimpleBooleanProperty validation = new SimpleBooleanProperty();
+     Remote remote;
      
-    public RegistrationViewModel(){
+    public RegistrationViewModel(Remote remote){
         password.set("");
         confirmPassword.set("");
         username.set("");
+        this.remote = remote;
+        isUsernameAvailable();
         
+    }
+    public SimpleBooleanProperty getValidation() {
+        return validation;
+    }
+
+    public void setValidation(SimpleBooleanProperty validation) {
+        this.validation = validation;
     }
 
     public SimpleStringProperty getUsername() {
@@ -177,5 +191,19 @@ public class RegistrationViewModel {
         if(result==false)
             result=true;
         return result;
+    }
+    private void isUsernameAvailable(){
+        
+        remote.getRegistrationResponse().addListener((observable, oldValue, newValue) -> {
+            
+            if("Register Successful".equals(newValue))
+                validation.set(true);
+            else
+                validation.set(false);
+            
+        });
+    }
+    protected void sendRegisterCredentials(){
+        Remote.getIntance().sendRegistrationCridentials(username.get().toString(), password.get().toString());
     }
 }

@@ -16,16 +16,33 @@ import static tictactoe.core.LocalAccessLayer.instance;
 
 public class Remote extends Thread{
 
+  private static Socket server;
+  private static DataInputStream listener;
+   private static PrintStream sender;
+  
+  private SimpleStringProperty gameMoveResponse = new SimpleStringProperty();
+  private SimpleStringProperty gameResultResponse = new SimpleStringProperty();
+  private SimpleStringProperty loginResponse = new SimpleStringProperty();
+  private SimpleStringProperty registrationResponse = new SimpleStringProperty();
     
+  static{
+      
+        try {
+            server = new Socket("localhost",4004);
+            listener = new DataInputStream(server.getInputStream());
+            sender = new PrintStream(server.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+  }
     private static Remote instance;
     @Override
     public void run() {
         super.run();
         
            try {
-            server = new Socket("192.168.1.21",4004);
-            listener = new DataInputStream(server.getInputStream());
-            sender = new PrintStream(server.getOutputStream());
+               
             
             
              while(true)
@@ -69,17 +86,34 @@ public class Remote extends Thread{
         }
         
     }
+  /*  private Remote(){
+        try {
+            listener = new DataInputStream(server.getInputStream());
+            sender = new PrintStream(server.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
 
-  private Socket server;
-  private DataInputStream listener; 
-  private PrintStream sender ;
-  private SimpleStringProperty gameMoveResponse = new SimpleStringProperty();
-  private SimpleStringProperty gameResultResponse = new SimpleStringProperty();
 
    
   
     
-    
+    public SimpleStringProperty getLoginResponse() {
+        return loginResponse;
+    }
+
+    public void setLoginResponse(SimpleStringProperty loginResponse) {
+        this.loginResponse = loginResponse;
+    }
+
+    public SimpleStringProperty getRegistrationResponse() {
+        return registrationResponse;
+    }
+
+    public void setRegistrationResponse(SimpleStringProperty registrationResponse) {
+        this.registrationResponse = registrationResponse;
+    }
     
      public SimpleStringProperty getGameResultResponse() {
         return gameResultResponse;
@@ -144,6 +178,27 @@ public class Remote extends Thread{
     }
     
     
+    public void sendRegistrationCridentials(String ... validate){        
+        sender.println("Register "+validate[0]+" "+validate[1]);
+    }
+    public void sendLoginCridentials(String ... check ){
+        sender.println("Login "+check[0]+" "+check[1]);
+    }
+    
+    private void recieveLoginResponse(String response){
+      loginResponse.set(response);
+    }
+    private void recieveRegistrationResponse(String response){
+      registrationResponse.set(response);
+    }
    
     
 }
+    
+    
+    
+    
+    
+   
+    
+
