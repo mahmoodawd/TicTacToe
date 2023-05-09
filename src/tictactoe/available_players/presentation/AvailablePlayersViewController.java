@@ -3,6 +3,7 @@ package tictactoe.available_players.presentation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import tictactoe.available_players.domain.model.Player;
 import tictactoe.available_players.presentation.dialogs.NoPlayerSelectedDialog;
+import tictactoe.available_players.presentation.dialogs.ReceivedRequestDialogViewController;
 import tictactoe.available_players.presentation.dialogs.RequestDeniedDialogViewController;
 import tictactoe.available_players.presentation.dialogs.SendRequestDialogViewController;
 import tictactoe.core.Navigation;
@@ -101,6 +103,7 @@ public class AvailablePlayersViewController extends VBox {
     }
 
     private void initialize() {
+        checkForRequests();
         viewPlayers();
         getCurrentToggled();
 
@@ -129,14 +132,13 @@ public class AvailablePlayersViewController extends VBox {
                         case REJECTED:
                             new RequestDeniedDialogViewController().show();
                             break;
-                    case SENDING:
-                    {
-                        try {
-                            sendRequestDialog.show();
-                        } catch (IOException ex) {
-                            Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        case SENDING: {
+                            try {
+                                sendRequestDialog.show();
+                            } catch (IOException ex) {
+                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-                    }
                         break;
                     }
                 });
@@ -144,7 +146,7 @@ public class AvailablePlayersViewController extends VBox {
             }
         } catch (IOException ex) {
             Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
     }
 
@@ -152,16 +154,25 @@ public class AvailablePlayersViewController extends VBox {
         viewModel.getAvailablePlayers().addListener(new ListChangeListener<Player>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Player> change) {
-
+                while (change.next()) {
+                    if (change.wasAdded()) {
+                        for (Player player : change.getAddedSubList()) {
+                            RadioButton radioButton = new RadioButton(player.getName());
+                            radioButton.setToggleGroup(toggleGroup);
+                            toggleButtonsContainer.getChildren().add(radioButton);
+                            toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
+                        }
+                    }
+                }
             }
         });
-
         for (Player player : viewModel.getAvailablePlayers()) {
             RadioButton radioButton = new RadioButton(player.getName());
             radioButton.setToggleGroup(toggleGroup);
             toggleButtonsContainer.getChildren().add(radioButton);
-            toggleButtonsScrollPane.setVvalue(toggleButtonsScrollPane.getVmax());
+//            toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
         }
+
     }
 
     private void getCurrentToggled() {
@@ -180,5 +191,19 @@ public class AvailablePlayersViewController extends VBox {
         } catch (IOException ex) {
             Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void checkForRequests() {
+
+        viewModel.isHaveRequest().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                Platform.runLater(() -> {
+                    ReceivedRequestDialogViewController receivedRequestDialogViewController = new ReceivedRequestDialogViewController();
+                });
+            } else {
+                // Do something when the boolean property changes to false
+                System.out.println(newValue);
+            }
+        });
     }
 }

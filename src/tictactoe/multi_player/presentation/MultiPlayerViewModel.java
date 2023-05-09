@@ -5,8 +5,11 @@
  */
 package tictactoe.multi_player.presentation;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.util.Pair;
 import tictactoe.online_multi_player.presentation.Turn;
 
 /**
@@ -20,6 +23,7 @@ public class MultiPlayerViewModel {
     
     
     private int  board [][] =  new int [3][3];
+    private Queue<Pair<Integer,Integer>> watchMovesQueue = new LinkedList();
     SimpleIntegerProperty boardNotifier = new SimpleIntegerProperty();
    private SimpleStringProperty winnerName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneSymbol = new SimpleIntegerProperty();
@@ -143,8 +147,8 @@ public class MultiPlayerViewModel {
         if(board[row][column]!= 0 || !winnerName.get().isEmpty()) return;
         
         numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1);
+        watchMovesQueue.add(new Pair(row,column));
       
-        
         
         if(playerTurn == Turn.FIRSTPLAYER)
         {
@@ -162,7 +166,12 @@ public class MultiPlayerViewModel {
         checkWinner();
          
     }
-    
+
+    public Queue<Pair<Integer, Integer>> getWatchMovesQueue() {
+        return watchMovesQueue;
+    }
+
+   
     
     public int[][] getBoard()
     {
@@ -229,11 +238,27 @@ public class MultiPlayerViewModel {
     
     
     
-    public void swapNames()
+    public void swapSymbols()
     {
+        
+             
         int temp = playerOneSymbol.get();
         playerOneSymbol.set(playerTwoSymbol.get());
         playerTwoSymbol.set(temp);
+         
+    }
+    
+    
+    public void setTurn()
+    {
+    
+        if(playerOneSymbol.get() == 1)
+        {
+           playerTurn = Turn.SECONDPLAYER;
+        }else
+        {
+             playerTurn = Turn.FIRSTPLAYER;
+        }
     }
     
   
@@ -246,6 +271,7 @@ public class MultiPlayerViewModel {
                     
                }
            }
+          watchMovesQueue.clear();
           winnerName.setValue("");
           numberOfPlayedMoves.set(0);
          

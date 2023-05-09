@@ -361,11 +361,6 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         mainMenuButton.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 15px;");
          replayButton.setStyle("-fx-background-color: "+ColorPalette.lightRed+"; -fx-background-radius: 15px;");
          watchMovesButton.setStyle("-fx-background-color: "+ColorPalette.lightYellow+"; -fx-background-radius: 15px;");
-         if(!PassData.showWatchMoves.get())
-         {
-         
-          watchMovesButton.setVisible(false);
-         }
          if(!"draw".equals(winnerName)){
          iconLeftImageView.setImage(new Image(ImagesUri.trophy));
            iconrightImageView.setImage(new Image(ImagesUri.trophy));
