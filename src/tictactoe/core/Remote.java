@@ -12,7 +12,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
-import static tictactoe.core.LocalAccessLayer.instance;
 
 public class Remote extends Thread{
 
@@ -52,7 +51,7 @@ public class Remote extends Thread{
                {
                
                
-                   case "gameMoveResponse":
+                   case "acceptMoveResponse":
                    {
                    
                        recieveGameMoveResponse(input);
@@ -136,7 +135,7 @@ public class Remote extends Thread{
     {
     
         try{
-           sender.println("acceptMoveRequest"+" "+playerTwoName +" "+String.valueOf(row)+" "+String.valueOf(column));
+           sender.println("acceptMoveRequest"+" "+playerTwoName+" "+String.valueOf(row)+" "+String.valueOf(column));
         }catch(Exception e)
         {
         
@@ -155,7 +154,7 @@ public class Remote extends Thread{
     public void sendGameResultRequest(String playerOneName,String playerTwoName, String gameResult)
     {
         try{
-                 sender.println("acceptGameResult"+" "+playerOneName +" "+playerTwoName+" "+gameResult);
+            sender.println("acceptGameResult"+" "+playerOneName+" "+playerTwoName+" "+gameResult);
         }catch(Exception e)
         {
 

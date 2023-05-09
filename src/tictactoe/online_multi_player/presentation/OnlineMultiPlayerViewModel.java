@@ -196,13 +196,14 @@ public class OnlineMultiPlayerViewModel {
        for (int row = 0; row < 3; row++) {
     if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != 0 ) {
        setWinnerName(row, 0);
- 
+      return ;
     }
   }
         // columns checker
          for (int column = 0; column < 3; column++) {
      if (board[0][column] == board[1][column] && board[1][column] == board[2][column] && board[0][column] != 0 ) {
          setWinnerName(0, column);
+           return ;
     }
   }
          
@@ -210,17 +211,18 @@ public class OnlineMultiPlayerViewModel {
        //  diagonals checkers
     if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != 0) {
        setWinnerName(0, 0);
+         return ;
         }
 
      if (board[0][2] == board[1][1] && board[1][1] == board[2][0]&& board[0][2] != 0) {
          setWinnerName(0, 2);
+           return ;
     }
      
      
      
      if(numberOfPlayedMoves.get() == 9 && winnerName.get().isEmpty()){
-     winnerName.set("draw");
-     sendWinnerRequest();
+     sendWinnerRequest("draw");
      }
         }
     
@@ -228,14 +230,12 @@ public class OnlineMultiPlayerViewModel {
     {
       if(board[row][column] == playerOneSymbol.get())
      {
-      winnerName.set(playerOneName.get());
-      playerOneScore.set(playerOneScore.get()+1);
+        sendWinnerRequest(playerOneName.get());
      }else
      {
-        winnerName.set(playerTwoName.get());
-        playerTwoScore.set(playerTwoScore.get()+1);
+        sendWinnerRequest(playerTwoName.get());  
      }
-      sendWinnerRequest();
+      
     
     }
     
@@ -275,29 +275,21 @@ public class OnlineMultiPlayerViewModel {
     }
     
     
-    private void sendWinnerRequest()
-    {
-    
-          if(winnerName.get().equals(playerOneName.get()) 
-              || ("draw".equals(winnerName.get())))
-      {
-         
+    private void sendWinnerRequest(String result)
+    {   
+        if(playerOneName.get().equals(result))
+        {
           remote.sendGameResultRequest(playerOneName.get()
-                  , playerTwoName.get(), winnerName.get());
-      }
-    
-    
+                  , playerTwoName.get(), result);
+        }
     }
     
     
     private void listenToMoveResponse()
     {
-     
-        
          remote.getGameMoveResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            
             String []splitedResponse = newValue.split(" ");
-            setBoard(Integer.valueOf(splitedResponse[1]), Integer.valueOf(splitedResponse[2]));
+            setBoard(Integer.valueOf(splitedResponse[0]), Integer.valueOf(splitedResponse[1]));
             
        });
         
@@ -312,7 +304,17 @@ public class OnlineMultiPlayerViewModel {
     
      remote.getGameResultResponse().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             
+         
               winnerName.set(newValue);
+               if(playerOneName.get().equals(newValue))
+               {
+               
+                    playerOneScore.set(playerOneScore.get()+1);
+               
+               } else if(playerTwoName.get().equals(newValue))
+               { 
+                    playerTwoScore.set(playerTwoScore.get()+1);
+               }
             
        });
     
