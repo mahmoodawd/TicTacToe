@@ -204,6 +204,6 @@ public class RegistrationViewModel {
         });
     }
     protected void sendRegisterCredentials(){
-        remote.sendRegistrationCridentials(username.get(), password.get());
+        Remote.getIntance().sendRegistrationCridentials(username.get().toString(), password.get().toString());
     }
 }
