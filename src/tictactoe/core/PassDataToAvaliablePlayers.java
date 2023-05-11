@@ -11,7 +11,6 @@ public class PassDataToAvaliablePlayers {
     
         private static PassDataToAvaliablePlayers instance  = null;
     public static SimpleStringProperty playerOneName = new SimpleStringProperty();
-    public static SimpleStringProperty playerTwoName = new SimpleStringProperty();
     private PassDataToAvaliablePlayers()
     {
     
@@ -24,17 +23,8 @@ public class PassDataToAvaliablePlayers {
     public  void setPlayerOneName(SimpleStringProperty playerOneName) {
         PassDataToOnlineMode.playerOneName = playerOneName;
     }
-
-    public  SimpleStringProperty getPlayerTwoName() {
-        return playerTwoName;
-    }
-
-    public  void setPlayerTwoName(SimpleStringProperty playerTwoName) {
-        PassDataToOnlineMode.playerTwoName = playerTwoName;
-    }
     
-    
-   
+       
    public static synchronized PassDataToAvaliablePlayers getInstance()
     {
   
