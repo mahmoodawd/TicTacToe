@@ -21,6 +21,23 @@ public class PassDataToOnlineMode {
     {
     
     }
+
+    public static SimpleStringProperty getPlayerOneName() {
+        return playerOneName;
+    }
+
+    public static void setPlayerOneName(SimpleStringProperty playerOneName) {
+        PassDataToOnlineMode.playerOneName = playerOneName;
+    }
+
+    public static SimpleStringProperty getPlayerTwoName() {
+        return playerTwoName;
+    }
+
+    public static void setPlayerTwoName(SimpleStringProperty playerTwoName) {
+        PassDataToOnlineMode.playerTwoName = playerTwoName;
+    }
+    
     
    
    public static synchronized PassDataToOnlineMode getInstance()

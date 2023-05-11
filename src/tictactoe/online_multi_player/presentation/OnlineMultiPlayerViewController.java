@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
+import tictactoe.core.PassDataToOnlineMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
@@ -613,7 +614,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     {
         viewModel.setPlayerOneSymbol(1);
           viewModel.setPlayerTwoSymbol(2);
-           viewModel.setPlayerOneName("ahmed");
+           viewModel.setPlayerOneName("");
           viewModel.setPlayerTwoName("ali");
     
     }
