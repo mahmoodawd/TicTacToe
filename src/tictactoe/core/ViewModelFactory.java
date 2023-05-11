@@ -32,6 +32,7 @@ public class ViewModelFactory {
             
             case ONLINEMULTIPLAYERVIEWCONTROLLER:{
                 
+                System.out.println("online factory");
                 return new OnlineMultiPlayerViewModel(Remote.getIntance());
             }
             

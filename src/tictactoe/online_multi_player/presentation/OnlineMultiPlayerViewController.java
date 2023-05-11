@@ -92,6 +92,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
 
       OnlineMultiPlayerViewModel viewModel ;
     public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
+        System.out.println("online mode");
         this.viewModel = viewModel;
       
         gridPane = new GridPane();

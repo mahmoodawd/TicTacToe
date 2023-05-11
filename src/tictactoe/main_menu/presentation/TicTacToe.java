@@ -18,7 +18,7 @@ public class TicTacToe extends Application {
                   
                
 
-        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER);
+        Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.MAINVIEWCONTROLLER);
         Scene scene = new Scene(root);
         root.setStyle("-fx-background-color: White;"); 
      

@@ -123,7 +123,7 @@ public class AvailablePlayersViewController extends VBox {
                     switch (rs.getValue()) {
                         case ACCEPTED: {
                             try {
-                                Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, this);
+                                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, this);
                             } catch (IOException ex) {
                                 Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
                             }

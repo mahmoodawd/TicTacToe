@@ -45,6 +45,8 @@ public class Remote extends Thread{
              while(true)
              {
                String input = listener.readLine();
+               
+                 System.out.println("response "+input);
                switch(input.split(" ")[0])
                {
                
@@ -201,6 +203,8 @@ public class Remote extends Thread{
     }
     
     private void recieveLoginResponse(String response){
+        System.out.println("recieve ");
+        loginResponse.set(" ");
       loginResponse.set(response);
     }
     private void recieveRegistrationResponse(String response){
