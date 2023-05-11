@@ -5,7 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -17,6 +20,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import tictactoe.available_players.domain.model.Player;
 import tictactoe.available_players.presentation.dialogs.NoPlayerSelectedDialog;
@@ -30,29 +34,42 @@ import tictactoe.core.designsystem.resources.StylesUri;
 
 public class AvailablePlayersViewController extends VBox {
 
+    private AvailablePlayersViewModel viewModel = null;
     protected final Button sendRequestBtn;
     protected final Button backBtn;
+    protected final Button reloadBtn;
     protected final Label availablePlayerTxt;
     private final ToggleGroup toggleGroup = new ToggleGroup();
-    private final VBox toggleButtonsContainer;
+    private final VBox radioButtonsContainer;
     private final VBox backButtonBox;
     private final ScrollPane toggleButtonsScrollPane;
-    private AvailablePlayersViewModel viewModel = null;
     private String selectedPlayer;
     protected final Image backIcon = new Image(getClass().getResourceAsStream(ImagesUri.back));
+    protected final Image reloadIcon = new Image(getClass().getResourceAsStream(ImagesUri.retry));
+    protected final GridPane headerGridPane = new GridPane();
+    private final VBox reloadButtonBox;
+    private Button sendRequesBtn;
 
     public AvailablePlayersViewController(AvailablePlayersViewModel viewModel) {
         this.viewModel = viewModel;
         ImageView backIconView = new ImageView(backIcon);
         backIconView.setFitWidth(50);
         backIconView.setFitHeight(50);
-
+        ImageView reloadIconView = new ImageView(reloadIcon);
+        reloadIconView.setFitWidth(50);
+        reloadIconView.setFitHeight(50);
         sendRequestBtn = new Button();
         backBtn = new Button();
-        toggleButtonsContainer = new VBox();
+        reloadBtn = new Button();
+        radioButtonsContainer = new VBox();
         backButtonBox = new VBox();
-        toggleButtonsScrollPane = new ScrollPane(toggleButtonsContainer);
+        reloadButtonBox = new VBox();
+        toggleButtonsScrollPane = new ScrollPane(radioButtonsContainer);
         availablePlayerTxt = new Label();
+        headerGridPane.setPadding(new Insets(10));
+        headerGridPane.setHgap(170);
+        headerGridPane.addRow(0, backButtonBox, availablePlayerTxt, reloadButtonBox);
+        GridPane.setHalignment(availablePlayerTxt, HPos.CENTER);
 
         setAlignment(javafx.geometry.Pos.CENTER);
         setMaxHeight(USE_PREF_SIZE);
@@ -70,26 +87,32 @@ public class AvailablePlayersViewController extends VBox {
         backBtn.setGraphic(backIconView);
         backBtn.setCursor(Cursor.HAND);
         backBtn.setStyle("-fx-background-color: transparent; -fx-pref-width: 50px; -fx-pref-height: 50px;");
+        reloadBtn.setGraphic(reloadIconView);
+        reloadBtn.setCursor(Cursor.HAND);
+        reloadBtn.setStyle("-fx-background-color: -light-red; -fx-pref-width: 50px; -fx-pref-height: 50px;");
 
         backButtonBox.getChildren().add(backBtn);
         backButtonBox.setAlignment(Pos.CENTER_LEFT);
+        reloadButtonBox.getChildren().add(reloadBtn);
+        reloadButtonBox.setAlignment(Pos.CENTER_RIGHT);
 
         availablePlayerTxt.setStyle("-fx-font-size: 28;");
         availablePlayerTxt.setText("Available Players");
 
-        toggleButtonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
-        toggleButtonsContainer.setSpacing(20.0);
-        toggleButtonsContainer.setPadding(new Insets(30.0));
-        toggleButtonsContainer.setId("my-vbox");
+        radioButtonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        radioButtonsContainer.setSpacing(20.0);
+        radioButtonsContainer.setPadding(new Insets(30.0));
+        radioButtonsContainer.setId("my-vbox");
 
+        toggleButtonsScrollPane.setContent(radioButtonsContainer);
         toggleButtonsScrollPane.setFitToWidth(true);
-        toggleButtonsScrollPane.setPrefViewportWidth(50);
-        toggleButtonsScrollPane.setMinViewportWidth(50);
+        toggleButtonsScrollPane.autosize();
+        toggleButtonsScrollPane.setMaxSize(300, 600);
+        toggleButtonsScrollPane.setMinViewportHeight(400);
         toggleButtonsScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         toggleButtonsScrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 
-        getChildren().add(backButtonBox);
-        getChildren().add(availablePlayerTxt);
+        getChildren().add(headerGridPane);
         getChildren().add(toggleButtonsScrollPane);
         getChildren().add(sendRequestBtn);
 
@@ -97,14 +120,19 @@ public class AvailablePlayersViewController extends VBox {
         this.setId("pane");
         setPrefWidth(800);
         setMaxHeight(600);
-        sendRequestBtn.setOnAction((event) -> SendRequest());
+        sendRequestBtn.setOnAction(((event) -> SendRequest()));
         backBtn.setOnAction((event) -> back());
+        reloadBtn.setOnAction((event) -> {
+            viewModel.sendRequest("ahmed", "ali");
+        });
+
         initialize();
     }
 
-    private void initialize() {
-        checkForRequests();
+    public void initialize() {
+        viewModel.func();
         viewPlayers();
+        checkForRequests();
         getCurrentToggled();
 
     }
@@ -115,15 +143,16 @@ public class AvailablePlayersViewController extends VBox {
             if (selectedPlayer == null) {
                 new NoPlayerSelectedDialog().show();
             } else {
+                viewModel.sendRequest("Ahmed", selectedPlayer);
                 sendRequestDialog.show();
-                viewModel.sendRequest(new Player(selectedPlayer));
                 SimpleObjectProperty<RequestStatus> rs = viewModel.getRequestStatus();
                 rs.addListener((observable, oldValue, newValue) -> {
                     System.out.println(newValue);
                     switch (rs.getValue()) {
                         case ACCEPTED: {
                             try {
-                                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, this);
+                                //passPlyersNames2MultiplayerBoard
+                                Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, this);
                             } catch (IOException ex) {
                                 Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -144,34 +173,32 @@ public class AvailablePlayersViewController extends VBox {
                 });
 
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     private void viewPlayers() {
-        viewModel.getAvailablePlayers().addListener(new ListChangeListener<Player>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends Player> change) {
-                while (change.next()) {
-                    if (change.wasAdded()) {
-                        for (Player player : change.getAddedSubList()) {
-                            RadioButton radioButton = new RadioButton(player.getName());
+        System.out.println("controller");
+
+        viewModel.getAvailablePlayers().addListener((ListChangeListener.Change<? extends String> change) -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    Platform.runLater(() -> {
+
+                        for (String player : change.getAddedSubList()) {
+                            RadioButton radioButton = new RadioButton(player);
                             radioButton.setToggleGroup(toggleGroup);
-                            toggleButtonsContainer.getChildren().add(radioButton);
+                            radioButtonsContainer.getChildren().add(radioButton);
                             toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
                         }
-                    }
+
+                    });
+
                 }
             }
         });
-        for (Player player : viewModel.getAvailablePlayers()) {
-            RadioButton radioButton = new RadioButton(player.getName());
-            radioButton.setToggleGroup(toggleGroup);
-            toggleButtonsContainer.getChildren().add(radioButton);
-//            toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
-        }
 
     }
 
@@ -198,7 +225,7 @@ public class AvailablePlayersViewController extends VBox {
         viewModel.isHaveRequest().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Platform.runLater(() -> {
-                    ReceivedRequestDialogViewController receivedRequestDialogViewController = new ReceivedRequestDialogViewController();
+//                    ReceivedRequestDialogViewController receivedRequestDialogViewController = new ReceivedRequestDialogViewController();
                 });
             } else {
                 // Do something when the boolean property changes to false
@@ -206,4 +233,15 @@ public class AvailablePlayersViewController extends VBox {
             }
         });
     }
+
+    public void observeSenderNamefromRemote() {
+        viewModel.getRequestSender().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            Platform.runLater(() -> {
+                ReceivedRequestDialogViewController receivedRequestDialogViewController =
+                        new ReceivedRequestDialogViewController(newValue);
+            });
+
+        });
+    }
+
 }

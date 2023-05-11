@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -22,9 +23,10 @@ public class ReceivedRequestDialogViewController extends DialogPane {
     protected final String title;
     protected final ButtonType acceptBtn;
     protected final ButtonType denyBtn;
+    protected  String senderName = "";
 
-    public ReceivedRequestDialogViewController() {
-
+    public ReceivedRequestDialogViewController(String senderName) {
+this.senderName = senderName;
         dialog = new Dialog<>();
         gridPane = new GridPane();
         label = new Label();
@@ -32,7 +34,7 @@ public class ReceivedRequestDialogViewController extends DialogPane {
         acceptBtn = new ButtonType("Accept");
         denyBtn = new ButtonType("Deny");
         dialog.setTitle(title);
-        label.setText("You have Received a request from .......");
+        label.setText("You have Received a request from" + senderName);
         gridPane.add(label, 0, 0);
         dialog.getDialogPane().getButtonTypes().addAll(acceptBtn, denyBtn);
 
@@ -41,19 +43,31 @@ public class ReceivedRequestDialogViewController extends DialogPane {
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
         try {
-            accept();
+            setButtonActions();
         } catch (IOException ex) {
             Logger.getLogger(SendRequestDialogViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    private void accept() throws IOException {
-        Optional<String> result;
-        result = dialog.showAndWait();
-        if (result.isPresent()) { //TODO make accept performed on pressing the accept button only
-            Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, null);
-        }
+    private void setButtonActions() throws IOException {
 
+        Button acceptButton = (Button) dialog.getDialogPane().lookupButton(acceptBtn);
+        acceptButton.setOnAction(event -> {
+            try {
+                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, null);
+            } catch (IOException ex) {
+                Logger.getLogger(ReceivedRequestDialogViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        // Override the default behavior of the Close button
+        Button denyButton = (Button) dialog.getDialogPane().lookupButton(denyBtn);
+        denyButton.setOnAction(event -> {
+            dialog.close();
+        });
+    }
+    public void show(){
+        dialog.showAndWait();
     }
 }
