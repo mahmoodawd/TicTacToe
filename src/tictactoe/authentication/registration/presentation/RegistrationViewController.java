@@ -3,6 +3,7 @@ package tictactoe.authentication.registration.presentation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -227,7 +228,7 @@ public class RegistrationViewController extends GridPane {
         registerBtn.setText("Register");
         registerBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         registerBtn.setTextFill(javafx.scene.paint.Color.WHITE);
-        registerBtn.setStyle("-fx-background-color: "+ColorPalette.lightBlue+"; -fx-background-radius: 15px;");
+        registerBtn.setStyle("-fx-background-color: " + ColorPalette.lightBlue + "; -fx-background-radius: 15px;");
         registerBtn.setPrefWidth(160);
 
         GridPane.setRowIndex(usernameField, 5);
@@ -262,7 +263,6 @@ public class RegistrationViewController extends GridPane {
         confirmationErrorTxt.setText("Password doesn't match !");
         confirmationErrorTxt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         confirmationErrorTxt.setVisible(false);
-        
 
         GridPane.setRowIndex(imageFrame, 1);
         imageFrame.setFitHeight(70.0);
@@ -313,7 +313,6 @@ public class RegistrationViewController extends GridPane {
         passwordField.setPromptText("e.g. Sample_Sample947");
         GridPane.setMargin(passwordField, new Insets(0.0, 190.0, 0.0, 190.0));
         passwordField.setStyle("-fx-background-radius: 15px;");
-        
 
         getColumnConstraints().add(columnConstraints);
         getRowConstraints().add(rowConstraints);
@@ -359,31 +358,31 @@ public class RegistrationViewController extends GridPane {
         navigateHyperLink();
         navigate();
     }
-    
-    
-    private void navigate(){
+
+    private void navigate() {
         registerBtn.setOnAction((event) -> {
-        try {
-            invalidPasswordTxt.setText(viewModel.getValidatePasswordMsg().toString());
-            invalidPasswordTxt.setVisible(false);
-            confirmationErrorTxt.setVisible(false);
-           
-                if(viewModel.validatePassword())
-                    if(viewModel.doesPasswordMatch())
+            try {
+                invalidPasswordTxt.setText(viewModel.getValidatePasswordMsg().toString());
+                invalidPasswordTxt.setVisible(false);
+                confirmationErrorTxt.setVisible(false);
+
+                if (viewModel.validatePassword()) {
+                    if (viewModel.doesPasswordMatch()) {
                         viewModel.sendRegisterCredentials();
-                    else{
+                    } else {
                         confirmationErrorTxt.setVisible(true);
                     }
-                else{    
+                } else {
                     invalidPasswordTxt.setVisible(true);
                 }
-           
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        }); 
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
-    private void uiObservers(){
+
+    private void uiObservers() {
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.setUsername(newValue);
         });
@@ -394,8 +393,8 @@ public class RegistrationViewController extends GridPane {
             viewModel.setConfirmPassword(newValue);
         });
     }
-    
-    private void viewModelObservers(){
+
+    private void viewModelObservers() {
         viewModel.getUsername().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             registerBtn.setDisable(!viewModel.enableRegisterBtn());
         });
@@ -406,20 +405,21 @@ public class RegistrationViewController extends GridPane {
             registerBtn.setDisable(!viewModel.enableRegisterBtn());
         });
         viewModel.getValidation().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(newValue){
+            if (newValue) {
+                Platform.runLater(() -> {
                     try {
-                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, this);
-                } catch (IOException ex) {
-                    Logger.getLogger(RegistrationViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            else{
+                        Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, confirmPasswordField);
+                    } catch (IOException ex) {
+                        Logger.getLogger(RegistrationViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
+            } else {
                 invalidUsernameTxt.setVisible(true);
             }
         });
     }
-    
-    private void navigateHyperLink(){
+
+    private void navigateHyperLink() {
         hyperlink.setOnAction(event -> {
             try {
                 Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, registerBtn);
@@ -428,14 +428,14 @@ public class RegistrationViewController extends GridPane {
             }
         });
     }
-    
-    private void navigateBackIcon(){
-        imageFrame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-              try {
-                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
-              } catch (IOException ex) {
-                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-              }
+
+    private void navigateBackIcon() {
+        imageFrame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            try {
+                Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 }

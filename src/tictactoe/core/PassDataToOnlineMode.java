@@ -15,8 +15,8 @@ public class PassDataToOnlineMode {
     
     
         private static PassDataToOnlineMode instance  = null;
-    public static SimpleStringProperty playerOneName = new SimpleStringProperty();
-    public static SimpleStringProperty playerTwoName = new SimpleStringProperty();
+    public  SimpleStringProperty playerOneName = new SimpleStringProperty();
+    public  SimpleStringProperty playerTwoName = new SimpleStringProperty();
     private PassDataToOnlineMode()
     {
     
@@ -26,16 +26,16 @@ public class PassDataToOnlineMode {
         return playerOneName;
     }
 
-    public  void setPlayerOneName(SimpleStringProperty playerOneName) {
-        PassDataToOnlineMode.playerOneName = playerOneName;
+    public  void setPlayerOneName(String playerName) {
+        playerOneName.set(playerName);
     }
 
     public  SimpleStringProperty getPlayerTwoName() {
         return playerTwoName;
     }
 
-    public  void setPlayerTwoName(SimpleStringProperty playerTwoName) {
-        PassDataToOnlineMode.playerTwoName = playerTwoName;
+    public  void setPlayerTwoName(String playerName) {
+        playerTwoName.set(playerName);
     }
     
     

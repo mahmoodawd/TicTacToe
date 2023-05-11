@@ -13,10 +13,6 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        
-           
-                  
-               
 
         Parent root = (Parent)ViewControllerFactory.getViewController(ViewController.MAINVIEWCONTROLLER);
         Scene scene = new Scene(root);

@@ -11,6 +11,8 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.StageStyle;
+import tictactoe.available_players.presentation.PassDataFromDialogToAvaliablePlayers;
+import tictactoe.available_players.presentation.RequestStatus;
 import tictactoe.core.Navigation;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.StylesUri;
@@ -23,10 +25,10 @@ public class ReceivedRequestDialogViewController extends DialogPane {
     protected final String title;
     protected final ButtonType acceptBtn;
     protected final ButtonType denyBtn;
-    protected  String senderName = "";
+    protected String senderName = "";
 
     public ReceivedRequestDialogViewController(String senderName) {
-this.senderName = senderName;
+        this.senderName = senderName;
         dialog = new Dialog<>();
         gridPane = new GridPane();
         label = new Label();
@@ -54,20 +56,21 @@ this.senderName = senderName;
 
         Button acceptButton = (Button) dialog.getDialogPane().lookupButton(acceptBtn);
         acceptButton.setOnAction(event -> {
-            try {
-                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, null);
-            } catch (IOException ex) {
-                Logger.getLogger(ReceivedRequestDialogViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            PassDataFromDialogToAvaliablePlayers.getInstance().setRequestStatus("");
+            PassDataFromDialogToAvaliablePlayers.getInstance().setRequestStatus(RequestStatus.ACCEPTED);
+            dialog.close();
         });
 
         // Override the default behavior of the Close button
         Button denyButton = (Button) dialog.getDialogPane().lookupButton(denyBtn);
         denyButton.setOnAction(event -> {
+            PassDataFromDialogToAvaliablePlayers.getInstance().setRequestStatus("");
+            PassDataFromDialogToAvaliablePlayers.getInstance().setRequestStatus(RequestStatus.REJECTED);
             dialog.close();
         });
     }
-    public void show(){
+
+    public void show() {
         dialog.showAndWait();
     }
 }
