@@ -22,19 +22,19 @@ public class PassDataToOnlineMode {
     
     }
 
-    public static SimpleStringProperty getPlayerOneName() {
+    public  SimpleStringProperty getPlayerOneName() {
         return playerOneName;
     }
 
-    public static void setPlayerOneName(SimpleStringProperty playerOneName) {
+    public  void setPlayerOneName(SimpleStringProperty playerOneName) {
         PassDataToOnlineMode.playerOneName = playerOneName;
     }
 
-    public static SimpleStringProperty getPlayerTwoName() {
+    public  SimpleStringProperty getPlayerTwoName() {
         return playerTwoName;
     }
 
-    public static void setPlayerTwoName(SimpleStringProperty playerTwoName) {
+    public  void setPlayerTwoName(SimpleStringProperty playerTwoName) {
         PassDataToOnlineMode.playerTwoName = playerTwoName;
     }
     

@@ -613,9 +613,9 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     private void init()
     {
         viewModel.setPlayerOneSymbol(1);
-          viewModel.setPlayerTwoSymbol(2);
-           viewModel.setPlayerOneName("");
-          viewModel.setPlayerTwoName("ali");
+        viewModel.setPlayerTwoSymbol(2);
+        viewModel.setPlayerOneName(PassDataToOnlineMode.getInstance().getPlayerOneName().get());
+        viewModel.setPlayerTwoName(PassDataToOnlineMode.getInstance().getPlayerTwoName().get());
     
     }
     
