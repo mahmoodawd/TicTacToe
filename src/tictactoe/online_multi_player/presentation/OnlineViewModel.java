@@ -13,7 +13,10 @@ public class OnlineViewModel {
    private SimpleStringProperty playerTwoName = new SimpleStringProperty();
    private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty playerTwoScore = new SimpleIntegerProperty();
-   private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty();
+   private SimpleIntegerProperty turnNotifier = new SimpleIntegerProperty(); 
+    
+   
+   
    
    
    //todo connect the server and everything will work perfectlly

@@ -628,7 +628,8 @@ public  class OnlineViewController extends BorderPane {
         viewModel.setPlayerOneSymbol(1);
           viewModel.setPlayerTwoSymbol(2);
            viewModel.setPlayerOneName("ahmed");
-          viewModel.setPlayerTwoName("ali");
+          viewModel.setPlayerTwoName("ali"); 
+          
     
     }
     

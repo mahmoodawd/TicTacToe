@@ -11,6 +11,7 @@ import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.exit_dialog.ExitDialogController;
 import tictactoe.main_menu.presentation.multi_mode.MultiModeViewController;
 import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
@@ -22,7 +23,8 @@ import tictactoe.online_multi_player.presentation.menu_dialog.MenuDialogControll
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
-import winnerDialog.SingleWinnerDialogController;
+import tictactoe.single_player.presentation.winnerDialog.SingleWinnerDialogController;
+//import winnerDialog.SingleWinnerDialogController;
 
 
 public class ViewControllerFactory {
@@ -95,7 +97,10 @@ public class ViewControllerFactory {
                 return new MultiPlayerWinnerDialogController();
             }  
             
-          
+           case EXITDIALOGCONTROLLER:{
+               
+               return new ExitDialogController();
+            }  
             
             
             //todo add your own controller name in enum class and add your case here

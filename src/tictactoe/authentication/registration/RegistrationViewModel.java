@@ -17,10 +17,29 @@ public class RegistrationViewModel {
      String containsSpecialCharacterMsg="";
      String passwordMatchesMsg="";
      String containsNumberMsg="";
+     
+     boolean  status =false;
+     String userName = null;
+    
+     
+    boolean getString ( String name){
+        
+        if(userName == "Ali")
+         return true;
+        else
+         return false;
+        
+}
+   
+    
+     
+           
      StringBuilder validatePasswordMsg=new StringBuilder();
      SimpleStringProperty password = new SimpleStringProperty();
      SimpleStringProperty confirmPassword = new SimpleStringProperty();
      SimpleStringProperty username = new SimpleStringProperty();
+     
+   
      
     public RegistrationViewModel(){
         password.set("");
@@ -160,4 +179,6 @@ public class RegistrationViewModel {
             result=true;
         return result;
     }
+    
+    
 }

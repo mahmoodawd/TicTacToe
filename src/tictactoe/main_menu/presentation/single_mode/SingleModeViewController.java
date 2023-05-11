@@ -336,6 +336,15 @@ SingleModeViewModel viewModel= null;
         getChildren().add(startBtn);
         getChildren().add(MotvitText);
         getChildren().add(imge_single); 
+        
+    String lightblue= ColorPalette.lightBlue;
+    
+        
+startBtn.setStyle("-fx-text-fill: white; " +
+                "-fx-font-weight: bold; " +
+                "-fx-background-color:" + lightblue + "; " +
+                "-fx-background-radius: 30px;");
+        
         // MotvitText.setStyle("-fx-background-color: "+ColorPalette.lightRed); 
        // MotvitText.setStyle("-fx-background-color: yellow");
         /*
@@ -386,8 +395,14 @@ SingleModeViewModel viewModel= null;
         alert.setContentText("Name must be at least 5 characters long.");
         alert.showAndWait();
     } else {
-        // If the name is valid, do something with it
-        System.out.println("Hello, " + name + "!");
+        try {
+            // If the name is valid, do something with it
+           
+            viewModel.setPlayerNameTxt(usernameField.getText());
+            Navigation.openPage(ViewController.SINGLEPLAYERVIEWCONTROLLER, this);
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }); 
 

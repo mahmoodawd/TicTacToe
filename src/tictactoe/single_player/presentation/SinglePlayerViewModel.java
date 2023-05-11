@@ -21,8 +21,8 @@ public class SinglePlayerViewModel {
    private SimpleIntegerProperty playerOneSymbol = new SimpleIntegerProperty();
    private SimpleIntegerProperty computerSymbol = new SimpleIntegerProperty();
    private SimpleStringProperty playerOneName = new SimpleStringProperty();
-   private SimpleStringProperty computer = new SimpleStringProperty();
-  private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
+   private final SimpleStringProperty computer = new SimpleStringProperty();
+   private SimpleIntegerProperty playerOneScore = new SimpleIntegerProperty();
    private SimpleIntegerProperty computerScore = new SimpleIntegerProperty(); 
    private SimpleIntegerProperty numberOfPlayedMoves = new SimpleIntegerProperty();
    
@@ -168,7 +168,8 @@ public class SinglePlayerViewModel {
 
     
     
-  public void setBoard(int row, int column) {
+  public void setBoard(int row, int column) { 
+     
     if (board[row][column] != 0 || !winnerName.get().isEmpty()  || playerTurn.get() == computerSymbol.get()  ) {
         return;
     }
@@ -190,12 +191,13 @@ public class SinglePlayerViewModel {
     { 
         
               board[row][column]= playerSymbol;  
-              
+              /*
               if(playerTurn.get() ==1) {
-                   playerTurn.set(2 );
+                  playerTurn.set(2 );
               }else{
                  playerTurn.set(1);  
               }
+*/
             numberOfPlayedMoves.set(numberOfPlayedMoves.get()+1); 
     } 
     

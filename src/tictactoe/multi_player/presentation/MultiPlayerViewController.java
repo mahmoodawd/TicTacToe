@@ -23,9 +23,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
+import tictactoe.core.PassPlayerNameMultiMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
-import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
+import tictactoe.main_menu.presentation.exit_dialog.ExitDialogController;
 import tictactoe.online_multi_player.presentation.OnlineViewController;
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 
@@ -610,8 +611,10 @@ public  class MultiPlayerViewController extends BorderPane {
      
         viewModel.setPlayerOneSymbol(1);
         viewModel.setPlayerTwoSymbol(2);
-        viewModel.setPlayerOneName("ahmed");
-        viewModel.setPlayerTwoName("ali");
+              String firstPlayerName = PassPlayerNameMultiMode.getInstance().getPlayerOneName();
+              String secondPlayerName = PassPlayerNameMultiMode.getInstance().getPlayerTwoName();
+        viewModel.setPlayerOneName(firstPlayerName);
+        viewModel.setPlayerTwoName(secondPlayerName);
     
     }
     

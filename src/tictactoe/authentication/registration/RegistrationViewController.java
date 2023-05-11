@@ -1,6 +1,8 @@
 package tictactoe.authentication.registration;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -62,7 +64,27 @@ public class RegistrationViewController extends GridPane {
     RegistrationViewModel viewModel;
 
     public RegistrationViewController(RegistrationViewModel viewModel) {
+         boolean isOnline = viewModel.getString("Ali");
+           // 
+           
+           
+           /*
+            if(isOnline){
+             try {
+                 Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, null);
+                 
+                 
+                 Navigation.openPage(ViewController.MAINVIEWCONTROLLER, null);
+             } catch (IOException ex) {
+                 Logger.getLogger(RegistrationViewController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            }
 
+           */
+         
+         
+    
+      
         this.viewModel = viewModel;
         columnConstraints = new ColumnConstraints();
         rowConstraints = new RowConstraints();

@@ -5,6 +5,8 @@
  */
 package tictactoe.main_menu.presentation.multi_mode;
 
+import tictactoe.core.PassPlayerNameMultiMode;
+
 /**
  *
  * @author Aya
@@ -28,6 +30,7 @@ public class MultiModeViewModel {
 
     public void setFirstPlayerNameTxt(String firstPlayerNameTxt) {
         this.firstPlayerNameTxt = firstPlayerNameTxt;
+        PassPlayerNameMultiMode.getInstance().setPlayerOneName(firstPlayerNameTxt);
     }
 
     public String getSecondPlayerName() {
@@ -36,6 +39,7 @@ public class MultiModeViewModel {
 
     public void setSecondPlayerName(String secondPlayerName) {
         this.secondPlayerName = secondPlayerName;
+         PassPlayerNameMultiMode.getInstance().setPlayerTwoName(secondPlayerName);
     }
 }
   

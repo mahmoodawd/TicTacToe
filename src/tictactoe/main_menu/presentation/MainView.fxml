@@ -4,75 +4,194 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="551.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <VBox fx:id="vBox" alignment="CENTER" prefHeight="130.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="597.0" minWidth="10.0" prefWidth="159.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="597.0" minWidth="10.0" prefWidth="255.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="527.0" minWidth="3.0" prefWidth="186.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="212.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="358.0" minHeight="10.0" prefHeight="188.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ImageView fx:id="imageLogo" fitHeight="163.0" fitWidth="253.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+      <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="singleBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" text="Single">
+            <Button fx:id="singleBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Single">
                <VBox.margin>
-                  <Insets left="50.0" top="8.0" />
+                  <Insets bottom="10.0" top="-70.0" />
                </VBox.margin>
-            </Button>
-            <Button fx:id="onloneBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Multi">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></Button>
+            <Button fx:id="multiBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="261.0" text="Multi">
                <VBox.margin>
-                  <Insets left="50.0" top="8.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
-            </Button>
-            <Button fx:id="multiBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Online">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></Button>
+            <Button fx:id="onlineBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="254.0" text="Online">
                <VBox.margin>
-                  <Insets left="50.0" top="8.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
-            </Button>
-            <Button fx:id="exitBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Exite">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></Button>
+            <Button fx:id="exitBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="257.0" text="Exit">
                <VBox.margin>
-                  <Insets left="50.0" top="8.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
-            </Button>
+               <padding>
+                  <Insets bottom="5.0" left="10.0" top="5.0" />
+               </padding></Button>
          </children>
+         <GridPane.margin>
+            <Insets bottom="70.0" top="60.0" />
+         </GridPane.margin>
+         <padding>
+            <Insets top="100.0" />
+         </padding>
       </VBox>
-   </bottom>
-   <top>
-      <AnchorPane fx:id="anchorePane" prefHeight="136.0" prefWidth="512.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imgeLogo" fitHeight="61.0" fitWidth="69.0" layoutX="328.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+      <BorderPane fx:id="borderPane_L1" prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <ImageView fx:id="img3" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../../../Download%20(E)/Logo.png" />
+                  <Image url="@../../../../../../Frame%201206.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="70.0" layoutX="276.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+         </center>
+         <top>
+            <ImageView fx:id="img1" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../../../Download%20(E)/Logo.png" />
+                  <Image url="@../../../../../../Frame%201206.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="66.0" fitWidth="71.0" layoutX="224.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+         </top>
+         <left>
+            <ImageView fx:id="img2" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../../../Download%20(E)/Logo.png" />
+                  <Image url="@../../../../../../Frame%201206.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgeO" fitHeight="32.0" fitWidth="23.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgeO" fitHeight="32.0" fitWidth="23.0" layoutX="119.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgeX" fitHeight="32.0" fitWidth="23.0" layoutX="477.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-   </top>
-   <left>
-      <AnchorPane prefHeight="68.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imgeX" fitHeight="32.0" fitWidth="23.0" layoutX="14.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imgX" fitHeight="32.0" fitWidth="23.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="imgeO" fitHeight="32.0" fitWidth="23.0" layoutX="122.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+         </left>
+         <right>
+            <ImageView fx:id="img4" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </right>
+         <bottom>
+            <ImageView fx:id="img5" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </bottom>
+      </BorderPane>
+      <BorderPane fx:id="pordderL2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <center>
+            <ImageView fx:id="img7" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image></ImageView>
+         </center>
+         <left>
+            <ImageView fx:id="img6" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image></ImageView>
+         </left>
+         <right>
+            <ImageView fx:id="img8" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image></ImageView>
+         </right>
+         <bottom>
+            <ImageView fx:id="img9" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image></ImageView>
+         </bottom>
+      </BorderPane>
+      <BorderPane fx:id="prderR1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+         <center>
+            <ImageView fx:id="img12" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </center>
+         <top>
+            <ImageView fx:id="img10" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </top>
+         <left>
+            <ImageView fx:id="img11" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </left>
+         <right>
+            <ImageView fx:id="img13" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </right>
+         <bottom>
+            <ImageView fx:id="img14" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </bottom>
+      </BorderPane>
+      <BorderPane fx:id="prderR2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <left>
+            <ImageView fx:id="img15" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </left>
+         <center>
+            <ImageView fx:id="img16" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </center>
+         <right>
+            <ImageView fx:id="img17" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </right>
+         <bottom>
+            <ImageView fx:id="img18" fitHeight="45.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Frame%201206.png" />
+               </image>
+            </ImageView>
+         </bottom>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets top="-10.0" />
+   </padding>
+</GridPane>

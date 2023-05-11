@@ -5,6 +5,8 @@
  */
 package tictactoe.main_menu.presentation.single_mode;
 
+import tictactoe.core.PassPlayerNameSingleMode;
+
 /**
  *
  * @author Aya
@@ -28,6 +30,8 @@ public class SingleModeViewModel {
 
     public void setPlayerNameTxt(String playerNameTxt) {
         this.playerNameTxt = playerNameTxt;
+        
+           PassPlayerNameSingleMode.getInstance().setPlayerName(playerNameTxt);
     }
 
     public boolean getIsPlayerTurn() {
@@ -37,7 +41,14 @@ public class SingleModeViewModel {
     public void setIsPlayerTurn(boolean isPlayerTurn) {
         this.isPlayerTurn = isPlayerTurn;
     }
-}
+   
+   
+    
+    }
+
+
+
+
 
     
     
