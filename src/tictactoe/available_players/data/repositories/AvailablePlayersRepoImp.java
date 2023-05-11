@@ -65,7 +65,7 @@ public class AvailablePlayersRepoImp {
         try {
             connectionLatch.await(); // Wait for the connection to be established
             sender.println(ClientMessage.HEADER + " " + ClientMessage.SEND_REQUEST + " " + requesterName + " " + receiverName);
-            getServerResponse();
+//            getServerResponse();
         } catch (InterruptedException ex) {
             Logger.getLogger(AvailablePlayersRepoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,7 +75,7 @@ public class AvailablePlayersRepoImp {
     public void acceptRequest() {
         try {
             connectionLatch.await(); // Wait for the connection to be established
-            sender.println(ClientMessage.HEADER + " " + ClientMessage.ACCEPT);
+            sender.println(ClientMessage.HEADER + " " + ClientMessage.ACCEPT_GAME_REQUEST);
         } catch (InterruptedException ex) {
             Logger.getLogger(AvailablePlayersRepoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,7 +95,7 @@ public class AvailablePlayersRepoImp {
         return isHaveRequest;
     }
 
-    private boolean getServerResponse() {
+   /* private boolean getServerResponse() {
         boolean fetchStatus = false;
         String serverMsg, header, body = null;
         String playerName;
@@ -132,13 +132,13 @@ public class AvailablePlayersRepoImp {
             Logger.getLogger(AvailablePlayersRepoImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fetchStatus;
-    }
+    }*/
 
     private void fetchPlayersListFromServer() {
         try {
             connectionLatch.await(); // Wait for the connection to be established
             sender.println(ClientMessage.HEADER + " " + ClientMessage.GET);
-            getServerResponse();
+//            getServerResponse();
         } catch (InterruptedException ex) {
             Logger.getLogger(AvailablePlayersRepoImp.class.getName()).log(Level.SEVERE, null, ex);
         }

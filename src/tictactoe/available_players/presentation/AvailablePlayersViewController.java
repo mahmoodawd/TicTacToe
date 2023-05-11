@@ -28,6 +28,8 @@ import tictactoe.available_players.presentation.dialogs.ReceivedRequestDialogVie
 import tictactoe.available_players.presentation.dialogs.RequestDeniedDialogViewController;
 import tictactoe.available_players.presentation.dialogs.SendRequestDialogViewController;
 import tictactoe.core.Navigation;
+import tictactoe.core.PassDataToAvaliablePlayers;
+import tictactoe.core.PassDataToOnlineMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.StylesUri;
@@ -123,14 +125,17 @@ public class AvailablePlayersViewController extends VBox {
         sendRequestBtn.setOnAction(((event) -> SendRequest()));
         backBtn.setOnAction((event) -> back());
         reloadBtn.setOnAction((event) -> {
-            viewModel.sendRequest("ahmed", "ali");
+
+            viewModel.sendRequest(selectedPlayer);
         });
 
         initialize();
     }
 
     public void initialize() {
-        viewModel.func();
+        observers();
+        viewModel.setPlayerOneName(PassDataToAvaliablePlayers.getInstance().getPlayerOneName().get());
+        viewModel.requestPlayersList();
         viewPlayers();
         checkForRequests();
         getCurrentToggled();
@@ -143,34 +148,8 @@ public class AvailablePlayersViewController extends VBox {
             if (selectedPlayer == null) {
                 new NoPlayerSelectedDialog().show();
             } else {
-                viewModel.sendRequest("Ahmed", selectedPlayer);
+                viewModel.sendRequest(selectedPlayer);
                 sendRequestDialog.show();
-                SimpleObjectProperty<RequestStatus> rs = viewModel.getRequestStatus();
-                rs.addListener((observable, oldValue, newValue) -> {
-                    System.out.println(newValue);
-                    switch (rs.getValue()) {
-                        case ACCEPTED: {
-                            try {
-                                //passPlyersNames2MultiplayerBoard
-                                Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, this);
-                            } catch (IOException ex) {
-                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        break;
-                        case REJECTED:
-                            new RequestDeniedDialogViewController().show();
-                            break;
-                        case SENDING: {
-                            try {
-                                sendRequestDialog.show();
-                            } catch (IOException ex) {
-                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        break;
-                    }
-                });
 
             }
         } catch (Exception ex) {
@@ -188,10 +167,14 @@ public class AvailablePlayersViewController extends VBox {
                     Platform.runLater(() -> {
 
                         for (String player : change.getAddedSubList()) {
-                            RadioButton radioButton = new RadioButton(player);
-                            radioButton.setToggleGroup(toggleGroup);
-                            radioButtonsContainer.getChildren().add(radioButton);
-                            toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
+                            System.out.println(player);
+                            System.out.println(viewModel.getPlayerOneName().get());
+                            if(!player.equals(viewModel.getPlayerOneName().get())){
+                                RadioButton radioButton = new RadioButton(player);
+                                radioButton.setToggleGroup(toggleGroup);
+                                radioButtonsContainer.getChildren().add(radioButton);
+                                toggleButtonsScrollPane.setVvalue(viewModel.getAvailablePlayers().size() - 1);
+                            }
                         }
 
                     });
@@ -234,14 +217,68 @@ public class AvailablePlayersViewController extends VBox {
         });
     }
 
-    public void observeSenderNamefromRemote() {
-        viewModel.getRequestSender().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+    public void observers() {
+        //For playerName
+        viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            System.out.println("ObservePlayer2Name on Controller");
             Platform.runLater(() -> {
-                ReceivedRequestDialogViewController receivedRequestDialogViewController =
-                        new ReceivedRequestDialogViewController(newValue);
+                if (viewModel.isRequestSent()) {
+                    System.out.println("ObservePlayer2Name on Controller:SentRequest");
+                    try {
+                        PassDataToOnlineMode.getInstance().setPlayerOneName(viewModel.getPlayerOneName().get());
+                        PassDataToOnlineMode.getInstance().setPlayerTwoName(viewModel.getPlayerTwoName().get());
+                        Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, backBtn);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    System.out.println("ObservePlayer2Name on Controller: receiver");
+                    new ReceivedRequestDialogViewController(newValue).show();
+                }
             });
 
         });
+        //for Request Status
+        PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(RequestStatus.ACCEPTED)) {
+                try {
+                    viewModel.acceptGameRequest();
+                    PassDataToOnlineMode.getInstance().setPlayerOneName(viewModel.getPlayerOneName().get());
+                    PassDataToOnlineMode.getInstance().setPlayerTwoName(viewModel.getPlayerTwoName().get());
+                    Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, backBtn);
+                } catch (IOException ex) {
+                    Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (newValue.equals(RequestStatus.REJECTED)) {
+                viewModel.rejectGameRequest();
+            }
+        });
+
+        viewModel.getDenied().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (newValue.equals("deniedGameResponse")) {
+                new RequestDeniedDialogViewController().show();
+            }
+
+        });
+
+        /*   viewModel.getRequestStatus().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case RequestStatus.ACCEPTED: {
+                    try {
+                        PassDataToOnlineMode.getInstance().setPlayerOneName(viewModel.getOwnerName());
+                        PassDataToOnlineMode.getInstance().setPlayerTwoName(viewModel.getReceiverName());
+                        Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, backBtn);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+                case RequestStatus.REJECTED:
+                    new RequestDeniedDialogViewController().show();
+                    break;
+
+            }
+        });*/
     }
 
 }

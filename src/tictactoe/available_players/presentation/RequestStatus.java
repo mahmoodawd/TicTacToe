@@ -9,7 +9,8 @@ package tictactoe.available_players.presentation;
  *
  * @author 3WD
  */
-public enum RequestStatus {
-    ACCEPTED,REJECTED,SENDING;
+public class RequestStatus {
+    public static final String ACCEPTED = "ACCEPTED";
+    public static final String REJECTED = "REJECTED"; 
     
 }

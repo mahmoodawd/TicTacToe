@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import tictactoe.core.Navigation;
+import tictactoe.core.PassDataToAvaliablePlayers;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
@@ -339,6 +340,7 @@ public class LoginViewController extends GridPane {
             System.out.println("controller "+newValue);
             switch (newValue){
                 case "Login Successful" :
+                    PassDataToAvaliablePlayers.getInstance().setPlayerOneName(viewModel.getUsername().get());
                     Platform.runLater(() -> {
                         try {
                             Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER,loginBtn );
