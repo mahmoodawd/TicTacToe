@@ -30,6 +30,7 @@ public class Remote extends Thread{
             server = new Socket("localhost",4004);
             listener = new DataInputStream(server.getInputStream());
             sender = new PrintStream(server.getOutputStream());
+            Remote.getIntance().start();
         } catch (IOException ex) {
             Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,9 +42,6 @@ public class Remote extends Thread{
         super.run();
         
            try {
-               
-            
-            
              while(true)
              {
                String input = listener.readLine();
@@ -65,6 +63,14 @@ public class Remote extends Thread{
                        recieveGameResultResponse(input);
                        break;
                    }
+                   case "Login":{
+                       recieveLoginResponse(input);
+                       break;
+                   }
+                   case "Register":{
+                       recieveRegistrationResponse(input);
+                       break;
+                   }
                    
                
                
@@ -74,7 +80,8 @@ public class Remote extends Thread{
              }
         } catch (IOException ex) {
             Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        }
+           finally{
             try {
                 listener.close();
                 sender.close();
