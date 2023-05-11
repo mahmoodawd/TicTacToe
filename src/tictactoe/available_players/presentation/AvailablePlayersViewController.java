@@ -125,8 +125,8 @@ public class AvailablePlayersViewController extends VBox {
         sendRequestBtn.setOnAction(((event) -> SendRequest()));
         backBtn.setOnAction((event) -> back());
         reloadBtn.setOnAction((event) -> {
-
-            viewModel.sendRequest(selectedPlayer);
+            viewModel.clearPlayersList();
+            viewModel.requestPlayersList();
         });
 
         initialize();
@@ -162,6 +162,9 @@ public class AvailablePlayersViewController extends VBox {
         System.out.println("controller");
 
         viewModel.getAvailablePlayers().addListener((ListChangeListener.Change<? extends String> change) -> {
+            Platform.runLater(() -> {
+//                radioButtonsContainer.getChildren().clear();
+            });
             while (change.next()) {
                 if (change.wasAdded()) {
                     Platform.runLater(() -> {
@@ -169,7 +172,7 @@ public class AvailablePlayersViewController extends VBox {
                         for (String player : change.getAddedSubList()) {
                             System.out.println(player);
                             System.out.println(viewModel.getPlayerOneName().get());
-                            if(!player.equals(viewModel.getPlayerOneName().get())){
+                            if (!player.equals(viewModel.getPlayerOneName().get())) {
                                 RadioButton radioButton = new RadioButton(player);
                                 radioButton.setToggleGroup(toggleGroup);
                                 radioButtonsContainer.getChildren().add(radioButton);
