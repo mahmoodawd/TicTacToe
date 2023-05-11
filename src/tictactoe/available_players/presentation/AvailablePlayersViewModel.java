@@ -69,7 +69,7 @@ public class AvailablePlayersViewModel {
     public SimpleStringProperty getDenied() {
         return denied;
     }
-    
+
     public void setPlayerTwoName(String receiverName) {
         this.playerTwoName.set(receiverName);
     }
@@ -137,12 +137,15 @@ public class AvailablePlayersViewModel {
         });
     }
 
-    private void observeDeniedFromRemote(){
+    private void observeDeniedFromRemote() {
         remote.getDenied().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             denied.set(newValue);
 
         });
     }
 
-   
+    void clearPlayersList() {
+        availablePlayers.clear();
+    }
+
 }

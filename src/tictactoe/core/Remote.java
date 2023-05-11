@@ -205,15 +205,9 @@ public class Remote extends Thread {
         String players[] = serverMsg.split(" ");
         String playerName = "";
 
-        try {
-
-            for (int i = 0; i < players.length; i++) {
-                playerName = listener.readLine();
-                availablePlayers.add(playerName);
-            }
-
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+        for (int i = 1; i < players.length; i++) {
+            System.out.println("Fill List" + playerName);
+            availablePlayers.add(players[i]);
         }
         return fetchStatus;
     }
