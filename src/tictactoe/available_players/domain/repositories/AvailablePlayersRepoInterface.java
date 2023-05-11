@@ -16,6 +16,6 @@ import tictactoe.available_players.domain.model.Player;
 public interface AvailablePlayersRepoInterface {
     
 List<Player> getAvailablePlayers();
-public boolean sendRequest(Player requester, Player receiver);
+public boolean sendRequest(String requesterName, String receiverName);
 boolean listenForRequest();
 }
