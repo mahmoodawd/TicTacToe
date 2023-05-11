@@ -19,9 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
+import tictactoe.core.PassDataToOnlineMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.core.designsystem.resources.Strings;
 import tictactoe.multi_player.presentation.MultiPlayerViewController;
 
 public  class OnlineMultiPlayerViewController extends BorderPane {
@@ -92,6 +94,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
 
       OnlineMultiPlayerViewModel viewModel ;
     public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
+        System.out.println("online mode");
         this.viewModel = viewModel;
       
         gridPane = new GridPane();
@@ -610,9 +613,9 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     private void init()
     {
         viewModel.setPlayerOneSymbol(1);
-          viewModel.setPlayerTwoSymbol(2);
-           viewModel.setPlayerOneName("ahmed");
-          viewModel.setPlayerTwoName("ali");
+        viewModel.setPlayerTwoSymbol(2);
+        viewModel.setPlayerOneName(PassDataToOnlineMode.getInstance().getPlayerOneName().get());
+        viewModel.setPlayerTwoName(PassDataToOnlineMode.getInstance().getPlayerTwoName().get());
     
     }
     
@@ -718,12 +721,12 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
 
                  switch(newValue){
            
-               case "main":{
+               case Strings.main:{
                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
                    break;
                }
                
-               case "replay":{
+               case Strings.replay:{
                  
                    resetBoard(true);
                    viewModel.swapSymbols();
@@ -731,7 +734,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
                }
                
                
-               case "watch moves":
+               case Strings.watchAgain:
                {
                   animateMoves();
                  break;

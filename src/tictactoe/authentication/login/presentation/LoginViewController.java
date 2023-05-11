@@ -3,6 +3,7 @@ package tictactoe.authentication.login.presentation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -335,21 +336,25 @@ public class LoginViewController extends GridPane {
             loginBtn.setDisable(!viewModel.enableLoginBtn());
         });
         viewModel.getValidation().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                    try {             
-                        switch (newValue){
-                            case "Login Successful" :
-                                Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, this);
-                                break;
-                            case "Login Failed Username" :
-                                invalidUsernameWarning.setVisible(true);
-                                break;
-                            case "Login Failed Password" :
-                                invalidPasswordWarning.setVisible(true);
-                                break;
+            System.out.println("controller "+newValue);
+            switch (newValue){
+                case "Login Successful" :
+                    Platform.runLater(() -> {
+                        try {
+                            Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER,loginBtn );
+                        } catch (IOException ex) {
+                            Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    });
+                    
+                    break;
+                case "Login Failed Username" :
+                    invalidUsernameWarning.setVisible(true);
+                    break;
+                case "Login Failed Password" :
+                    invalidPasswordWarning.setVisible(true);
+                    break;
+            }
 
 
             });

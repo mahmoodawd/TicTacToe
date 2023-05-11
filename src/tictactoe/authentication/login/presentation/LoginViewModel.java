@@ -19,7 +19,9 @@ public class LoginViewModel {
     public LoginViewModel(Remote remote){
         username.set("");
         password.set("");
+       
         this.remote = remote;
+         validation();
     }
 
     public SimpleStringProperty getValidation() {
@@ -59,6 +61,7 @@ public class LoginViewModel {
     }
     protected void validation(){
         remote.getLoginResponse().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
             validation.set(newValue);
         });
     }

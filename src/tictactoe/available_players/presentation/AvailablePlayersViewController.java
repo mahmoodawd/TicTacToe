@@ -144,33 +144,33 @@ public class AvailablePlayersViewController extends VBox {
                 new NoPlayerSelectedDialog().show();
             } else {
                 viewModel.sendRequest("Ahmed", selectedPlayer);
-//                sendRequestDialog.show();
-//                SimpleObjectProperty<RequestStatus> rs = viewModel.getRequestStatus();
-//                rs.addListener((observable, oldValue, newValue) -> {
-//                    System.out.println(newValue);
-//                    switch (rs.getValue()) {
-//                        case ACCEPTED: {
-//                            try {
-//                                //passPlyersNames2MultiplayerBoard
-//                                Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, this);
-//                            } catch (IOException ex) {
-//                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
-//                        }
-//                        break;
-//                        case REJECTED:
-//                            new RequestDeniedDialogViewController().show();
-//                            break;
-//                        case SENDING: {
-//                            try {
-//                                sendRequestDialog.show();
-//                            } catch (IOException ex) {
-//                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
-//                            }
-//                        }
-//                        break;
-//                    }
-//                });
+                sendRequestDialog.show();
+                SimpleObjectProperty<RequestStatus> rs = viewModel.getRequestStatus();
+                rs.addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    switch (rs.getValue()) {
+                        case ACCEPTED: {
+                            try {
+                                //passPlyersNames2MultiplayerBoard
+                                Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, this);
+                            } catch (IOException ex) {
+                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        break;
+                        case REJECTED:
+                            new RequestDeniedDialogViewController().show();
+                            break;
+                        case SENDING: {
+                            try {
+                                sendRequestDialog.show();
+                            } catch (IOException ex) {
+                                Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        break;
+                    }
+                });
 
             }
         } catch (Exception ex) {
