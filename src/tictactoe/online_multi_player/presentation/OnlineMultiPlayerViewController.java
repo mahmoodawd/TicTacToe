@@ -22,6 +22,7 @@ import tictactoe.core.PassData;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.core.designsystem.resources.Strings;
 import tictactoe.multi_player.presentation.MultiPlayerViewController;
 
 public  class OnlineMultiPlayerViewController extends BorderPane {
@@ -719,12 +720,12 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
 
                  switch(newValue){
            
-               case "main":{
+               case Strings.main:{
                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
                    break;
                }
                
-               case "replay":{
+               case Strings.replay:{
                  
                    resetBoard(true);
                    viewModel.swapSymbols();
@@ -732,7 +733,7 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
                }
                
                
-               case "watch moves":
+               case Strings.watchAgain:
                {
                   animateMoves();
                  break;

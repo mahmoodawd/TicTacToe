@@ -14,6 +14,7 @@ import tictactoe.core.PassData;
 import tictactoe.core.designsystem.ColorPalette;
 import tictactoe.core.designsystem.Typography;
 import tictactoe.core.designsystem.resources.ImagesUri;
+import tictactoe.core.designsystem.resources.Strings;
 
 public  class MultiPlayerWinnerDialogController extends GridPane {
 
@@ -169,7 +170,7 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         GridPane.setValignment(winnerNameTextView, javafx.geometry.VPos.CENTER);
         winnerNameTextView.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         winnerNameTextView.setStrokeWidth(0.0);
-        winnerNameTextView.setText("Winner");
+        winnerNameTextView.setText(Strings.winnerPlaceHolder);
         winnerNameTextView.setFont(Typography.headerMediumFont);
         winnerNameTextView.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 
@@ -224,7 +225,7 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         text.setFill(javafx.scene.paint.Color.WHITE);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
-        text.setText("Main Menu");
+        text.setText(Strings.mainMenu);
         text.setFont(Typography.subtitleOneMediumFont);
         mainMenuButton.setGraphic(gridPane0);
 
@@ -311,7 +312,7 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         text1.setFill(javafx.scene.paint.Color.WHITE);
         text1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text1.setStrokeWidth(0.0);
-        text1.setText("Watch Moves");
+        text1.setText(Strings.watchAgain);
         text1.setFont(Typography.subtitleOneMediumFont);
         
         GridPane.setMargin(text1, new Insets(0.0));
@@ -380,20 +381,20 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
           mainMenuButton.setOnAction((event) -> {
             
               
-                 setReturnAndClose("main");
+                 setReturnAndClose(Strings.main);
             });
             
             
              replayButton.setOnAction((event) -> {
             
        
-                 setReturnAndClose("replay");
+                 setReturnAndClose(Strings.replay);
             
             });
              
               watchMovesButton.setOnAction((event) -> {
             
-              setReturnAndClose("watch moves");
+              setReturnAndClose(Strings.watchAgain);
 
             });
     }

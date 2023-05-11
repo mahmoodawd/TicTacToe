@@ -74,8 +74,6 @@ public class Remote extends Thread{
                        break;
                    }
                    
-               
-               
                }
              
              
