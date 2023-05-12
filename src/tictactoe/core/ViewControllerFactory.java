@@ -1,6 +1,4 @@
-
 package tictactoe.core;
-
 
 import tictactoe.multi_player.presentation.MultiPlayerViewModel;
 import tictactoe.authentication.login.presentation.LoginViewController;
@@ -11,6 +9,8 @@ import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.AvailablePlayersViewModel;
 import tictactoe.main_menu.presentation.MainViewController;
 import tictactoe.main_menu.presentation.MainViewModel;
+import tictactoe.main_menu.presentation.exit_dialog.ExitDialogController;
+
 import tictactoe.main_menu.presentation.multi_mode.MultiModeViewController;
 import tictactoe.main_menu.presentation.multi_mode.MultiModeViewModel;
 import tictactoe.main_menu.presentation.single_mode.SingleModeViewController;
@@ -24,93 +24,78 @@ import tictactoe.single_player.presentation.SinglePlayerController;
 import tictactoe.single_player.presentation.SinglePlayerViewModel;
 import tictactoe.single_player.presentation.winnerDialog.SingleWinnerDialogController;
 
-
-
 public class ViewControllerFactory {
 
-    public static Object getViewController(ViewController viewController)
-    {
+    public static Object getViewController(ViewController viewController) {
         Object viewModel = ViewModelFactory.getViewModel(viewController);
-        
-        switch(viewController)
-        {
-        
-            case MAINVIEWCONTROLLER :{
-            
-              return new MainViewController((MainViewModel)viewModel);
-         
+
+        switch (viewController) {
+
+            case MAINVIEWCONTROLLER: {
+
+                return new MainViewController((MainViewModel) viewModel);
+
             }
-            
-            case ONLINEMULTIPLAYERVIEWCONTROLLER:{
-                return new OnlineMultiPlayerViewController((OnlineMultiPlayerViewModel)viewModel);
+
+            case ONLINEMULTIPLAYERVIEWCONTROLLER: {
+                return new OnlineMultiPlayerViewController((OnlineMultiPlayerViewModel) viewModel);
             }
-            
-            
-             case MENUDIALOGCONTROLLER:{
+
+            case MENUDIALOGCONTROLLER: {
                 return new MenuDialogController();
             }
-             
-             
-              case WINNERDIALOGCNTROLLER:{
+
+            case WINNERDIALOGCNTROLLER: {
                 return new MultiPlayerWinnerDialogController();
             }
-              
-              
-              case REGISTRATIONVIEWCONTROLLER:{
+
+            case REGISTRATIONVIEWCONTROLLER: {
                 return new RegistrationViewController((RegistrationViewModel) viewModel);
             }
-              
-              case LOGINVIEWCONTROLLER:{
+
+            case LOGINVIEWCONTROLLER: {
                 return new LoginViewController((LoginViewModel) viewModel);
             }
-              
-              
-         case AVAILABLEPLAYERSVIEWCONTROLLER:{
-                return new AvailablePlayersViewController((AvailablePlayersViewModel)viewModel);
-            }   
-         
-         
-         case MULTIMODEVIEWCONTROLLER:{
-                return new MultiModeViewController((MultiModeViewModel)viewModel);
-            } 
-         
-         
-           case SINGLEMODEVIEWCONTROLLER:{
-                return new SingleModeViewController((SingleModeViewModel)viewModel);
-            }  
-         
-         
-             case SINGLEPLAYERVIEWCONTROLLER:{
-                return new SinglePlayerController((SinglePlayerViewModel)viewModel);
-            }  
-         
-            case MULTIPLAYERVIEWCONTROLLER:{
-                return new MultiPlayerViewController((MultiPlayerViewModel)viewModel);
-            }  
-            
-          case  SINGLEWINNERDIALOGCONTROLLER:{
-                return new SingleWinnerDialogController();
-            }  
-            
-             case MULTIPLAYERWINNERDIALOG:{
-                return new MultiPlayerWinnerDialogController();
-            }  
-            
-          
-            
-            
-            //todo add your own controller name in enum class and add your case here
-            
-            
-            default:{
-                 return new MainViewController((MainViewModel)viewModel);
+
+            case AVAILABLEPLAYERSVIEWCONTROLLER: {
+                return new AvailablePlayersViewController((AvailablePlayersViewModel) viewModel);
             }
-        
-        
+
+            case MULTIMODEVIEWCONTROLLER: {
+                return new MultiModeViewController((MultiModeViewModel) viewModel);
+            }
+
+            case SINGLEMODEVIEWCONTROLLER: {
+                return new SingleModeViewController((SingleModeViewModel) viewModel);
+            }
+
+            case SINGLEPLAYERVIEWCONTROLLER: {
+                return new SinglePlayerController((SinglePlayerViewModel) viewModel);
+            }
+
+            case MULTIPLAYERVIEWCONTROLLER: {
+                return new MultiPlayerViewController((MultiPlayerViewModel) viewModel);
+            }
+
+            case SINGLEWINNERDIALOGCONTROLLER: {
+                return new SingleWinnerDialogController();
+            }
+
+            case MULTIPLAYERWINNERDIALOG: {
+                return new MultiPlayerWinnerDialogController();
+            }
+            case EXITDIALOGCONTROLLER: {
+
+                return new ExitDialogController();
+            }
+
+            //todo add your own controller name in enum class and add your case here
+            default: {
+                return new MainViewController((MainViewModel) viewModel);
+            }
+
         }
-       
-    
+
     }
-    
-    
+
 }

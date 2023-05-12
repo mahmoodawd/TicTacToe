@@ -3,42 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Label fx:id="textDialog" prefHeight="97.0" prefWidth="294.0" text="              Are You sure You Want to Exit?" BorderPane.alignment="CENTER_LEFT">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-   </top>
-   <center>
-      <GridPane prefHeight="262.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="159.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="316.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="0.0" prefWidth="0.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="190.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="302.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label prefHeight="17.0" prefWidth="207.0" text="Are You Sure You Want To Exit?" GridPane.halignment="CENTER" />
+      <GridPane prefHeight="116.0" prefWidth="219.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="58.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="369.0" minWidth="10.0" prefWidth="142.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="153.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="163.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="YesBtn" mnemonicParsing="false" text="Yes" GridPane.halignment="LEFT" />
-            <Button fx:id="NoBtn" mnemonicParsing="false" text="No" GridPane.columnIndex="1" GridPane.halignment="LEFT">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin></Button>
+            <Button mnemonicParsing="false" text="Yes" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="No" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
+         <GridPane.margin>
+            <Insets bottom="10.0" left="50.0" right="90.0" top="10.0" />
+         </GridPane.margin>
          <padding>
-            <Insets left="100.0" right="100.0" />
+            <Insets top="10.0" />
          </padding>
-         <BorderPane.margin>
-            <Insets bottom="250.0" />
-         </BorderPane.margin>
       </GridPane>
-   </center>
-</BorderPane>
+   </children>
+</GridPane>
