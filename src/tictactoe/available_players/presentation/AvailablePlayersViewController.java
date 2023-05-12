@@ -230,6 +230,7 @@ public class AvailablePlayersViewController extends VBox {
                     try {
                         PassDataToOnlineMode.getInstance().setPlayerOneName(viewModel.getPlayerOneName().get());
                         PassDataToOnlineMode.getInstance().setPlayerTwoName(viewModel.getPlayerTwoName().get());
+                        PassDataToOnlineMode.getInstance().setRequestSenderName(viewModel.getPlayerOneName().get());
                         Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, backBtn);
                     } catch (IOException ex) {
                         Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -248,6 +249,7 @@ public class AvailablePlayersViewController extends VBox {
                     viewModel.acceptGameRequest();
                     PassDataToOnlineMode.getInstance().setPlayerOneName(viewModel.getPlayerOneName().get());
                     PassDataToOnlineMode.getInstance().setPlayerTwoName(viewModel.getPlayerTwoName().get());
+                    PassDataToOnlineMode.getInstance().setRequestSenderName(viewModel.getPlayerTwoName().get());
                     Navigation.openPage(ViewController.ONLINEMULTIPLAYERVIEWCONTROLLER, backBtn);
                 } catch (IOException ex) {
                     Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);

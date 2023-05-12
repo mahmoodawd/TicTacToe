@@ -31,6 +31,7 @@ public class Remote extends Thread {
     private SimpleStringProperty playerTwoName = new SimpleStringProperty();
     private SimpleStringProperty senderName = new SimpleStringProperty();
     private SimpleStringProperty denied = new SimpleStringProperty();
+    private SimpleStringProperty replayRequest = new SimpleStringProperty();
 
     static {
 
@@ -90,6 +91,9 @@ public class Remote extends Thread {
                             break;
                         case ServerMessage.DENIED_GAME_RESPONSE:
                             denyGameResponse(input);
+                            break;
+                        case "forwardReplayRequest":
+                            handleForwardedReplayRequest(input);
                             break;
 
                     }
@@ -167,8 +171,8 @@ public class Remote extends Thread {
     }
 
     private void recieveGameResultResponse(String response) {
-        gameResultResponse.set(" ");
-        gameResultResponse.set(response);
+        gameResultResponse.set("");
+        gameResultResponse.set(response.split(" ")[1]);
     }
 
     public static synchronized Remote getIntance() {
@@ -263,6 +267,23 @@ public class Remote extends Thread {
     private void denyGameResponse(String input) {
 
         denied.set(input.split(" ")[0]);
+    }
+
+    public void sendReplayRequest(String senderName, String receiverName) {
+        sender.println("ReplayRequest" + " " + senderName + " " + receiverName);
+    }
+
+    private void handleForwardedReplayRequest(String input) {
+        replayRequest.set("");
+        replayRequest.set(input.split(" ")[1]);
+    }
+
+    public SimpleStringProperty getReplayRequest() {
+        return replayRequest;
+    }
+
+    public void replayResponse(String response) {
+        sender.println("ReplayResponse" + " " + replayRequest.get() + " " + response);
     }
 
 }
