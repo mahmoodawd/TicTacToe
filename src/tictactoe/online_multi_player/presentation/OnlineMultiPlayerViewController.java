@@ -17,6 +17,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import tictactoe.available_players.presentation.AvailablePlayersViewController;
+import tictactoe.available_players.presentation.PassDataFromDialogToAvaliablePlayers;
+import tictactoe.available_players.presentation.RequestStatus;
+import tictactoe.available_players.presentation.dialogs.ReceivedRequestDialogViewController;
+import tictactoe.available_players.presentation.dialogs.SendRequestDialogViewController;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
 import tictactoe.core.PassDataToOnlineMode;
@@ -26,7 +31,7 @@ import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.Strings;
 import tictactoe.multi_player.presentation.MultiPlayerViewController;
 
-public  class OnlineMultiPlayerViewController extends BorderPane {
+public class OnlineMultiPlayerViewController extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -92,11 +97,12 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
     protected final Text playerTwoScoreTextView;
     private ImageView imageViews[][] = new ImageView[3][3];
 
-      OnlineMultiPlayerViewModel viewModel ;
+    OnlineMultiPlayerViewModel viewModel;
+
     public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
         System.out.println("online mode");
         this.viewModel = viewModel;
-      
+
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         rowConstraints = new RowConstraints();
@@ -264,7 +270,6 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
         firstPlayerName1.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         firstPlayerName1.setStrokeWidth(0.0);
         firstPlayerName1.setText("player 1");
-      
 
         GridPane.setHalignment(firstPlayerSymbolImageView1, javafx.geometry.HPos.CENTER);
         GridPane.setRowIndex(firstPlayerSymbolImageView1, 2);
@@ -580,310 +585,321 @@ public  class OnlineMultiPlayerViewController extends BorderPane {
         gridPane5.getChildren().add(playerTwoNameScoreTextView);
         gridPane5.getChildren().add(playerTwoScoreTextView);
         gridPane4.getChildren().add(gridPane5);
-        
+
         titleTextView.setFont(Typography.headerBoldFont);
         playerOneNameScoreTextView.setFont(Typography.subtitleTwoRegularFont);
-          firstPlayerName1.setFont(Typography.subtitleOneRegularFont);
-          firstPlayerName.setFont(Typography.subtitleOneRegularFont);
-          playerOneNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
-          playerTwoNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
-          
-          playerOneScoreTextView.setFont(Typography.BodyOneRegularFont);
-          playerTwoScoreTextView.setFont(Typography.BodyOneRegularFont);
-        
-          
-            imageViews[0][0] = firstPlaceImageView;
-            imageViews[0][1] = secondPlaceImageView;
-            imageViews[0][2] = thirdPlaceImageView;
-            imageViews[1][0] = fourthPlaceImageView;
-            imageViews[1][1] = fifthPlaceImageView;
-            imageViews[1][2] = sixthPlaceImageView;
-            imageViews[2][0]= sevenPlaceImageView;
-            imageViews[2][1] = eightPlaceImageView;
-            imageViews[2][2] = ninethPlaceImageView;
-     
-      resetBoard(true);
-      boardSetters();
-      properitiesObservers();
-      init();
+        firstPlayerName1.setFont(Typography.subtitleOneRegularFont);
+        firstPlayerName.setFont(Typography.subtitleOneRegularFont);
+        playerOneNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
+        playerTwoNameScoreTextView.setFont(Typography.subtitleOneRegularFont);
+
+        playerOneScoreTextView.setFont(Typography.BodyOneRegularFont);
+        playerTwoScoreTextView.setFont(Typography.BodyOneRegularFont);
+
+        imageViews[0][0] = firstPlaceImageView;
+        imageViews[0][1] = secondPlaceImageView;
+        imageViews[0][2] = thirdPlaceImageView;
+        imageViews[1][0] = fourthPlaceImageView;
+        imageViews[1][1] = fifthPlaceImageView;
+        imageViews[1][2] = sixthPlaceImageView;
+        imageViews[2][0] = sevenPlaceImageView;
+        imageViews[2][1] = eightPlaceImageView;
+        imageViews[2][2] = ninethPlaceImageView;
+
+        resetBoard(true);
+        boardSetters();
+        properitiesObservers();
+        init();
 
     }
-    
-    
-    private void init()
-    {
-        viewModel.setPlayerOneSymbol(1);
-        viewModel.setPlayerTwoSymbol(2);
+
+    private void init() {
+
         viewModel.setPlayerOneName(PassDataToOnlineMode.getInstance().getPlayerOneName().get());
         viewModel.setPlayerTwoName(PassDataToOnlineMode.getInstance().getPlayerTwoName().get());
-    
+        System.out.println("Request Sender: " + PassDataToOnlineMode.getInstance().getRequestSenderName().get());
+
+        if (viewModel.getPlayerOneName().get().equals(PassDataToOnlineMode.getInstance().getRequestSenderName().get())) {
+
+            viewModel.setPlayerOneSymbol(1);
+            viewModel.setPlayerTwoSymbol(2);
+
+        } else {
+            viewModel.setPlayerOneSymbol(2);
+            viewModel.setPlayerTwoSymbol(1);
+
+        }
+        viewModel.setTurnNotifier(1);
     }
-    
-    
-    private void boardSetters()
-    {
-        
-          backImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-              try {
-                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
-              } catch (IOException ex) {
-                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-              }
-             
-    }); 
-    
-       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
-           if(viewModel.getTurnNotifier().get() == 1)
-           {
-                 viewModel.setBoard(0,0);
-           }
-           
-    }); 
-    
-    
-       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> { 
-           if(viewModel.getTurnNotifier().get() == 1)
-           {
-             viewModel.setBoard(0,1);
-           }
-    }); 
-       
-          thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,2);
-    }); 
-          
-          
-             fourthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,0);
-    }); 
-             
-                fifthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,1);
-    }); 
-                
-                   sixthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,2);
-    }); 
-                   
-                      sevenPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,0);
-    }); 
-                      
-                         eightPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,1);
-    }); 
-                         
-             ninethPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,2);
-    }); 
-             
-             
-    
+
+    private void boardSetters() {
+
+        backImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            try {
+                Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(0, 0);
+            }
+
+        });
+
+        secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(0, 1);
+            }
+        });
+
+        thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(0, 2);
+            }
+        });
+
+        fourthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(1, 0);
+            }
+        });
+
+        fifthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(1, 1);
+            }
+        });
+
+        sixthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(1, 2);
+            }
+        });
+
+        sevenPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(2, 0);
+            }
+        });
+
+        eightPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(2, 1);
+            }
+        });
+
+        ninethPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (viewModel.getTurnNotifier().get() == viewModel.getPlayerOneSymbol().get()) {
+                viewModel.setBoard(2, 2);
+            }
+        });
+
     }
-    
-    
-    private void properitiesObservers()
-    {
-    
-    
-       viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-           int [][] board = viewModel.getBoard();
-           System.out.println(board[0][1]);
-           for(int row = 0 ; row < 3 ; row++){
-               for(int column = 0 ; column < 3 ; column++)
-               {
-                   ImageView imageView = imageViews[row][column];
-                   if(board[row][column] == 1){
-                       imageView.setImage(new Image(ImagesUri.xWithBackground));
-                   }else if (board[row][column] == 2){
-                       imageView.setImage(new Image(ImagesUri.oWithBackground));
-                   }
-               }
-           }
-       });
-       
-       
-      viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-    
-          System.out.println(newValue);
-          if(!newValue.isEmpty())PassData.getInstance().winnerName.set(newValue);
-           try {
-               if(!newValue.isEmpty()) Navigation.openPage(ViewController.WINNERDIALOGCNTROLLER, null);
-           } catch (IOException ex) {
-               Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       });
-      
-      
-       PassData.getInstance().dialogReturn.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+
+    private void properitiesObservers() {
+        viewModel.getReplayRequest().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                new ReceivedRequestDialogViewController(newValue).show();
+            }
+        });
+
+        PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(RequestStatus.ACCEPTED)) {
+                resetBoard(true);
+                viewModel.swapSymbols();
+                viewModel.setTurnNotifier(1);
+            } else if (newValue.equals(RequestStatus.REJECTED)) {
+                try {
+                    Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER, backImageView);
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            viewModel.replayResponse(newValue);
+        });
+
+        viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            int[][] board = viewModel.getBoard();
+            System.out.println(board[0][1]);
+            for (int row = 0; row < 3; row++) {
+                for (int column = 0; column < 3; column++) {
+                    ImageView imageView = imageViews[row][column];
+                    if (board[row][column] == 1) {
+                        imageView.setImage(new Image(ImagesUri.xWithBackground));
+                    } else if (board[row][column] == 2) {
+                        imageView.setImage(new Image(ImagesUri.oWithBackground));
+                    }
+                }
+            }
+        });
+
+        viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+
+            System.out.println(newValue);
+            if (!newValue.isEmpty()) {
+                PassData.getInstance().winnerName.set(newValue);
+            }
+            Platform.runLater(() -> {
+                try {
+                    if (!newValue.isEmpty()) {
+                        Navigation.openPage(ViewController.WINNERDIALOGCNTROLLER, null);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        });
+
+        PassData.getInstance().dialogReturn.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 
             try {
 
-                 switch(newValue){
-           
-               case Strings.main:{
-                 Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
-                   break;
-               }
-               
-               case Strings.replay:{
-                 
-                   resetBoard(true);
-                   viewModel.swapSymbols();
-                     break;
-               }
-               
-               
-               case Strings.watchAgain:
-               {
-                  animateMoves();
-                 break;
-               }
-           
-           } 
-               } catch (IOException ex) {
-                   Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-          
-       });
-       
-     viewModel.getPlayerOneName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-         firstPlayerName1.setText(newValue);
-         playerOneNameScoreTextView.setText(newValue);
-       });
-     
-      viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-         
-         firstPlayerName.setText(newValue);
-         playerTwoNameScoreTextView.setText(newValue);
-       });
-      
-      
-         viewModel.getPlayerOneSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-             if(newValue.intValue() == 1)
-             {
-                 firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.x));
-             }else{
+                switch (newValue) {
+
+                    case Strings.main: {
+                        Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+                        break;
+                    }
+
+                    case Strings.replay: {
+                        viewModel.sendReplayRequest();
+
+                        new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get()).show();
+                        resetBoard(true);
+                        viewModel.swapSymbols();
+                        viewModel.setTurnNotifier(1);
+                        break;
+                    }
+
+                    case Strings.watchAgain: {
+                        animateMoves();
+                        break;
+                    }
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        viewModel.getPlayerOneName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            firstPlayerName1.setText(newValue);
+            playerOneNameScoreTextView.setText(newValue);
+        });
+
+        viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+
+            firstPlayerName.setText(newValue);
+            playerTwoNameScoreTextView.setText(newValue);
+        });
+
+        viewModel.getPlayerOneSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (newValue.intValue() == 1) {
+                firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.x));
+            } else {
                 firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.o));
-             }
-            
-       });
-         
-         
-          viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-             if(newValue.intValue() == 1)
-             {
-                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
-             }else{
+            }
+
+        });
+
+        viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (newValue.intValue() == 1) {
+                secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
+            } else {
                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.o));
-             }
-            
-       });
-         
-         
-           viewModel.getPlayerOneScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-        
+            }
+
+        });
+
+        viewModel.getPlayerOneScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+
             playerOneScoreTextView.setText(newValue.toString());
-            
-       });
-           
-           
-             viewModel.getPlayerTwoScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-        
-           playerTwoScoreTextView.setText(newValue.toString());
-            
-       });
-      
-      
-             
-      
-      
+
+        });
+
+        viewModel.getPlayerTwoScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+
+            playerTwoScoreTextView.setText(newValue.toString());
+
+        });
+
         viewModel.getTurnNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-         int board [][] = viewModel.getBoard();
-              for(int row = 0 ; row < 3 ; row++){
-               for(int column = 0 ; column < 3 ; column++)
-               {
-                 if(board[row][column] == 0)
-                 {
-                 
-                      ImageView imageView = imageViews[row][column];
-                 
-           
-                    if(newValue.intValue() == 1)
-                   {
-                        imageView.setImage(new Image(ImagesUri.emptyEnabled));
-                   }else{
-                    imageView.setImage(new Image(ImagesUri.emptyDisabled));
-                   }
-                 }       
-               }
-           }
-         
-            
-       });
-    
-    
+            int board[][] = viewModel.getBoard();
+            for (int row = 0; row < 3; row++) {
+                for (int column = 0; column < 3; column++) {
+                    if (board[row][column] == 0) {
+
+                        ImageView imageView = imageViews[row][column];
+
+                        if (newValue.intValue() == viewModel.getPlayerOneSymbol().get()) {
+                            imageView.setImage(new Image(ImagesUri.emptyEnabled));
+                        } else {
+                            imageView.setImage(new Image(ImagesUri.emptyDisabled));
+                        }
+                    }
+                }
+            }
+
+        });
+
     }
-    
-    
-     private void animateMoves()
-    {
-      int [][] board = viewModel.getBoard();
-                      resetBoard(false);
-      new Thread(() -> {
-          viewModel.getWatchMovesQueue().forEach((pair) -> {
+
+    private void animateMoves() {
+        int[][] board = viewModel.getBoard();
+        resetBoard(false);
+        new Thread(() -> {
+            viewModel.getWatchMovesQueue().forEach((pair) -> {
                 final ImageView view = imageViews[pair.getKey()][pair.getValue()];
-                              final int symbol =  board[pair.getKey()][pair.getValue()];
-                        
-                              if(symbol != 0){
-                                  
-                                  Platform.runLater(() -> {
-                                      setImage(view,symbol , ImagesUri.xWithBackground,ImagesUri.oWithBackground);
-                                  });
-                                  
-                                  try {
-                                      Thread.sleep(1000);
-                                  } catch (InterruptedException ex) {
-                                      Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                                  }
-                              }
-          });
-         
-                       Platform.runLater(() -> {
-                           
-                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-                       });
-                   }).start();
-    
+                final int symbol = board[pair.getKey()][pair.getValue()];
+
+                if (symbol != 0) {
+
+                    Platform.runLater(() -> {
+                        setImage(view, symbol, ImagesUri.xWithBackground, ImagesUri.oWithBackground);
+                    });
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            Platform.runLater(() -> {
+
+                Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
+            });
+        }).start();
+
     }
-     
-     
-     
-      private void setImage(ImageView imageView, int symbol,String imageUriOne,String imageUriTwo)
-    {
-    
-     if(symbol == 1)
-             {
-                 imageView.setImage(new Image(imageUriOne));
-             }else{
-                imageView.setImage(new Image(imageUriTwo));
-             }
-    
+
+    private void setImage(ImageView imageView, int symbol, String imageUriOne, String imageUriTwo) {
+
+        if (symbol == 1) {
+            imageView.setImage(new Image(imageUriOne));
+        } else {
+            imageView.setImage(new Image(imageUriTwo));
+        }
+
     }
-     
-     
-     
-         private void resetBoard(boolean reset)
-    {
-          if(reset)viewModel.resetBorad();
-               for(int row = 0 ; row < 3 ; row++){
-               for(int column = 0 ; column < 3 ; column++)
-               {
-             
-                   ImageView imageView = imageViews[row][column];
-                       imageView.setImage(new Image(ImagesUri.emptyEnabled));
-               }
-           }
+
+    private void resetBoard(boolean reset) {
+        if (reset) {
+            viewModel.resetBorad();
+        }
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+
+                ImageView imageView = imageViews[row][column];
+                imageView.setImage(new Image(ImagesUri.emptyEnabled));
+            }
+        }
     }
-   
+
 }

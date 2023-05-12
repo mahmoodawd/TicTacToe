@@ -17,6 +17,15 @@ public class PassDataToOnlineMode {
         private static PassDataToOnlineMode instance  = null;
     public  SimpleStringProperty playerOneName = new SimpleStringProperty();
     public  SimpleStringProperty playerTwoName = new SimpleStringProperty();
+    public  SimpleStringProperty requestSenderName = new SimpleStringProperty();
+
+    public SimpleStringProperty getRequestSenderName() {
+        return requestSenderName;
+    }
+
+    public void setRequestSenderName(String requestSenderName) {
+        this.requestSenderName.set(requestSenderName);
+    }
     private PassDataToOnlineMode()
     {
     
