@@ -21,8 +21,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import tictactoe.available_players.presentation.PassDataFromDialogToAvaliablePlayers;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
+import tictactoe.core.PassPlayerNameMultiMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.Strings;
@@ -30,7 +32,7 @@ import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
 import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 
-public  class MultiPlayerViewController extends BorderPane {
+public class MultiPlayerViewController extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -94,14 +96,14 @@ public  class MultiPlayerViewController extends BorderPane {
     protected final Separator separator;
     protected final Text playerTwoNameScoreTextView;
     protected final Text playerTwoScoreTextView;
-    
+
     private ImageView imageViews[][] = new ImageView[3][3];
     MultiPlayerViewModel viewModel;
 
     public MultiPlayerViewController(MultiPlayerViewModel viewModel) {
 
         this.viewModel = viewModel;
-        
+
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         rowConstraints = new RowConstraints();
@@ -278,7 +280,6 @@ public  class MultiPlayerViewController extends BorderPane {
         firstPlayerSymbolImageView1.setFitWidth(30.0);
         firstPlayerSymbolImageView1.setPickOnBounds(true);
         firstPlayerSymbolImageView1.setPreserveRatio(true);
-        
 
         GridPane.setColumnIndex(gridPane3, 1);
         gridPane3.setStyle("-fx-background-color: #ffffff;");
@@ -313,7 +314,7 @@ public  class MultiPlayerViewController extends BorderPane {
         secondPlayerSymbolImageView.setFitWidth(30.0);
         secondPlayerSymbolImageView.setPickOnBounds(true);
         secondPlayerSymbolImageView.setPreserveRatio(true);
-     
+
         setTop(gridPane);
 
         BorderPane.setAlignment(gridPane4, javafx.geometry.Pos.CENTER);
@@ -368,7 +369,6 @@ public  class MultiPlayerViewController extends BorderPane {
         secondPlaceImageView.setPickOnBounds(true);
         secondPlaceImageView.setPreserveRatio(true);
 
-
         GridPane.setColumnIndex(firstPlaceImageView, 1);
         GridPane.setHalignment(firstPlaceImageView, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(firstPlaceImageView, javafx.geometry.VPos.CENTER);
@@ -376,7 +376,6 @@ public  class MultiPlayerViewController extends BorderPane {
         firstPlaceImageView.setFitWidth(100.0);
         firstPlaceImageView.setPickOnBounds(true);
         firstPlaceImageView.setPreserveRatio(true);
-      
 
         GridPane.setColumnIndex(fourthPlaceImageView, 1);
         GridPane.setHalignment(fourthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -386,7 +385,6 @@ public  class MultiPlayerViewController extends BorderPane {
         fourthPlaceImageView.setFitWidth(100.0);
         fourthPlaceImageView.setPickOnBounds(true);
         fourthPlaceImageView.setPreserveRatio(true);
-      
 
         GridPane.setColumnIndex(fifthPlaceImageView, 2);
         GridPane.setHalignment(fifthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -396,7 +394,6 @@ public  class MultiPlayerViewController extends BorderPane {
         fifthPlaceImageView.setFitWidth(100.0);
         fifthPlaceImageView.setPickOnBounds(true);
         fifthPlaceImageView.setPreserveRatio(true);
-     
 
         GridPane.setColumnIndex(sevenPlaceImageView, 1);
         GridPane.setHalignment(sevenPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -406,7 +403,6 @@ public  class MultiPlayerViewController extends BorderPane {
         sevenPlaceImageView.setFitWidth(100.0);
         sevenPlaceImageView.setPickOnBounds(true);
         sevenPlaceImageView.setPreserveRatio(true);
-      
 
         GridPane.setColumnIndex(eightPlaceImageView, 2);
         GridPane.setHalignment(eightPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -416,7 +412,6 @@ public  class MultiPlayerViewController extends BorderPane {
         eightPlaceImageView.setFitWidth(100.0);
         eightPlaceImageView.setPickOnBounds(true);
         eightPlaceImageView.setPreserveRatio(true);
-        
 
         GridPane.setColumnIndex(thirdPlaceImageView, 3);
         GridPane.setHalignment(thirdPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -425,7 +420,6 @@ public  class MultiPlayerViewController extends BorderPane {
         thirdPlaceImageView.setFitWidth(100.0);
         thirdPlaceImageView.setPickOnBounds(true);
         thirdPlaceImageView.setPreserveRatio(true);
-       
 
         GridPane.setColumnIndex(sixthPlaceImageView, 3);
         GridPane.setHalignment(sixthPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -435,7 +429,6 @@ public  class MultiPlayerViewController extends BorderPane {
         sixthPlaceImageView.setFitWidth(100.0);
         sixthPlaceImageView.setPickOnBounds(true);
         sixthPlaceImageView.setPreserveRatio(true);
-    
 
         GridPane.setColumnIndex(ninethPlaceImageView, 3);
         GridPane.setHalignment(ninethPlaceImageView, javafx.geometry.HPos.CENTER);
@@ -445,7 +438,6 @@ public  class MultiPlayerViewController extends BorderPane {
         ninethPlaceImageView.setFitWidth(100.0);
         ninethPlaceImageView.setPickOnBounds(true);
         ninethPlaceImageView.setPreserveRatio(true);
- 
 
         GridPane.setColumnIndex(text, 4);
         GridPane.setHalignment(text, javafx.geometry.HPos.CENTER);
@@ -585,269 +577,233 @@ public  class MultiPlayerViewController extends BorderPane {
         gridPane5.getChildren().add(playerTwoNameScoreTextView);
         gridPane5.getChildren().add(playerTwoScoreTextView);
         gridPane4.getChildren().add(gridPane5);
-        
-             imageViews[0][0] = firstPlaceImageView;
-            imageViews[0][1] = secondPlaceImageView;
-            imageViews[0][2] = thirdPlaceImageView;
-            imageViews[1][0] = fourthPlaceImageView;
-            imageViews[1][1] = fifthPlaceImageView;
-            imageViews[1][2] = sixthPlaceImageView;
-            imageViews[2][0]= sevenPlaceImageView;
-            imageViews[2][1] = eightPlaceImageView;
-            imageViews[2][2] = ninethPlaceImageView;
-             
-             resetBoard(true);
-             boardSetters();
-             properitiesObservers();
-             init();
-            
+
+        imageViews[0][0] = firstPlaceImageView;
+        imageViews[0][1] = secondPlaceImageView;
+        imageViews[0][2] = thirdPlaceImageView;
+        imageViews[1][0] = fourthPlaceImageView;
+        imageViews[1][1] = fifthPlaceImageView;
+        imageViews[1][2] = sixthPlaceImageView;
+        imageViews[2][0] = sevenPlaceImageView;
+        imageViews[2][1] = eightPlaceImageView;
+        imageViews[2][2] = ninethPlaceImageView;
+
+        resetBoard(true);
+        boardSetters();
+        properitiesObservers();
+        init();
 
     }
-    
-    
-     private void init()
-    {
-    
-     
+
+    private void init() {
+
         viewModel.setPlayerOneSymbol(1);
         viewModel.setPlayerTwoSymbol(2);
-        viewModel.setPlayerOneName("ahmed");
-        viewModel.setPlayerTwoName("ali");
-    
+        viewModel.setPlayerOneName(PassPlayerNameMultiMode.getInstance().getPlayerOneName());
+        viewModel.setPlayerTwoName(PassPlayerNameMultiMode.getInstance().getPlayerTwoName());
+
     }
-    
-    
-    private void boardSetters()
-    {
-        
-          backImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-              try {
-                  Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
-              } catch (IOException ex) {
-                  Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-              }
-             
-    }); 
-    
-       firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,0);
-    }); 
-    
-    
-       secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,1);
-    }); 
-       
-          thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(0,2);
-    }); 
-          
-          
-             fourthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,0);
-    }); 
-             
-                fifthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,1);
-    }); 
-                
-                   sixthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(1,2);
-    }); 
-                   
-                      sevenPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,0);
-    }); 
-                      
-                         eightPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,1);
-    }); 
-                         
-             ninethPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {    
-             viewModel.setBoard(2,2);
-    }); 
-             
-             
-    
+
+    private void boardSetters() {
+
+        backImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            try {
+                Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        firstPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(0, 0);
+        });
+
+        secondPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(0, 1);
+        });
+
+        thirdPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(0, 2);
+        });
+
+        fourthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(1, 0);
+        });
+
+        fifthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(1, 1);
+        });
+
+        sixthPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(1, 2);
+        });
+
+        sevenPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(2, 0);
+        });
+
+        eightPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(2, 1);
+        });
+
+        ninethPlaceImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            viewModel.setBoard(2, 2);
+        });
+
     }
-    
-    
-    private void properitiesObservers()
-    {
-    
-    
-       viewModel.boardNotifier.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-           int [][] board = viewModel.getBoard();
-        
-           for(int row = 0 ; row < 3 ; row++){
-               for(int column = 0 ; column < 3 ; column++)
-               {
-                   if(board[row][column] != 0)
-                   {
-                     ImageView imageView = imageViews[row][column];
-                   setImage(imageView, board[row][column], ImagesUri.xWithBackground, ImagesUri.oWithBackground);
-                   }
-                 
-               }
-           }
-       });
-       
-       
-      viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-          if(!newValue.isEmpty()){
-              
-              PassData.getInstance().winnerName.set(newValue);
-              Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-              
-          }
-       });
-      
-      
-       PassData.getInstance().dialogReturn.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+
+    private void properitiesObservers() {
+
+        viewModel.boardNotifier.addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            int[][] board = viewModel.getBoard();
+
+            for (int row = 0; row < 3; row++) {
+                for (int column = 0; column < 3; column++) {
+                    if (board[row][column] != 0) {
+                        ImageView imageView = imageViews[row][column];
+                        setImage(imageView, board[row][column], ImagesUri.xWithBackground, ImagesUri.oWithBackground);
+                    }
+
+                }
+            }
+        });
+
+        viewModel.getWinnerName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.isEmpty()) {
+
+                PassData.getInstance().winnerName.set(newValue);
+                Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
+
+            }
+        });
+
+        PassData.getInstance().dialogReturn.addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 
             try {
 
-                 switch(newValue){
-           
-               case Strings.main:{
-                 Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
-                   break;
-               }
-               
-               case Strings.replay:{
-                   resetBoard(true);
-                   
-                   viewModel.swapSymbols();
-                   
-                     break;
-               }
-               
-               
-               case Strings.watchAgain:
-               {
-                   //viewModel.resetWinnerName();
-                   animateMoves();     
-              
-                 break;
-               }
-           
-           } 
-               } catch (IOException ex) {
-                   Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-               }
-          
-       });
-       
-     viewModel.getPlayerOneName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-         playerOneName.setText(newValue);
-         playerOneNameScoreTextView.setText(newValue);
-       });
-     
-      viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-         
-         playerTwoName.setText(newValue);
-         playerTwoNameScoreTextView.setText(newValue);
-       });
-      
-      
-         viewModel.getPlayerOneSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-             if(newValue.intValue() == 1)
-             {
-                 firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.x));
-             }else{
+                switch (newValue) {
+
+                    case Strings.main: {
+                        Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+                        break;
+                    }
+
+                    case Strings.replay: {
+                        resetBoard(true);
+
+                        viewModel.swapSymbols();
+
+                        break;
+                    }
+
+                    case Strings.watchAgain: {
+                        //viewModel.resetWinnerName();
+                        animateMoves();
+
+                        break;
+                    }
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        viewModel.getPlayerOneName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            playerOneName.setText(newValue);
+            playerOneNameScoreTextView.setText(newValue);
+        });
+
+        viewModel.getPlayerTwoName().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+
+            playerTwoName.setText(newValue);
+            playerTwoNameScoreTextView.setText(newValue);
+        });
+
+        viewModel.getPlayerOneSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (newValue.intValue() == 1) {
+                firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.x));
+            } else {
                 firstPlayerSymbolImageView1.setImage(new Image(ImagesUri.o));
-             }
-            
-       });
-         
-         
-          viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-             if(newValue.intValue() == 1)
-             {
-                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
-             }else{
+            }
+
+        });
+
+        viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (newValue.intValue() == 1) {
+                secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
+            } else {
                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.o));
-             }
-             
-            
-       });
-         
-         
-           viewModel.getPlayerOneScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-        
+            }
+
+        });
+
+        viewModel.getPlayerOneScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+
             playerOneScoreTextView.setText(newValue.toString());
-            
-       });
-           
-           
-             viewModel.getPlayerTwoScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-        
-           playerTwoScoreTextView.setText(newValue.toString());
-            
-       });
-      
-      
-      
-      
-      
-    
-    
+
+        });
+
+        viewModel.getPlayerTwoScore().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+
+            playerTwoScoreTextView.setText(newValue.toString());
+
+        });
+
     }
-    
-    
-    private void resetBoard(boolean reset)
-    {
-          if(reset)viewModel.resetBorad();
-               for(int row = 0 ; row < 3 ; row++){
-               for(int column = 0 ; column < 3 ; column++)
-               {
-             
-                   ImageView imageView = imageViews[row][column];
-                       imageView.setImage(new Image(ImagesUri.emptyEnabled));
-               }
-           }
+
+    private void resetBoard(boolean reset) {
+        if (reset) {
+            viewModel.resetBorad();
+        }
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 3; column++) {
+
+                ImageView imageView = imageViews[row][column];
+                imageView.setImage(new Image(ImagesUri.emptyEnabled));
+            }
+        }
     }
-    
-    private void setImage(ImageView imageView, int symbol,String imageUriOne,String imageUriTwo)
-    {
-    
-     if(symbol == 1)
-             {
-                 imageView.setImage(new Image(imageUriOne));
-             }else{
-                imageView.setImage(new Image(imageUriTwo));
-             }
-    
+
+    private void setImage(ImageView imageView, int symbol, String imageUriOne, String imageUriTwo) {
+
+        if (symbol == 1) {
+            imageView.setImage(new Image(imageUriOne));
+        } else {
+            imageView.setImage(new Image(imageUriTwo));
+        }
+
     }
-    
-    private void animateMoves()
-    {
-      int [][] board = viewModel.getBoard();
-                      resetBoard(false);
-      new Thread(() -> {
-          viewModel.getWatchMovesQueue().forEach((pair) -> {
+
+    private void animateMoves() {
+        int[][] board = viewModel.getBoard();
+        resetBoard(false);
+        new Thread(() -> {
+            viewModel.getWatchMovesQueue().forEach((pair) -> {
                 final ImageView view = imageViews[pair.getKey()][pair.getValue()];
-                              final int symbol =  board[pair.getKey()][pair.getValue()];
-                        
-                              if(symbol != 0){
-                                  
-                                  Platform.runLater(() -> {
-                                      setImage(view,symbol , ImagesUri.xWithBackground,ImagesUri.oWithBackground);
-                                  });
-                                  
-                                  try {
-                                      Thread.sleep(1000);
-                                  } catch (InterruptedException ex) {
-                                      Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                                  }
-                              }
-          });
-         
-                       Platform.runLater(() -> {
-                           
-                   Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
-                       });
-                   }).start();
-    
+                final int symbol = board[pair.getKey()][pair.getValue()];
+
+                if (symbol != 0) {
+
+                    Platform.runLater(() -> {
+                        setImage(view, symbol, ImagesUri.xWithBackground, ImagesUri.oWithBackground);
+                    });
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+            Platform.runLater(() -> {
+
+                Navigation.openDialog(ViewController.MULTIPLAYERWINNERDIALOG);
+            });
+        }).start();
+
     }
 }

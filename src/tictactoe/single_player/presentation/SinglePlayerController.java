@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
+import tictactoe.core.PassPlayerNameSingleMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 
@@ -589,7 +590,7 @@ public  class SinglePlayerController extends BorderPane {
             imageViews[2][1] = eightPlaceImageView;
             imageViews[2][2] = ninethPlaceImageView;
             
-            
+           
              resetBoard(false);
              boardSetters();
              properitiesObservers();
@@ -609,9 +610,10 @@ public  class SinglePlayerController extends BorderPane {
           playerOneScoreTextView.setText("0");
           playerTwoScoreTextView.setText("0");
           viewModel.setPlayerOneSymbol(1);
-           viewModel.setPlayerOneName("ahmed");
           viewModel.setPlayerTwoName("Computer");
         viewModel. boardNotifier.set(0);
+       
+        viewModel.setPlayerOneName( PassPlayerNameSingleMode.getInstance().getPlayerName());
     }
     
     
@@ -669,6 +671,7 @@ public  class SinglePlayerController extends BorderPane {
     
     }
     
+   
     
     private void properitiesObservers()
     {
@@ -679,7 +682,7 @@ public  class SinglePlayerController extends BorderPane {
            @Override
            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                int [][] board = viewModel.getBoard();
-               System.out.println(board[0][1]);
+              // System.out.println(board[0][1]);
                for(int row = 0 ; row < 3 ; row++){
                    for(int column = 0 ; column < 3 ; column++)
                    {
@@ -693,8 +696,16 @@ public  class SinglePlayerController extends BorderPane {
                }
            }
        }); 
-       
-       
+       /*
+       PassPlayerNameSingleMode.getInstance().playerName.addListener(new ChangeListener<String>() { 
+          
+           @Override
+           public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+               System.out.println("yes "+newValue);
+               viewModel.setPlayerOneName(newValue);
+           }
+        });
+       */
        viewModel.getPlayerTurn().addListener(new ChangeListener<Number>(){
            @Override
          
@@ -718,7 +729,7 @@ public  class SinglePlayerController extends BorderPane {
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                System.out.println(newValue);
                if(!newValue.isEmpty())PassData.getInstance().winnerName.set(newValue);
-           //    if(!newValue.isEmpty()) Navigation.openPage(ViewController.SINGLEWINNERDIALOGCONTROLLER, null);
+              if(!newValue.isEmpty()) Navigation.openDialog(ViewController.SINGLEWINNERDIALOGCONTROLLER);
            }
        });
       
@@ -761,6 +772,7 @@ public  class SinglePlayerController extends BorderPane {
      viewModel.getPlayerOneName().addListener(new ChangeListener<String>() {
            @Override
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+               System.out.println(newValue);
                playerOneName.setText(newValue);
                playerOneNameScoreTextView.setText(newValue);
            }
@@ -870,4 +882,3 @@ public  class SinglePlayerController extends BorderPane {
 
 
 
-//

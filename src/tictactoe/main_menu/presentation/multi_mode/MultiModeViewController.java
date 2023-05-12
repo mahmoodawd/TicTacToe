@@ -325,47 +325,48 @@ this.viewModel=viewModel;
 
         
         
+         String lightblue= ColorPalette.lightBlue;
+    
         
+startBtn.setStyle("-fx-text-fill: white; " +
+                "-fx-font-weight: bold; " +
+                "-fx-background-color:" + lightblue + "; " +
+                "-fx-background-radius: 30px;");
         
   
 
 
 // Set up the submit button action
 startBtn.setOnAction(event -> {
-    String name = usernameField.getText();
-    if (name.isEmpty()) {
+    String playerOneName = usernameField.getText();
+    String playerTwoName = textField2.getText();
+    if (playerOneName.isEmpty() || playerTwoName.isEmpty()) {
         // If the name field is empty, show an error message
         Alert alert = new Alert(AlertType.ERROR);
         alert.setContentText("Please enter your name.");
         alert.showAndWait();
-    } else if (name.length() < 5) {
+    } else if (playerOneName.length() < 5 || playerTwoName.length() < 5) {
         // If the name is less than 5 characters long, show an error message
         Alert alert = new Alert(AlertType.ERROR);
         alert.setContentText("Name must be at least 5 characters long.");
         alert.showAndWait();
+
     } else {
-        // If the name is valid, do something with it
-        System.out.println("Hello, " + name + "!");
+    
+       viewModel.setFirstPlayerNameTxt(playerOneName);
+       viewModel.setSecondPlayerName(playerTwoName);
+        try{
+          Navigation.openPage(ViewController.MULTIPLAYERVIEWCONTROLLER, null);
+        }catch(IOException e)
+        {
+        
+        
+        }
+        
     }
 }); 
 
-startBtn.setOnAction(event -> {
-    String name = textField2.getText();
-    if (name.isEmpty()) {
-        // If the name field is empty, show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setContentText("Please enter your name.");
-        alert.showAndWait();
-    } else if (name.length() < 5) {
-        // If the name is less than 5 characters long, show an error message
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setContentText("Name must be at least 5 characters long.");
-        alert.showAndWait();
-    } else {
-        // If the name is valid, do something with it
-        System.out.println("Hello, " + name + "!");
-    }
-}); 
+
 
 
 
