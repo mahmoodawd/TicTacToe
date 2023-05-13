@@ -27,6 +27,13 @@ public class TicTacToe extends Application {
         
         
     }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        Remote.getIntance().sendOfflineRequest();
+    }
+    
     
     public static void main(String[] args) {
         launch(args);

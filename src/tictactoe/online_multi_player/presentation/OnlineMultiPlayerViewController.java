@@ -115,7 +115,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
         columnConstraints2 = new ColumnConstraints();
         rowConstraints1 = new RowConstraints();
         titleTextView = new Text();
-      
+
         blend = new Blend();
         backImageView = new ImageView();
         gridPane1 = new GridPane();
@@ -725,9 +725,8 @@ public class OnlineMultiPlayerViewController extends BorderPane {
         });
 
         PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
-            Platform.runLater(() -> {
-                sendReplayDialog.close();
-            });
+
+            sendReplayDialog.close();
             if (newValue.equals(RequestStatus.ACCEPTED)) {
                 resetBoard(true);
                 viewModel.swapSymbols();
@@ -781,7 +780,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
                     }
 
                     case Strings.replay: {
-                          this.sendReplayDialog = new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get());
+                        this.sendReplayDialog = new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get());
                         viewModel.sendReplayRequest();
 //                        sendReplayDialog = new SendRequestDialogViewController(titleTextView, viewModel.getPlayerTwoName().get());
                         sendReplayDialog.show();
