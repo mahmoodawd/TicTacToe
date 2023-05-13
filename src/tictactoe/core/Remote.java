@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +56,7 @@ public class Remote extends Thread {
                         connectionState.set(false);
                     }
                 } catch (IOException ex1) {
-                    Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex1);
+                  
                 }
 
             }
@@ -120,7 +121,15 @@ public class Remote extends Thread {
                 }
 
             }
-        } catch (Exception ex) {
+        } catch (SocketException ex) {
+            try {
+                listener.close();
+                this.stop();
+            
+            } catch (IOException ex1) {
+                Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } catch (IOException ex) {
             Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
         }
 
