@@ -40,7 +40,7 @@ public class ExitDialogController extends DialogPane {
         dialog.getDialogPane().getButtonTypes().addAll(yesBtn, noBtn);
         
         DialogPane dialogPane = dialog.getDialogPane();
-        //dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
+        dialogPane.getStylesheets().addAll(this.getClass().getResource(StylesUri.globalStyle).toExternalForm());
         dialogPane.setContent(gridPane);
         dialog.initStyle(StageStyle.UNIFIED);
         try {

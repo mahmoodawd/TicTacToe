@@ -28,7 +28,7 @@ import tictactoe.core.PassPlayerNameMultiMode;
 import tictactoe.core.ViewController;
 import tictactoe.core.designsystem.resources.ImagesUri;
 import tictactoe.core.designsystem.resources.Strings;
-import tictactoe.main_menu.presentation.exit_dialog.ExitDialogContoller;
+
 import tictactoe.online_multi_player.presentation.OnlineMultiPlayerViewController;
 import tictactoe.online_multi_player.presentation.winner_dialog.MultiPlayerWinnerDialogController;
 

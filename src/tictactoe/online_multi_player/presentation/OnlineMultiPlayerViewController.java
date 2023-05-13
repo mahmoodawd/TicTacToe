@@ -101,6 +101,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
     OnlineMultiPlayerViewModel viewModel;
 
     public OnlineMultiPlayerViewController(OnlineMultiPlayerViewModel viewModel) {
+
         System.out.println("online mode");
         this.viewModel = viewModel;
 
@@ -114,6 +115,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
         columnConstraints2 = new ColumnConstraints();
         rowConstraints1 = new RowConstraints();
         titleTextView = new Text();
+      
         blend = new Blend();
         backImageView = new ImageView();
         gridPane1 = new GridPane();
@@ -637,7 +639,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
 
         backImageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             try {
-                Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+                Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER, this);
             } catch (IOException ex) {
                 Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -704,34 +706,35 @@ public class OnlineMultiPlayerViewController extends BorderPane {
     private void properitiesObservers() {
         viewModel.getReplayRequest().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
-                new ReceivedRequestDialogViewController(newValue).show();
+                Platform.runLater(() -> {
+                    new ReceivedRequestDialogViewController(newValue).show();
+                });
             }
         });
-        
-        
+
         viewModel.getReplayResponse().addListener((observable, oldValue, newValue) -> {
-        
+
             if (newValue.equals(RequestStatus.ACCEPTED)) {
                 resetBoard(true);
                 viewModel.swapSymbols();
                 viewModel.setTurnNotifier(1);
             } else {
-              new RequestDeniedDialogViewController().show();
-            }      
-        
+                new RequestDeniedDialogViewController().show();
+            }
+
         });
-        
 
         PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
-            sendReplayDialog.close();
+            Platform.runLater(() -> {
+                sendReplayDialog.close();
+            });
             if (newValue.equals(RequestStatus.ACCEPTED)) {
                 resetBoard(true);
                 viewModel.swapSymbols();
                 viewModel.setTurnNotifier(1);
             }
             viewModel.sendReplayResponse(newValue);
-            
-            
+
         });
 
         viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -773,14 +776,15 @@ public class OnlineMultiPlayerViewController extends BorderPane {
                 switch (newValue) {
 
                     case Strings.main: {
-                        Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
+                        Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER, this);
                         break;
                     }
 
                     case Strings.replay: {
-                     viewModel.sendReplayRequest();
-                     sendReplayDialog = new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get());
-                     sendReplayDialog.show();
+                          this.sendReplayDialog = new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get());
+                        viewModel.sendReplayRequest();
+//                        sendReplayDialog = new SendRequestDialogViewController(titleTextView, viewModel.getPlayerTwoName().get());
+                        sendReplayDialog.show();
                         break;
                     }
 
@@ -818,8 +822,8 @@ public class OnlineMultiPlayerViewController extends BorderPane {
 
         viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (newValue.intValue() == 1) {
-              secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
-            }else {
+                secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
+            } else {
                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.o));
             }
 
