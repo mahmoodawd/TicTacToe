@@ -17,10 +17,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import tictactoe.available_players.presentation.AvailablePlayersViewController;
 import tictactoe.available_players.presentation.PassDataFromDialogToAvaliablePlayers;
 import tictactoe.available_players.presentation.RequestStatus;
 import tictactoe.available_players.presentation.dialogs.ReceivedRequestDialogViewController;
+import tictactoe.available_players.presentation.dialogs.RequestDeniedDialogViewController;
 import tictactoe.available_players.presentation.dialogs.SendRequestDialogViewController;
 import tictactoe.core.Navigation;
 import tictactoe.core.PassData;
@@ -96,6 +96,7 @@ public class OnlineMultiPlayerViewController extends BorderPane {
     protected final Text playerTwoNameScoreTextView;
     protected final Text playerTwoScoreTextView;
     private ImageView imageViews[][] = new ImageView[3][3];
+    private SendRequestDialogViewController sendReplayDialog;
 
     OnlineMultiPlayerViewModel viewModel;
 
@@ -706,20 +707,31 @@ public class OnlineMultiPlayerViewController extends BorderPane {
                 new ReceivedRequestDialogViewController(newValue).show();
             }
         });
-
-        PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
+        
+        
+        viewModel.getReplayResponse().addListener((observable, oldValue, newValue) -> {
+        
             if (newValue.equals(RequestStatus.ACCEPTED)) {
                 resetBoard(true);
                 viewModel.swapSymbols();
                 viewModel.setTurnNotifier(1);
-            } else if (newValue.equals(RequestStatus.REJECTED)) {
-                try {
-                    Navigation.openPage(ViewController.AVAILABLEPLAYERSVIEWCONTROLLER, backImageView);
-                } catch (IOException ex) {
-                    Logger.getLogger(OnlineMultiPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } else {
+              new RequestDeniedDialogViewController().show();
+            }      
+        
+        });
+        
+
+        PassDataFromDialogToAvaliablePlayers.getInstance().getRequestStatus().addListener((observable, oldValue, newValue) -> {
+            sendReplayDialog.close();
+            if (newValue.equals(RequestStatus.ACCEPTED)) {
+                resetBoard(true);
+                viewModel.swapSymbols();
+                viewModel.setTurnNotifier(1);
             }
-            viewModel.replayResponse(newValue);
+            viewModel.sendReplayResponse(newValue);
+            
+            
         });
 
         viewModel.getBoardNotifier().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -766,12 +778,9 @@ public class OnlineMultiPlayerViewController extends BorderPane {
                     }
 
                     case Strings.replay: {
-                        viewModel.sendReplayRequest();
-
-                        new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get()).show();
-                        resetBoard(true);
-                        viewModel.swapSymbols();
-                        viewModel.setTurnNotifier(1);
+                     viewModel.sendReplayRequest();
+                     sendReplayDialog = new SendRequestDialogViewController(this, viewModel.getPlayerTwoName().get());
+                     sendReplayDialog.show();
                         break;
                     }
 
@@ -809,8 +818,8 @@ public class OnlineMultiPlayerViewController extends BorderPane {
 
         viewModel.getPlayerTwoSymbol().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (newValue.intValue() == 1) {
-                secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
-            } else {
+              secondPlayerSymbolImageView.setImage(new Image(ImagesUri.x));
+            }else {
                 secondPlayerSymbolImageView.setImage(new Image(ImagesUri.o));
             }
 

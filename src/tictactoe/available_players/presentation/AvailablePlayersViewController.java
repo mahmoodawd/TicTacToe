@@ -261,7 +261,10 @@ public class AvailablePlayersViewController extends VBox {
 
         viewModel.getDenied().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (newValue.equals("deniedGameResponse")) {
-                new RequestDeniedDialogViewController().show();
+                Platform.runLater(() -> {
+                        new RequestDeniedDialogViewController().show();
+                });
+            
             }
 
         });
