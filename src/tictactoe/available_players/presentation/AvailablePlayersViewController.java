@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,7 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import tictactoe.available_players.domain.model.Player;
 import tictactoe.available_players.presentation.dialogs.NoPlayerSelectedDialog;
 import tictactoe.available_players.presentation.dialogs.ReceivedRequestDialogViewController;
 import tictactoe.available_players.presentation.dialogs.RequestDeniedDialogViewController;
@@ -50,7 +47,7 @@ public class AvailablePlayersViewController extends VBox {
     protected final Image reloadIcon = new Image(getClass().getResourceAsStream(ImagesUri.retry));
     protected final GridPane headerGridPane = new GridPane();
     private final VBox reloadButtonBox;
-    private Button sendRequesBtn;
+    
 
     public AvailablePlayersViewController(AvailablePlayersViewModel viewModel) {
         this.viewModel = viewModel;
@@ -200,6 +197,7 @@ public class AvailablePlayersViewController extends VBox {
 
     private void back() {
         try {
+            viewModel.logOut();
             Navigation.openPage(ViewController.MAINVIEWCONTROLLER, this);
         } catch (IOException ex) {
             Logger.getLogger(AvailablePlayersViewController.class.getName()).log(Level.SEVERE, null, ex);

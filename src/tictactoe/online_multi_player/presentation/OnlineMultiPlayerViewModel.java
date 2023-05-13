@@ -26,7 +26,7 @@ public class OnlineMultiPlayerViewModel {
 
     private Queue<Pair<Integer, Integer>> watchMovesQueue = new LinkedList();
     private boolean requestSent = false;
-     private SimpleStringProperty replayRequest = new SimpleStringProperty();
+    private SimpleStringProperty replayRequest = new SimpleStringProperty();
     private SimpleStringProperty replayResponse = new SimpleStringProperty();
 
     public SimpleStringProperty getReplayResponse() {
@@ -36,6 +36,7 @@ public class OnlineMultiPlayerViewModel {
     public void setReplayResponse(SimpleStringProperty replayResponse) {
         this.replayResponse = replayResponse;
     }
+
     public SimpleStringProperty getReplayRequest() {
         return replayRequest;
     }
@@ -147,6 +148,7 @@ public class OnlineMultiPlayerViewModel {
         if (board[row][column] != 0 || !winnerName.get().isEmpty()) {
             return;
         }
+        watchMovesQueue.add(new Pair(row, column));
 
         if (turnNotifier.get() == playerOneSymbol.get()) {
             setXorO(row, column, playerOneSymbol.get());
@@ -266,25 +268,26 @@ public class OnlineMultiPlayerViewModel {
         });
 
     }
-    private void listenToReplayRequest(){
-    remote.getReplayRequest().addListener((observable, oldValue, newValue) -> {
-        replayRequest.set(newValue);
-    });
-    }
+    
     protected void sendReplayRequest() {
         remote.sendReplayRequest(playerOneName.get(), playerTwoName.get());
     }
-
-    public  void sendReplayResponse(String response) {
-    remote.replayResponse(response);
+   
+    private void listenToReplayRequest() {
+        remote.getReplayRequest().addListener((observable, oldValue, newValue) -> {
+            replayRequest.set(newValue);
+        });
     }
-    
-    private void observeReplayResponse()
-    {
-    remote.getReplayResponse().addListener((observable, oldValue, newValue) -> {
-        replayResponse.set(newValue);
-    });
-    
+
+    public void sendReplayResponse(String response) {
+        remote.replayResponse(response);
+    }
+
+    private void observeReplayResponse() {
+        remote.getReplayResponse().addListener((observable, oldValue, newValue) -> {
+            replayResponse.set(newValue);
+        });
+
     }
 
 }

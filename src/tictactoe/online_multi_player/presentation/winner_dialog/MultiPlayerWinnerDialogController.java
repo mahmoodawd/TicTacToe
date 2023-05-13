@@ -225,7 +225,7 @@ public  class MultiPlayerWinnerDialogController extends GridPane {
         text.setFill(javafx.scene.paint.Color.WHITE);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
-        text.setText(Strings.mainMenu);
+        text.setText(Strings.playersMenu);
         text.setFont(Typography.subtitleOneMediumFont);
         mainMenuButton.setGraphic(gridPane0);
 

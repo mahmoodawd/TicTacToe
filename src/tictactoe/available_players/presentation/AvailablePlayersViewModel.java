@@ -148,4 +148,12 @@ public class AvailablePlayersViewModel {
         availablePlayers.clear();
     }
 
+    public AvailablePlayersViewModel(SimpleBooleanProperty haveRequest) {
+        this.haveRequest = haveRequest;
+    }
+    
+    public void logOut(){
+        remote.sendOfflineRequest();
+    }
+
 }

@@ -5,6 +5,6 @@ public class Strings {
   public static final String main = "main";
   public static final String replay = "replay";
   public static final String watchAgain = "watch again";
-  public static final String mainMenu = "Main Menu";
+  public static final String playersMenu = "Players Menu";
   public static final String winnerPlaceHolder = "Winner";
 }
