@@ -9,8 +9,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,18 +34,37 @@ public class Remote extends Thread {
     private SimpleStringProperty senderName = new SimpleStringProperty();
     private SimpleStringProperty denied = new SimpleStringProperty();
     private SimpleStringProperty replayRequest = new SimpleStringProperty();
-
-    static {
-
-        try {
+    private SimpleStringProperty replayResponse = new SimpleStringProperty();
+     private SimpleBooleanProperty connectionState = new SimpleBooleanProperty();
+   
+    
+    private  void init()
+    {
+    
+        if(!connectionState.get())
+        {
+       try {
             server = new Socket("localhost", 4004);
             listener = new DataInputStream(server.getInputStream());
             sender = new PrintStream(server.getOutputStream());
             Remote.getIntance().start();
-        } catch (IOException ex) {
-            Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
+            connectionState.set(true);
+        } catch (Exception ex) {
+            try {
+                if(server != null)
+                {
+                 server.close();
+                listener.close();
+                sender.close();
+                connectionState.set(false);
+                }
+            } catch (IOException ex1) {
+                Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+                
         }
-
+        }
+    
     }
 
     private Remote() {
@@ -95,20 +116,15 @@ public class Remote extends Thread {
                         case "forwardReplayRequest":
                             handleForwardedReplayRequest(input);
                             break;
+                        case "replayResponse":
+                            handleReplayResponse(input);
+                            break;
 
                     }
                 }
             }
         } catch (IOException ex) {
             Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                listener.close();
-                sender.close();
-                server.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Remote.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
 
     }
@@ -148,6 +164,7 @@ public class Remote extends Thread {
     public void sendGameMoveRequest(String playerTwoName, int row, int column) {
 
         try {
+             init();
             sender.println("acceptMoveRequest" + " " + playerTwoName + " " + String.valueOf(row) + " " + String.valueOf(column));
         } catch (Exception e) {
 
@@ -163,6 +180,7 @@ public class Remote extends Thread {
 
     public void sendGameResultRequest(String playerOneName, String playerTwoName, String gameResult) {
         try {
+             init();
             sender.println("acceptGameResult" + " " + playerOneName + " " + playerTwoName + " " + gameResult);
         } catch (Exception e) {
 
@@ -187,11 +205,24 @@ public class Remote extends Thread {
     }
 
     public void sendRegistrationCridentials(String... validate) {
+        try{
+             init();
         sender.println("Register " + validate[0] + " " + validate[1]);
+         } catch (Exception e) {
+
+        }
     }
 
     public void sendLoginCridentials(String... check) {
-        sender.println("Login" + " " + check[0] + " " + check[1]);
+        System.out.println("login");
+       try{
+            init();
+           sender.println("Login" + " " + check[0] + " " + check[1]);
+        } catch (Exception e) {
+
+            System.out.println("login exception "  +e.getMessage());
+        }
+       
     }
 
     private void recieveLoginResponse(String response) {
@@ -217,7 +248,13 @@ public class Remote extends Thread {
     }
 
     public void requestPlayersListFromServer() {
-        sender.println(ClientMessage.HEADER + " " + ClientMessage.GET);
+        try{ 
+             init();
+            sender.println(ClientMessage.HEADER + " " + ClientMessage.GET);
+        
+        }  catch (Exception e) {
+
+        }
     }
 
     public ObservableList<String> getAvailablePlayers() {
@@ -234,8 +271,13 @@ public class Remote extends Thread {
 
     public void sendRequest(String requesterName, String receiverName) {
         System.out.println("SendRequest On Client");
-        sender.println(ClientMessage.SEND_REQUEST
+         try{ 
+              init();
+             sender.println(ClientMessage.SEND_REQUEST
                 + " " + requesterName + " " + receiverName);
+          } catch (Exception e) {
+
+        }
     }
 
     private void handleRequest(String input) {
@@ -250,14 +292,25 @@ public class Remote extends Thread {
 
     public void acceptRequest(String playerOne, String playerTwo) {
         System.out.println("acceptGameRequest on Remote");
-        sender.println(ClientMessage.ACCEPT_GAME_REQUEST
-                + " " + playerOne + " " + playerTwo);
+        try{ 
+             init();
+            sender.println(ClientMessage.ACCEPT_GAME_REQUEST
+                + " " + playerOne + " " + playerTwo); 
+        } catch (Exception e) {
+
+        }
     }
 
     public void rejectRequest(String playerOne, String playerTwo) {
         System.out.println("acceptGameRequest on Remote");
-        sender.println(ClientMessage.REJECT_GAME_REQUEST
+         try{  
+             
+              init();
+             sender.println(ClientMessage.REJECT_GAME_REQUEST
                 + " " + playerOne + " " + playerTwo);
+          } catch (Exception e) {
+
+        }
     }
 
     public SimpleStringProperty getDenied() {
@@ -270,7 +323,12 @@ public class Remote extends Thread {
     }
 
     public void sendReplayRequest(String senderName, String receiverName) {
+       try{
+        init();
         sender.println("ReplayRequest" + " " + senderName + " " + receiverName);
+     } catch (Exception e) {
+
+        }
     }
 
     private void handleForwardedReplayRequest(String input) {
@@ -283,7 +341,25 @@ public class Remote extends Thread {
     }
 
     public void replayResponse(String response) {
-        sender.println("ReplayResponse" + " " + replayRequest.get() + " " + response);
+       
+        try{
+            init();
+            sender.println("ReplayResponse" + " " + replayRequest.get() + " " + response);
+         } catch (Exception e) {
+
+        }
     }
+
+    private void handleReplayResponse(String input) {
+       replayResponse.set(input.split(" ")[1]);
+    }
+    
+    public SimpleStringProperty getReplayResponse()
+    {
+    
+       return replayResponse;
+    }
+
+   
 
 }

@@ -27,7 +27,15 @@ public class OnlineMultiPlayerViewModel {
     private Queue<Pair<Integer, Integer>> watchMovesQueue = new LinkedList();
     private boolean requestSent = false;
      private SimpleStringProperty replayRequest = new SimpleStringProperty();
+    private SimpleStringProperty replayResponse = new SimpleStringProperty();
 
+    public SimpleStringProperty getReplayResponse() {
+        return replayResponse;
+    }
+
+    public void setReplayResponse(SimpleStringProperty replayResponse) {
+        this.replayResponse = replayResponse;
+    }
     public SimpleStringProperty getReplayRequest() {
         return replayRequest;
     }
@@ -50,6 +58,8 @@ public class OnlineMultiPlayerViewModel {
         //listeners to the remote class
         listenToMoveResponse();
         listenToGameResult();
+        listenToReplayRequest();
+        observeReplayResponse();
 
     }
 
@@ -256,17 +266,25 @@ public class OnlineMultiPlayerViewModel {
         });
 
     }
-void listenToReplayRequest(){
+    private void listenToReplayRequest(){
     remote.getReplayRequest().addListener((observable, oldValue, newValue) -> {
         replayRequest.set(newValue);
     });
-}
-    void sendReplayRequest() {
+    }
+    protected void sendReplayRequest() {
         remote.sendReplayRequest(playerOneName.get(), playerTwoName.get());
     }
 
-    void replayResponse(String response) {
+    public  void sendReplayResponse(String response) {
     remote.replayResponse(response);
+    }
+    
+    private void observeReplayResponse()
+    {
+    remote.getReplayResponse().addListener((observable, oldValue, newValue) -> {
+        replayResponse.set(newValue);
+    });
+    
     }
 
 }

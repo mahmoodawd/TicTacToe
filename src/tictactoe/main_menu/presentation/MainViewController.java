@@ -3,6 +3,7 @@ package tictactoe.main_menu.presentation;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -410,11 +411,14 @@ public class MainViewController extends GridPane {
         });
          */
         onlineBtn.setOnAction((event) -> {
-            try {
+            Platform.runLater(() -> {
+                 try {
                 Navigation.openPage(ViewController.LOGINVIEWCONTROLLER, onlineBtn);
             } catch (IOException ex) {
                 Logger.getLogger(MainViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            });
+           
         });
 
         multiBtn.setOnAction((event) -> {
