@@ -8,7 +8,7 @@ package tictactoe.core;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class PassData {
+public class PassDataToMultiAndOnlineController {
     
     private static PassData instance  = null;
     public static SimpleStringProperty winnerName = new SimpleStringProperty();
